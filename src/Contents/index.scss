@@ -2,8 +2,8 @@
   display: flex;
   height: 100%;
   overflow: hidden;
-  
-  &>:nth-child(2){
+
+  & > :nth-child(2) {
     border-left: 1px solid gray;
   }
 
@@ -11,6 +11,11 @@
   .right {
     width: 50%;
     height: 100%;
-    overflow: scroll;
+    overflow-y: scroll;
+    padding-right: 17px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
