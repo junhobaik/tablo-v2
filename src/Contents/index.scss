@@ -1,0 +1,16 @@
+#Contents {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  
+  &>:nth-child(2){
+    border-left: 1px solid gray;
+  }
+
+  .left,
+  .right {
+    width: 50%;
+    height: 100%;
+    overflow: scroll;
+  }
+}
