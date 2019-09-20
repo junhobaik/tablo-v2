@@ -1,0 +1,59 @@
+#Menu {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  height: 15rem;
+  width: 100%;
+  flex-direction: column;
+  padding: 0 2rem;
+
+  * {
+    // border: 1px solid blue;
+    box-sizing: border-box;
+  }
+
+  .header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    height: 1.5rem;
+
+    .header-btn {
+      cursor: pointer;
+      height: 100%;
+      width: 5rem;
+      background-color: lightgray;
+      transition: 0.3s;
+
+      &:hover {
+        background-color: gray;
+      }
+    }
+    .tab-menu-button-wrap {
+      border-top-left-radius: 3px;
+    }
+
+    // .toggle-button-wrap {}
+
+    .feed-menu-button-wrap {
+      border-top-right-radius: 3px;
+    }
+  }
+  .content {
+    padding: 0.5rem 1rem;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: lightgray;
+    height: 100%;
+    overflow: hidden;
+
+    & > div {
+      height: 100%;
+      overflow-y: scroll;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+}
