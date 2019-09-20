@@ -1,21 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Icon } from 'semantic-ui-react';
 
 import './index.scss';
 import FeedMenu from './FeedMenu';
+import TabMenu from './TabMenu';
 
 const Menu = () => {
+  const [selectMenu, setSelectMenu] = useState('feed');
+
   return (
     <div id="Menu">
       <div className="header">
-        <div className="tab-menu-button-wrap header-btn">Tab</div>
-        <div className="toggle-button-wrap header-btn">
+        <div
+          className="tab-menu-button header-btn"
+          role="button"
+          onClick={() => {
+            setSelectMenu('tab');
+          }}
+        >
+          <span>TAB</span>
+        </div>
+        <div className="toggle-button header-btn">
           <Icon name="angle down" />
         </div>
-        <div className="feed-menu-button-wrap header-btn">Feed</div>
+        <div
+          className="feed-menu-button header-btn"
+          role="button"
+          onClick={() => {
+            setSelectMenu('feed');
+          }}
+        >
+          <span>FEED</span>
+        </div>
       </div>
       <div className="content">
-        <FeedMenu />
+        {selectMenu === 'feed' ? <FeedMenu /> : <TabMenu />}
       </div>
     </div>
   );
