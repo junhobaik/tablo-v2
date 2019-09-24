@@ -4,15 +4,19 @@ import Tabs from './Tabs';
 
 import './index.scss';
 
-const Contents = () => {
+const Contents = ({ selectedWindow }) => {
   return (
     <div id="Contents">
-      <div className="left">
-        <Tabs />
-      </div>
-      <div className="right">
-        <Feeds />
-      </div>
+      {selectedWindow !== 'feed' ? (
+        <div className="left">
+          <Tabs />
+        </div>
+      ) : null}
+      {selectedWindow !== 'tab' ? (
+        <div className="right">
+          <Feeds />
+        </div>
+      ) : null}
     </div>
   );
 };
