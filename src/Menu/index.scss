@@ -1,8 +1,6 @@
 #Menu {
   display: flex;
   position: absolute;
-  bottom: 0;
-  height: 15rem;
   width: 100%;
   flex-direction: column;
   padding: 0 2rem;
@@ -22,14 +20,19 @@
     .header-btn {
       cursor: pointer;
       height: 100%;
-      width: 5rem;
+      width: 8rem;
       background-color: lightgray;
-      transition: 0.3s;
 
       &:hover {
         background-color: gray;
+        transition: 0.3s background-color;
       }
     }
+
+    .header-half-btn {
+      width: 4rem !important;
+    }
+
     .tab-menu-button {
       border-top-left-radius: 3px;
     }
