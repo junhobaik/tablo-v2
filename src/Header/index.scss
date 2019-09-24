@@ -1,4 +1,74 @@
 #Header {
-  border-bottom: 1px solid gray;
-  min-height: 2rem;
+  display: flex;
+  border-bottom: 1px solid #dadce0;
+  height: 3rem;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1465c0;
+
+  .title,
+  .setting {
+    padding: 0 1rem;
+    width: 10rem;
+  }
+
+  .title {
+    h1 {
+      font-size: 1.2rem;
+      color: white;
+    }
+  }
+  .select-content {
+    .button-group {
+      button {
+        height: 1.8rem;
+        width: 5rem;
+        padding: 0 !important;
+        font-size: 0.9rem;
+        color: white;
+        background-color: #2bbbff;
+        transition: 0.3s;
+
+        &.selected {
+          border: 2px solid white;
+        }
+
+        &:nth-child(1) {
+          padding-right: 0.45rem !important;
+        }
+        &:nth-child(3) {
+          width: 5rem;
+          background-color: #fff;
+          color: #1ab1f7;
+        }
+        &:nth-child(5) {
+          padding-left: 0.45rem !important;
+        }
+      }
+
+      .or {
+        height: 1.8rem;
+        &::before {
+          color: white !important;
+          height: 1.8rem;
+        }
+      }
+    }
+  }
+
+  .setting {
+    display: flex;
+    justify-content: flex-end;
+    color: white;
+
+    .setting-icon-wrap {
+      opacity: 0.5;
+      transition: 0.3s;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
 }
