@@ -10,7 +10,7 @@ const Menu = () => {
   const [toggleMenu, setToggleMenu] = useState('hide'); // hide, default, extend
 
   const menuStyle = {
-    bottom: '-13.5rem',
+    bottom: '-13rem',
     height: '15rem',
     minHeight: '15rem',
     transition: '0.3s',
@@ -18,7 +18,7 @@ const Menu = () => {
 
   switch (toggleMenu) {
     case 'hide':
-      menuStyle.bottom = '-13.5rem';
+      menuStyle.bottom = '-13rem';
       break;
     case 'default':
       menuStyle.bottom = '0';

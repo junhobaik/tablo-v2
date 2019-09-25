@@ -10,16 +10,19 @@
     justify-content: center;
     width: 100%;
     text-align: center;
-    height: 1.5rem;
+    height: 2rem;
 
     .header-btn {
       cursor: pointer;
       height: 100%;
       width: 8rem;
-      background-color: lightgray;
+      background-color: #fff;
+      border-top: 2px solid #2bbbff;
+      position: relative;
+      top: 2px;
 
       &:hover {
-        background-color: gray;
+        background-color: #dadce0;
         transition: 0.3s background-color;
       }
     }
@@ -29,20 +32,23 @@
     }
 
     .tab-menu-button {
+      border-left: 2px solid #2bbbff;
       border-top-left-radius: 3px;
     }
 
-    // .toggle-button-wrap {}
-
     .feed-menu-button {
+      border-right: 2px solid #2bbbff;
       border-top-right-radius: 3px;
     }
   }
   .content {
+    box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+    border: 2px solid #2bbbff;
+    border-bottom: 0;
     padding: 0.5rem 1rem;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    background-color: lightgray;
+    background-color: #fff;
     height: 100%;
     overflow: hidden;
 
