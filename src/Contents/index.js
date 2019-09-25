@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import Feeds from './Feeds';
 import Tabs from './Tabs';
 
@@ -19,6 +21,10 @@ const Contents = ({ selectedWindow }) => {
       ) : null}
     </div>
   );
+};
+
+Contents.propTypes = {
+  selectedWindow: PropTypes.string.isRequired,
 };
 
 export default Contents;

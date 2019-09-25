@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Icon, Form, Radio } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
 import './index.scss';
 
@@ -19,11 +20,12 @@ const SettingModal = ({ close }) => {
 
   return (
     <React.Fragment>
-      <div className="modal-layout" onClick={close}></div>
+      {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+      <div className="modal-layout" role="button" tabIndex="-1" onClick={close} />
       <div id="SettingModal">
         <div className="header">
           <h2>Setting</h2>
-          <Icon name="close" onClick={close}/>
+          <Icon name="close" onClick={close} />
         </div>
         <div className="content">
           <div className="link-setting">
@@ -85,6 +87,10 @@ const SettingModal = ({ close }) => {
       </div>
     </React.Fragment>
   );
+};
+
+SettingModal.propTypes = {
+  close: PropTypes.func.isRequired,
 };
 
 export default SettingModal;

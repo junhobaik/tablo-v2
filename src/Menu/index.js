@@ -37,6 +37,7 @@ const Menu = () => {
         <div
           className="tab-menu-button header-btn"
           role="button"
+          tabIndex={0}
           onClick={() => {
             setSelectMenu('tab');
             if (toggleMenu === 'hide') setToggleMenu('default');
@@ -55,6 +56,7 @@ const Menu = () => {
           <div
             className="toggle-extend-button header-btn header-half-btn"
             role="button"
+            tabIndex={0}
             onClick={() => {
               setToggleMenu('extend');
             }}
@@ -66,6 +68,7 @@ const Menu = () => {
         <div
           className={`toggle-button header-btn ${toggleMenu === 'default' ? 'header-half-btn' : null}`}
           role="button"
+          tabIndex={0}
           onClick={() => {
             if (toggleMenu === 'hide') {
               setToggleMenu('default');
@@ -80,6 +83,7 @@ const Menu = () => {
         <div
           className="feed-menu-button header-btn"
           role="button"
+          tabIndex={0}
           onClick={() => {
             setSelectMenu('feed');
             if (toggleMenu === 'hide') setToggleMenu('default');

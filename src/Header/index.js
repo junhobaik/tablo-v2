@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Icon, Button } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
 import './index.scss';
 import SettingModal from './SettingModal';
@@ -44,7 +45,7 @@ const Header = ({ selectedWindow, setSelectedWindow }) => {
           </Button.Group>
         </div>
         <div className="setting">
-          <div className="setting-icon-wrap" onClick={() => setIsModal(true)}>
+          <div className="setting-icon-wrap" role="button" tabIndex="0" onClick={() => setIsModal(true)}>
             <Icon name="cog" />
           </div>
         </div>
@@ -58,6 +59,11 @@ const Header = ({ selectedWindow, setSelectedWindow }) => {
       ) : null}
     </React.Fragment>
   );
+};
+
+Header.propTypes = {
+  selectedWindow: PropTypes.string.isRequired,
+  setSelectedWindow: PropTypes.func.isRequired,
 };
 
 export default Header;
