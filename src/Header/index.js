@@ -5,7 +5,7 @@ import './index.scss';
 import SettingModal from './SettingModal';
 
 const Header = ({ selectedWindow, setSelectedWindow }) => {
-  const [isModal, setIsModal] = useState(true);
+  const [isModal, setIsModal] = useState(false);
 
   return (
     <React.Fragment>
