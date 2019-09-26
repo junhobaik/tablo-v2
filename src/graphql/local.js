@@ -1,6 +1,5 @@
 import { GET_FEEDS } from './queries';
 
-// eslint-disable-next-line import/prefer-default-export
 export const saveFeeds = cache => {
   const { feeds } = cache.readQuery({ query: GET_FEEDS });
   const feedsToString = JSON.stringify(feeds);
