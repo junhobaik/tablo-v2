@@ -5,6 +5,7 @@ import { GET_FEEDS } from '../queries';
 import { saveFeeds } from '../local';
 
 const findObjectInArray = (key, value, array) => {
+  // eslint-disable-next-line no-unused-vars
   for (const obj of array) {
     if (obj[key] === value) return obj;
   }
@@ -33,7 +34,9 @@ export default {
       const { feeds } = cache.readQuery({ query: GET_FEEDS });
       return feeds;
     },
+  },
 
+  Mutation: {
     createFeed: (_, { url, title, category }, { cache }) => {
       const { feeds } = cache.readQuery({ query: GET_FEEDS });
 

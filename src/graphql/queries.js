@@ -12,3 +12,11 @@ export const GET_FEEDS = gql`
     }
   }
 `;
+
+export const GET_GLOBAL_SETTINGS = gql`
+  {
+    globalSetting @client {
+      window
+    }
+  }
+`;

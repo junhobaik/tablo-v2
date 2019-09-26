@@ -1,3 +1,7 @@
-import feedResolvers from './feed';
+// import { merge } from 'lodash';
 
-export default [feedResolvers];
+import feedResolvers from './feed';
+import globalReslovers from './global';
+
+// export default merge(feedResolvers, globalReslovers);
+export default [feedResolvers, globalReslovers];

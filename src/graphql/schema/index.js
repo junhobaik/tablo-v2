@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
 
 import feedSchema from './feed';
+import globalSchema from './global';
 
 const linkSchema = gql`
   type Query {
@@ -16,4 +17,4 @@ const linkSchema = gql`
   }
 `;
 
-export default [linkSchema, feedSchema];
+export default [linkSchema, feedSchema, globalSchema];

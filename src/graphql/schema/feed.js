@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  type Query {
+  extend type Query {
     feeds: [Feed]
     feedById(id: String!): Feed
     feedByUrl(url: String!): Feed
@@ -15,7 +15,7 @@ export default gql`
     isHide: Boolean
   }
 
-  type Mutation {
+  extend type Mutation {
     createFeed(url: String!, title: String!, category: String!): Feed!
     editFeed(id: String, newTitle: String, newCategory: String, newIsHide: Boolean): Feed!
     clearFeeds: Boolean!

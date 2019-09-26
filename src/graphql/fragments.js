@@ -10,3 +10,12 @@ export const FEED_FRAGMENT = gql`
     category
   }
 `;
+
+export const GLOBAL_FRAGMENT = gql`
+  fragment globalSettingPars on GlobalSetting {
+    id
+    window
+    tabLinkMethod
+    feedLinkMethod
+  }
+`;
