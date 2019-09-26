@@ -45,7 +45,7 @@ export const typeDefs = [
     }
 
     type Mutation {
-      createFeed(url: String!): Feed!
+      createFeed(url: String!, title: String!, category: String!): Feed!
       editFeed(id: String, newTitle: String, newCategory: String, newIsHide: Boolean): Feed!
       clearFeeds: Boolean!
     }
@@ -69,16 +69,16 @@ export const resolvers = {
       return feeds;
     },
 
-    createFeed: (_, { url }, { cache }) => {
+    createFeed: (_, { url, title, category }, { cache }) => {
       const { feeds } = cache.readQuery({ query: GET_FEEDS });
 
       if (!findObjectInArray('url', url, feeds)) {
         const newFeed = {
           __typename: 'Feed',
           id: uuidv4(),
-          title: 'TEMP TITLE',
+          title,
           url,
-          category: 'TEMP CATEGORY',
+          category,
           isHide: false,
         };
 
