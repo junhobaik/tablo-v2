@@ -4,6 +4,7 @@ import uuidv4 from 'uuid/v4';
 
 import { FEED_FRAGMENT } from './fragments';
 import { GET_FEEDS } from './queries';
+import { saveFeeds, restoreFeeds } from './local';
 
 const findObjectInArray = (key, value, array) => {
   for (const obj of array) {
@@ -19,16 +20,7 @@ const getFeed = (id, cache) => {
 };
 
 export const defaults = {
-  feeds: [
-    {
-      id: '1',
-      url: 'https://junhobaik.github.io/rss',
-      title: "JunhoBaik's Blog",
-      isHide: false,
-      category: 'blog',
-      __typename: 'Feed',
-    },
-  ],
+  feeds: restoreFeeds(),
 };
 
 export const typeDefs = [
@@ -40,21 +32,22 @@ export const typeDefs = [
 
     type Query {
       feeds: [Feed]
-      feedById(id: String!): Feed!
-      feedByUrl(url: String!): Feed!
+      feedById(id: String!): Feed
+      feedByUrl(url: String!): Feed
     }
 
     type Feed {
-      id: String!
-      url: String!
-      title: String!
-      category: String!
-      isHide: Boolean!
+      id: String
+      url: String
+      title: String
+      category: String
+      isHide: Boolean
     }
 
     type Mutation {
       createFeed(url: String!): Feed!
       editFeed(id: String, newTitle: String, newCategory: String, newIsHide: Boolean): Feed!
+      clearFeeds: Boolean!
     }
   `,
 ];
@@ -95,6 +88,7 @@ export const resolvers = {
           },
         });
 
+        saveFeeds(cache);
         return newFeed;
       }
 
@@ -118,7 +112,22 @@ export const resolvers = {
         data: updateFeed,
       });
 
+      saveFeeds(cache);
       return updateFeed;
+    },
+
+    clearFeeds: (_, variables, { cache }) => {
+      try {
+        localStorage.setItem('tablo-v2-feeds', '');
+        cache.writeData({
+          data: {
+            feeds: [],
+          },
+        });
+        return true;
+      } catch (error) {
+        return false;
+      }
     },
   },
 };
