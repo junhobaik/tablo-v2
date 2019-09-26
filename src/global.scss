@@ -2,4 +2,11 @@
   .icon {
     margin: 0;
   }
+  
+  div[role='button'],
+  button {
+    &:focus {
+      outline: 0;
+    }
+  }
 }
