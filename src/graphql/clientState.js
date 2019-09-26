@@ -12,6 +12,12 @@ const findObjectInArray = (key, value, array) => {
   return null;
 };
 
+const getFeed = (id, cache) => {
+  const feedId = cache.config.dataIdFromObject({ __typename: 'Feed', id });
+  return cache.readFragment({ fragment: FEED_FRAGMENT, id: feedId });
+  // NOTE: readFragment의 id는 반드시 dataIdFromObject로 얻은 값이어야 한다.
+};
+
 export const defaults = {
   feeds: [
     {
@@ -48,6 +54,7 @@ export const typeDefs = [
 
     type Mutation {
       createFeed(url: String!): Feed!
+      editFeed(id: String, newTitle: String, newCategory: String, newIsHide: Boolean): Feed!
     }
   `,
 ];
@@ -55,11 +62,7 @@ export const typeDefs = [
 export const resolvers = {
   Query: {
     feedById: (_, { id }, { cache }) => {
-      const feedId = cache.config.dataIdFromObject({ __typename: 'Feed', id });
-      const feed = cache.readFragment({ fragment: FEED_FRAGMENT, id: feedId });
-      // NOTE: readFragment의 id는 반드시 dataIdFromObject로 얻은 값이어야 한다.
-
-      return feed;
+      return getFeed(id, cache);
     },
 
     feedByUrl: (_, { url }, { cache }) => {
@@ -96,6 +99,26 @@ export const resolvers = {
       }
 
       return null;
+    },
+
+    editFeed: (_, { id, newTitle, newCategory, newIsHide }, { cache }) => {
+      const feed = getFeed(id, cache);
+      const { title, category, isHide } = feed;
+
+      const updateFeed = {
+        ...feed,
+        title: newTitle || title,
+        category: newCategory || category,
+        isHide: newIsHide || isHide,
+      };
+
+      cache.writeFragment({
+        id: cache.config.dataIdFromObject({ __typename: 'Feed', id }),
+        fragment: FEED_FRAGMENT,
+        data: updateFeed,
+      });
+
+      return updateFeed;
     },
   },
 };
