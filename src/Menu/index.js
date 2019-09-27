@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 
 import './index.scss';
@@ -6,6 +7,7 @@ import FeedMenu from './FeedMenu';
 import TabMenu from './TabMenu';
 
 const Menu = () => {
+  const { window } = useSelector(state => state.app);
   const [selectMenu, setSelectMenu] = useState('feed');
   const [toggleMenu, setToggleMenu] = useState('hide'); // hide, default, extend
 
@@ -30,6 +32,14 @@ const Menu = () => {
     default:
       break;
   }
+
+  useEffect(() => {
+    if (toggleMenu === 'hide') {
+      if (window === 'feed') {
+        setSelectMenu('feed');
+      } else setSelectMenu('tab');
+    }
+  }, [toggleMenu, window]);
 
   return (
     <div id="Menu" style={menuStyle}>
