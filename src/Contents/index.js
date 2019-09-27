@@ -1,30 +1,28 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import Feeds from './Feeds';
 import Tabs from './Tabs';
 
 import './index.scss';
 
-const Contents = ({ selectedWindow }) => {
+const Contents = () => {
+  const { window } = useSelector(state => state.app);
+
   return (
     <div id="Contents">
-      {selectedWindow !== 'feed' ? (
+      {window !== 'feed' ? (
         <div className="left">
           <Tabs />
         </div>
       ) : null}
-      {selectedWindow !== 'tab' ? (
+      {window !== 'tab' ? (
         <div className="right">
           <Feeds />
         </div>
       ) : null}
     </div>
   );
-};
-
-Contents.propTypes = {
-  selectedWindow: PropTypes.string.isRequired,
 };
 
 export default Contents;
