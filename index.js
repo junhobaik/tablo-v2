@@ -24,6 +24,7 @@ const preloadedState = {
       tab: 'blank',
       feed: 'blank',
     },
+    isMenuAlwaysOpen: false,
   },
 };
 
