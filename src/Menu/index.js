@@ -7,9 +7,9 @@ import FeedMenu from './FeedMenu';
 import TabMenu from './TabMenu';
 
 const Menu = () => {
-  const { window } = useSelector(state => state.app);
+  const { window, isMenuAlwaysOpen } = useSelector(state => state.app);
   const [selectMenu, setSelectMenu] = useState('feed');
-  const [toggleMenu, setToggleMenu] = useState('hide'); // hide, default, extend
+  const [toggleMenu, setToggleMenu] = useState(isMenuAlwaysOpen ? 'default' : 'hide'); // hide, default, extend
 
   const menuStyle = {
     bottom: '-13rem',

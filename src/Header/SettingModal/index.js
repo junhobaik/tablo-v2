@@ -1,13 +1,13 @@
 import React from 'react';
-import { Icon, Form, Radio } from 'semantic-ui-react';
+import { Icon, Form, Radio, Checkbox } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import './index.scss';
-import { setLinkMethod } from '../../redux/actions/app';
+import { setLinkMethod, toggleMenuAlwaysOpen } from '../../redux/actions/app';
 
 const SettingModal = ({ close }) => {
-  const { linkMethod } = useSelector(state => state.app, {});
+  const { linkMethod, isMenuAlwaysOpen } = useSelector(state => state.app, {});
   const dispatch = useDispatch();
 
   const tabLinkMethod = linkMethod.tab;
@@ -21,6 +21,10 @@ const SettingModal = ({ close }) => {
     } else {
       dispatch(setLinkMethod(null, method));
     }
+  };
+
+  const handleMenuOpen = () => {
+    dispatch(toggleMenuAlwaysOpen());
   };
 
   return (
@@ -87,6 +91,10 @@ const SettingModal = ({ close }) => {
                 </Form>
               </div>
             </div>
+          </div>
+          <div className="menu-open-setting">
+            <h3>Always open bottom menu</h3>
+            <Checkbox className="menu-open-toggle" onChange={handleMenuOpen} checked={isMenuAlwaysOpen} toggle />
           </div>
         </div>
       </div>

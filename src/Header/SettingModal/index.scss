@@ -26,7 +26,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 1rem;
 
     h2 {
       margin: 0;
@@ -43,11 +42,26 @@
   }
 
   .content {
+    padding-right: 1rem;
+
+    & > div {
+      padding: 2rem 0;
+
+      &:nth-child(2n + 1) {
+        border-bottom: 1px solid lightgray;
+      }
+    }
+
     .link-setting {
       .link-method {
         display: flex;
         justify-content: space-around;
       }
+    }
+
+    .menu-open-setting {
+      display: flex;
+      justify-content: space-between;
     }
   }
 }

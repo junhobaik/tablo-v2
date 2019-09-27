@@ -1,4 +1,4 @@
-import { SET_WINDOW, SET_LINK_METHOD } from '../actions/app';
+import { SET_WINDOW, SET_LINK_METHOD, TOGGLE_MENU_ALWAYS_OPEN } from '../actions/app';
 
 const app = (state = [], action) => {
   switch (action.type) {
@@ -15,6 +15,8 @@ const app = (state = [], action) => {
           feed: action.feedLinkMethod || state.linkMethod.feed,
         },
       };
+    case TOGGLE_MENU_ALWAYS_OPEN:
+      return { ...state, isMenuAlwaysOpen: !state.isMenuAlwaysOpen };
     default:
       return state;
   }
