@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Icon, Button } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
 
 import './index.scss';
 import SettingModal from './SettingModal';
+import { setWindow } from '../redux/actions/app';
 
-const Header = ({ selectedWindow, setSelectedWindow }) => {
+const Header = () => {
   const [isModal, setIsModal] = useState(false);
+  const { window } = useSelector(state => state.app, {});
+  const dispatch = useDispatch();
 
   return (
     <React.Fragment>
@@ -17,9 +20,9 @@ const Header = ({ selectedWindow, setSelectedWindow }) => {
         <div className="select-content">
           <Button.Group className="button-group">
             <Button
-              className={`left ${selectedWindow !== 'feed' ? 'selected' : null}`}
+              className={`left ${window !== 'feed' ? 'selected' : null}`}
               onClick={() => {
-                setSelectedWindow('tab');
+                dispatch(setWindow('tab'));
               }}
             >
               TAB
@@ -28,16 +31,16 @@ const Header = ({ selectedWindow, setSelectedWindow }) => {
             <Button
               className="center"
               onClick={() => {
-                setSelectedWindow('both');
+                dispatch(setWindow('both'));
               }}
             >
               BOTH
             </Button>
             <Button.Or />
             <Button
-              className={`right ${selectedWindow !== 'tab' ? 'selected' : null}`}
+              className={`right ${window !== 'tab' ? 'selected' : null}`}
               onClick={() => {
-                setSelectedWindow('feed');
+                dispatch(setWindow('feed'));
               }}
             >
               FEED
@@ -59,11 +62,6 @@ const Header = ({ selectedWindow, setSelectedWindow }) => {
       ) : null}
     </React.Fragment>
   );
-};
-
-Header.propTypes = {
-  selectedWindow: PropTypes.string.isRequired,
-  setSelectedWindow: PropTypes.func.isRequired,
 };
 
 export default Header;
