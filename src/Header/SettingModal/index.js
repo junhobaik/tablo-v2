@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Icon, Form, Radio } from 'semantic-ui-react';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import './index.scss';
+import { setLinkMethod } from '../../redux/actions/app';
 
 const SettingModal = ({ close }) => {
-  const [tabLinkMethod, setTabLinkMethod] = useState('blank');
-  const [feedLinkMethod, setFeedLinkMethod] = useState('blank');
+  const { linkMethod } = useSelector(state => state.app, {});
+  const dispatch = useDispatch();
+
+  const tabLinkMethod = linkMethod.tab;
+  const feedLinkMethod = linkMethod.feed;
 
   const handleLinkMethod = (e, isBlank) => {
     const isSetTabLinkMethod = e.target.parentNode.parentNode.parentNode.classList.contains('tab-link-method-form');
     const method = isBlank ? 'blank' : 'self';
     if (isSetTabLinkMethod) {
-      setTabLinkMethod(method);
+      dispatch(setLinkMethod(method, null));
     } else {
-      setFeedLinkMethod(method);
+      dispatch(setLinkMethod(null, method));
     }
   };
 
