@@ -1,0 +1,117 @@
+#FeedMenu {
+  .add-icon-button {
+    position: absolute;
+    right: 3rem;
+    bottom: 0.5rem;
+    cursor: pointer;
+    background-color: gray;
+    border-radius: 100%;
+    transition: 0.3s;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    .icon {
+      display: flex;
+      color: white;
+      border-radius: 100%;
+      width: 2rem;
+      height: 2rem;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .feed-menu-inner {
+    height: inherit;
+    // padding-right: 2.5rem;
+
+    .feed-list-wrap {
+      height: inherit;
+      padding: 1rem;
+      overflow-y: scroll;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .feed-list {
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.25rem;
+        background-color: rgba(43, 187, 255);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+
+        .feed-list-header {
+          display: flex;
+          color: white;
+          padding: 0.5rem;
+
+          .feed-list-title {
+            flex-grow: 1;
+            font-weight: bold;
+          }
+          .feed-list-setting {
+            .icon {
+              cursor: pointer;
+              margin: 0 0.25rem;
+              opacity: 0.5;
+
+              &:hover {
+                opacity: 0.9;
+              }
+            }
+          }
+        }
+        .feed-list-content {
+          display: flex;
+          flex-wrap: wrap;
+          padding: 0.25rem;
+
+          .feed {
+            display: flex;
+            background-color: rgb(245, 246, 250);
+            // box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            margin: 0.25rem;
+            padding: 0.25rem;
+            border-radius: 3px;
+            width: 12rem;
+            max-width: 12rem;
+            align-items: center;
+
+            .feed-visible {
+              cursor: pointer;
+              padding-left: 0.25rem;
+
+              .visible-icon {
+                width: 0.75rem;
+                height: 0.75rem;
+                border-radius: 100%;
+                border: 2px solid rgb(43, 187, 255);
+
+                &.visible {
+                  background-color: rgb(43, 187, 255);
+                }
+              }
+            }
+            .feed-title {
+              padding: 0 0.5rem;
+              flex-grow: 1;
+            }
+            .feed-setting {
+              cursor: pointer;
+              padding-right: 0.25rem;
+              opacity: 0.3;
+              transition: 0.3s;
+
+              &:hover {
+                opacity: 0.7;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
