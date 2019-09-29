@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 
 import './index.scss';
-import { setSettingInfo, remove } from '../redux/actions/app';
+import { remove } from '../redux/actions/app';
 
 const Setting = () => {
   const [isMouseIn, setIsMouseIn] = useState(false);
