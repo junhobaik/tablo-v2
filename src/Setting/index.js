@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 
 import './index.scss';
-import { remove } from '../redux/actions/app';
+import { deleteFeed } from '../redux/actions/feed';
 
 const Setting = () => {
   const [isMouseIn, setIsMouseIn] = useState(false);
@@ -43,7 +43,11 @@ const Setting = () => {
         role="button"
         tabIndex="0"
         onClick={() => {
-          dispatch(remove('feed'));
+          if (settingInfo.target === 'feed') {
+            dispatch(deleteFeed(settingInfo.url));
+          } else {
+            // dispatch(deleteTab());
+          }
         }}
       >
         <Icon name="trash" />
