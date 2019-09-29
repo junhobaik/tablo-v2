@@ -10,6 +10,7 @@
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "jsx-a11y/click-events-have-key-events": 0,
-    "react/jsx-fragments": 0
+    "react/jsx-fragments": 0,
+    "react/self-closing-comp": 0
   }
 }
