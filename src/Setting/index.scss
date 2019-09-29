@@ -1,0 +1,23 @@
+#FeedMenu {
+  .setting-tt {
+    z-index: 9;
+    display: flex;
+    border-radius: 5px;
+    padding: 0.25rem;
+    position: fixed;
+    background-color: rgb(245, 246, 250);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+
+    & > div {
+      padding: 0 0.25rem;
+    }
+    .title-edit, .remove {
+      cursor: pointer;
+      opacity: 0.5;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+}

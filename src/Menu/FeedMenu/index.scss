@@ -98,6 +98,15 @@
             .feed-title {
               padding: 0 0.5rem;
               flex-grow: 1;
+              .title-input {
+                display: none;
+                input {
+                  // height: 1rem;
+                  padding: 0 0.2rem;
+                  margin: 0;
+                  width: 8rem;
+                }
+              }
             }
             .feed-setting {
               cursor: pointer;

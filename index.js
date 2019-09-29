@@ -25,7 +25,13 @@ const preloadedState = {
       feed: 'blank',
     },
     menuOpenStatus: 'hide',
-    isMenuAlwaysOpen: false,
+    isMenuAlwaysOpen: true,
+    settingInfo: {
+      isVisible: false,
+      url: '#',
+      x: 0,
+      y: 0,
+    },
   },
 };
 
