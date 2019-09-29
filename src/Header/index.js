@@ -8,7 +8,7 @@ import { setWindow } from '../redux/actions/app';
 
 const Header = () => {
   const [isModal, setIsModal] = useState(false);
-  const { window } = useSelector(state => state.app, {});
+  const { windowStatus } = useSelector(state => state.app);
   const dispatch = useDispatch();
 
   return (
@@ -20,14 +20,14 @@ const Header = () => {
         <div className="select-content">
           <Button.Group className="button-group">
             <Button
-              className={`left ${window !== 'feed' ? 'selected' : null}`}
+              className={`left ${windowStatus !== 'feed' ? 'selected' : null}`}
               onClick={() => {
                 dispatch(setWindow('tab'));
               }}
             >
               TAB
             </Button>
-            <Button.Or />
+            <div className="round left"></div>
             <Button
               className="center"
               onClick={() => {
@@ -36,9 +36,9 @@ const Header = () => {
             >
               BOTH
             </Button>
-            <Button.Or />
+            <div className="round right"></div>
             <Button
-              className={`right ${window !== 'tab' ? 'selected' : null}`}
+              className={`right ${windowStatus !== 'tab' ? 'selected' : null}`}
               onClick={() => {
                 dispatch(setWindow('feed'));
               }}

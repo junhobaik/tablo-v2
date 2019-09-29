@@ -19,11 +19,12 @@ const preloadedState = {
     },
   ],
   app: {
-    window: 'both',
+    windowStatus: 'both',
     linkMethod: {
       tab: 'blank',
       feed: 'blank',
     },
+    menuOpenStatus: 'hide',
     isMenuAlwaysOpen: false,
   },
 };

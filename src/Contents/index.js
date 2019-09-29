@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import Feeds from './Feeds';
@@ -7,17 +7,38 @@ import Tabs from './Tabs';
 import './index.scss';
 
 const Contents = () => {
-  const { window } = useSelector(state => state.app);
+  const { windowStatus, menuOpenStatus } = useSelector(state => state.app);
+  const [paddingBottom, setPaddingBottom] = useState('0');
+
+  const style = {
+    paddingBottom,
+  };
+
+  useEffect(() => {
+    switch (menuOpenStatus) {
+      case 'hide':
+        setPaddingBottom('3rem');
+        break;
+      case 'default':
+        setPaddingBottom('17rem');
+        break;
+      case 'extend':
+        setPaddingBottom(`${window.innerHeight * 0.6 + 20}px`);
+        break;
+      default:
+        break;
+    }
+  }, [menuOpenStatus]);
 
   return (
     <div id="Contents">
-      {window !== 'feed' ? (
-        <div className="left">
+      {windowStatus !== 'feed' ? (
+        <div className="left" style={style}>
           <Tabs />
         </div>
       ) : null}
-      {window !== 'tab' ? (
-        <div className="right">
+      {windowStatus !== 'tab' ? (
+        <div className="right" style={style}>
           <Feeds />
         </div>
       ) : null}

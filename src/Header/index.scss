@@ -20,6 +20,23 @@
   }
   .select-content {
     .button-group {
+      div.round {
+        min-width: 1.8rem;
+        border-radius: 100%;
+        border: 2px solid white;
+        background-color: white;
+        z-index: 3;
+
+        &.left {
+          position: relative;
+          left: 0.9rem;
+        }
+        &.right {
+          position: relative;
+          left: -0.9rem;
+        }
+      }
+
       button {
         height: 1.8rem;
         width: 5rem;
@@ -34,14 +51,19 @@
         }
 
         &:nth-child(1) {
+          position: relative;
+          left: 1.8rem;
           padding-right: 0.45rem !important;
         }
         &:nth-child(3) {
-          width: 5rem;
+          z-index: 2;
+          // width: 7rem;
           background-color: #fff;
           color: #1ab1f7;
         }
         &:nth-child(5) {
+          position: relative;
+          left: -1.8rem;
           padding-left: 0.45rem !important;
         }
       }

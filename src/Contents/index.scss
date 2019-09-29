@@ -1,6 +1,7 @@
 #Contents {
   display: flex;
   height: 100%;
+
   overflow: hidden;
   background-color: rgb(245, 246, 250);
 
@@ -13,7 +14,7 @@
     width: 50%;
     height: 100%;
     overflow-y: scroll;
-    padding-right: 17px;
+    // padding-right: 17px;
 
     &::-webkit-scrollbar {
       display: none;

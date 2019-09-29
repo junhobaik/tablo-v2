@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 
 import './index.scss';
 import FeedMenu from './FeedMenu';
 import TabMenu from './TabMenu';
+import { setMenuOpenStatus } from '../redux/actions/app';
 
 const Menu = () => {
-  const { window, isMenuAlwaysOpen } = useSelector(state => state.app);
+  const { windowStatus, isMenuAlwaysOpen, menuOpenStatus } = useSelector(state => state.app);
+  const dispatch = useDispatch();
   const [selectMenu, setSelectMenu] = useState('feed');
-  const [toggleMenu, setToggleMenu] = useState(isMenuAlwaysOpen ? 'default' : 'hide'); // hide, default, extend
+
+  let menuStatus = menuOpenStatus;
+  if (menuOpenStatus === 'hide' && isMenuAlwaysOpen) menuStatus = 'default';
 
   const menuStyle = {
     bottom: '-13rem',
@@ -18,7 +22,7 @@ const Menu = () => {
     transition: '0.3s',
   };
 
-  switch (toggleMenu) {
+  switch (menuStatus) {
     case 'hide':
       menuStyle.bottom = '-13rem';
       break;
@@ -34,12 +38,12 @@ const Menu = () => {
   }
 
   useEffect(() => {
-    if (toggleMenu === 'hide') {
-      if (window === 'feed') {
+    if (menuStatus === 'hide') {
+      if (windowStatus === 'feed') {
         setSelectMenu('feed');
       } else setSelectMenu('tab');
     }
-  }, [toggleMenu, window]);
+  }, [menuStatus, windowStatus]);
 
   return (
     <div id="Menu" style={menuStyle}>
@@ -50,7 +54,9 @@ const Menu = () => {
           tabIndex={0}
           onClick={() => {
             setSelectMenu('tab');
-            if (toggleMenu === 'hide') setToggleMenu('default');
+            if (menuStatus === 'hide') {
+              dispatch(setMenuOpenStatus('default'));
+            }
           }}
         >
           {selectMenu === 'tab' ? (
@@ -62,13 +68,13 @@ const Menu = () => {
           )}
         </div>
 
-        {toggleMenu === 'default' ? (
+        {menuStatus === 'default' ? (
           <div
             className="toggle-extend-button header-btn header-half-btn"
             role="button"
             tabIndex={0}
             onClick={() => {
-              setToggleMenu('extend');
+              dispatch(setMenuOpenStatus('extend'));
             }}
           >
             <Icon name="angle double up" />
@@ -76,18 +82,18 @@ const Menu = () => {
         ) : null}
 
         <div
-          className={`toggle-button header-btn ${toggleMenu === 'default' ? 'header-half-btn' : null}`}
+          className={`toggle-button header-btn ${menuStatus === 'default' ? 'header-half-btn' : null}`}
           role="button"
           tabIndex={0}
           onClick={() => {
-            if (toggleMenu === 'hide') {
-              setToggleMenu('default');
+            if (menuStatus === 'hide') {
+              dispatch(setMenuOpenStatus('default'));
             } else {
-              setToggleMenu('hide');
+              dispatch(setMenuOpenStatus('hide'));
             }
           }}
         >
-          <Icon name={toggleMenu === 'hide' ? 'angle up' : 'angle down'} />
+          <Icon name={menuStatus === 'hide' ? 'angle up' : 'angle down'} />
         </div>
 
         <div
@@ -96,7 +102,9 @@ const Menu = () => {
           tabIndex={0}
           onClick={() => {
             setSelectMenu('feed');
-            if (toggleMenu === 'hide') setToggleMenu('default');
+            if (menuStatus === 'hide') {
+              dispatch(setMenuOpenStatus('default'));
+            }
           }}
         >
           {selectMenu === 'feed' ? (
