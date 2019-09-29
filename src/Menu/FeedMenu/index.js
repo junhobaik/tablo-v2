@@ -4,11 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Icon, Input } from 'semantic-ui-react';
 
 import './index.scss';
-import Setting from '../../Setting';
 import { setSettingInfo } from '../../redux/actions/app';
 
 const FeedMenu = () => {
-  const { settingInfo } = useSelector(state => state.app);
+  const feeds = useSelector(state => state.feed);
   const dispatch = useDispatch();
   const [isAddFeed, setIsAddFeed] = useState(false);
 
@@ -17,6 +16,7 @@ const FeedMenu = () => {
 
     dispatch(
       setSettingInfo({
+        target: 'feed',
         x,
         y,
         isVisible: true,
@@ -33,6 +33,35 @@ const FeedMenu = () => {
       );
     }, 1000);
   };
+
+  const feedList = feeds.map(feed => {
+    return (
+      <div className="feed" key={feed.url}>
+        <div className="feed-visible">
+          <div className={`visible-icon ${!feed.isHide ? 'visible' : null}`}></div>
+        </div>
+        <div className="feed-title title">
+          <a className="title-a" href={feed.url}>
+            {feed.title}
+          </a>
+          <Input
+            type="text"
+            placeholder={feed.title}
+            className="title-input"
+            onKeyUp={e => {
+              if (e.keyCode === 13) {
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.parentNode.parentNode.querySelector('.title-a').style.display = 'inline-block';
+              }
+            }}
+          />
+        </div>
+        <div className="feed-setting" onMouseEnter={e => feedSettingMouseEnter(e)} onMouseLeave={feedSettingMouseLeave}>
+          <Icon name="ellipsis horizontal" />
+        </div>
+      </div>
+    );
+  });
 
   return (
     <div id="FeedMenu">
@@ -60,39 +89,7 @@ const FeedMenu = () => {
                 </div>
               </div>
               <div className="feed-list-content">
-                {/*  */}
-                <div className="feed">
-                  <div className="feed-visible">
-                    <div className="visible-icon visible"></div>
-                  </div>
-                  <div className="feed-title title">
-                    <a className="title-a" href="#">
-                      TITLE
-                    </a>
-                    <Input
-                      type="text"
-                      placeholder="TITLE"
-                      className="title-input"
-                      onKeyUp={e => {
-                        if (e.keyCode === 13) {
-                          // enter key
-                          e.currentTarget.style.display = 'none';
-                          e.currentTarget.parentNode.parentNode.querySelector('.title-a').style.display =
-                            'inline-block';
-                        }
-                      }}
-                    />
-                  </div>
-                  <div
-                    className="feed-setting"
-                    onMouseEnter={e => feedSettingMouseEnter(e)}
-                    onMouseLeave={feedSettingMouseLeave}
-                  >
-                    <Icon name="ellipsis horizontal" />
-                  </div>
-                </div>
-                <Setting settingInfo={settingInfo} />
-                {/*  */}
+                {feedList}
               </div>
             </div>
           </div>
