@@ -4,7 +4,6 @@ export const TOGGLE_MENU_ALWAYS_OPEN = 'TOGGLE_MENU_ALWAYS_OPEN';
 export const TOGGLE_CHANGEED_MENU_OPEN_STATUS = 'TOGGLE_CHANGEED_MENU_OPEN_STATUS';
 export const SET_MENU_OPEN_STATUS = 'SET_MENU_OPEN_STATUS';
 export const SET_SETTING_INFO = 'SET_SETTING_INFO';
-export const REMOVE = 'REMOVE';
 
 export const setWindow = status => {
   return { type: SET_WINDOW, status };
@@ -24,8 +23,4 @@ export const setMenuOpenStatus = status => {
 
 export const setSettingInfo = info => {
   return { type: SET_SETTING_INFO, info };
-};
-
-export const remove = target => {
-  return { type: REMOVE, target };
 };

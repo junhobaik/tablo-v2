@@ -4,7 +4,6 @@ import {
   TOGGLE_MENU_ALWAYS_OPEN,
   SET_MENU_OPEN_STATUS,
   SET_SETTING_INFO,
-  REMOVE,
 } from '../actions/app';
 
 const app = (state = [], action) => {
@@ -33,9 +32,6 @@ const app = (state = [], action) => {
     case SET_SETTING_INFO:
       return { ...state, settingInfo: { ...state.settingInfo, ...action.info } };
 
-    case REMOVE:
-      if (action.target === 'feed') return { ...state };
-      return { ...state };
     default:
       return state;
   }
