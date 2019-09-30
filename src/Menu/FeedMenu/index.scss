@@ -8,6 +8,9 @@
     border-radius: 100%;
     transition: 0.3s;
     opacity: 0.5;
+    .icon {
+      margin: 0;
+    }
 
     &:hover {
       opacity: 0.9;
@@ -120,6 +123,26 @@
             }
           }
         }
+      }
+    }
+  }
+}
+
+#AddFeed {
+  display: flex;
+  height: 100%;
+
+  .add-feed-wrap {
+    align-self: center;
+    margin: 0 auto;
+    min-width: 70%;
+    max-width: 720px;
+
+    .add-input {
+      display: flex;
+
+      .visible.menu {
+        max-height: 7rem;
       }
     }
   }

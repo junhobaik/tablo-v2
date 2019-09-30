@@ -5,6 +5,7 @@ import { Icon, Input } from 'semantic-ui-react';
 
 import './index.scss';
 import { setSettingInfo } from '../../redux/actions/app';
+import AddFeed from './AddFeed';
 
 const FeedMenu = () => {
   const feeds = useSelector(state => state.feed);
@@ -24,6 +25,7 @@ const FeedMenu = () => {
       })
     );
   };
+
   const feedSettingMouseLeave = () => {
     setTimeout(() => {
       dispatch(
@@ -76,7 +78,7 @@ const FeedMenu = () => {
         <Icon name={isAddFeed ? 'close' : 'plus'} />
       </div>
       <div className="feed-menu-inner">
-        {!isAddFeed ? (
+        {isAddFeed ? (
           <div className="feed-list-wrap">
             <div className="feed-list">
               <div className="feed-list-header">
@@ -88,13 +90,11 @@ const FeedMenu = () => {
                   <Icon name="ellipsis horizontal" />
                 </div>
               </div>
-              <div className="feed-list-content">
-                {feedList}
-              </div>
+              <div className="feed-list-content">{feedList}</div>
             </div>
           </div>
         ) : (
-          <div className="add-feed">addfeed</div>
+          <AddFeed />
         )}
       </div>
     </div>
