@@ -138,12 +138,38 @@
     min-width: 70%;
     max-width: 720px;
 
-    .add-input {
+    .add-inputs {
       display: flex;
+      justify-content: space-between;
 
-      .visible.menu {
-        max-height: 7rem;
+      & > div {
+        &:nth-child(1) {
+          flex-grow: 4;
+          // width: 40%;
+        }
+        &:nth-child(2) {
+          // width: 40%;
+          flex-grow: 4;
+          padding: 0 1rem;
+        }
+        &:nth-child(3) {
+          flex-grow: 2;
+          // width: 20% !important;
+          // min-width: auto;
+        }
       }
+      .add-input {
+        .visible.menu {
+          max-height: 7rem;
+        }
+      }
+    }
+
+    .message {
+      margin: 0.5rem 0;
+    }
+    & > button[type='submit'] {
+      width: 100%;
     }
   }
 }

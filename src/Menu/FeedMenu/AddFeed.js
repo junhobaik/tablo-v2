@@ -4,8 +4,9 @@ import { Input, Message, Icon, Select, Button } from 'semantic-ui-react';
 
 const AddFeed = () => {
   const [linkValue, setLinkValue] = useState('');
+  const [titleValue, setTitleValue] = useState('');
   const [linkStatus, setLinkStatus] = useState('info');
-  const [verifiedUrl, setVerifiedUrl] = useState('');
+  const [verifiedFeed, setVerifiedFeed] = useState({});
 
   const feedLinkCheck = (requestUrl, urlCheckCnt = 0) => {
     const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
@@ -13,8 +14,8 @@ const AddFeed = () => {
 
     const urlCheck = ['rss', 'feed.xml', 'feed', 'd2.atom'];
 
-    parser.parseURL(CORS_PROXY + requestUrl, err => {
-      setVerifiedUrl('');
+    parser.parseURL(CORS_PROXY + requestUrl, (err, feed) => {
+      setVerifiedFeed({});
       let modifiedUrl = requestUrl;
       if (requestUrl[requestUrl.length - 1] !== '/') modifiedUrl += '/';
 
@@ -31,7 +32,8 @@ const AddFeed = () => {
       } else if (err) {
         setLinkStatus('negative');
       } else {
-        setVerifiedUrl(requestUrl);
+        setVerifiedFeed({ url: requestUrl, title: feed.title });
+        setTitleValue(feed.title);
         setLinkStatus('positive');
       }
     });
@@ -44,9 +46,14 @@ const AddFeed = () => {
     if (value === '') setLinkStatus('info');
 
     setTimeout(() => {
-      const currentValue = document.querySelector('.add-input>input').value;
+      const currentValue = document.querySelector('.url-input>input').value;
       if (value !== '' && value === currentValue) feedLinkCheck(value);
     }, 1500);
+  };
+
+  const handleTitleChange = e => {
+    const { value } = e.currentTarget;
+    setTitleValue(value);
   };
 
   const createMessage = () => {
@@ -55,7 +62,7 @@ const AddFeed = () => {
         return (
           <Message positive>
             <Message.Header>주소가 유효합니다!</Message.Header>
-            <p>{`"${verifiedUrl}" 주소가 확인되었습니다. 추가하시려면 Add 버튼을 눌러주세요`}</p>
+            <p>{`"${verifiedFeed.url}" 주소가 확인되었습니다. 추가하시려면 Add 버튼을 눌러주세요`}</p>
           </Message>
         );
       case 'warning':
@@ -90,32 +97,44 @@ const AddFeed = () => {
   return (
     <div id="AddFeed">
       <div className="add-feed-wrap">
-        <Input
-          className="add-input"
-          type="text"
-          placeholder="URL"
-          value={linkValue}
-          action
-          onChange={e => handleChange(e)}
-        >
-          <input />
+        <div className="add-inputs">
+          <Input
+            label="URL"
+            className="url-input"
+            type="text"
+            placeholder="URL"
+            value={linkValue}
+            onChange={e => handleChange(e)}
+          />
+
+          <Input
+            label="TITLE"
+            className="title-input"
+            type="text"
+            placeholder="TITLE"
+            value={titleValue}
+            onChange={e => handleTitleChange(e)}
+          />
+
           <Select compact placeholder="Select Category" options={options} />
-          {linkStatus === 'positive' ? (
-            <Button
-              type="submit"
-              onClick={() => {
-                console.log('add');
-              }}
-            >
-              Add
-            </Button>
-          ) : (
-            <Button type="submit" disabled>
-              Add
-            </Button>
-          )}
-        </Input>
+        </div>
+
         {msg}
+
+        {linkStatus === 'positive' ? (
+          <Button
+            type="submit"
+            onClick={() => {
+              console.log('add');
+            }}
+          >
+            ADD
+          </Button>
+        ) : (
+          <Button type="submit" disabled>
+            ADD
+          </Button>
+        )}
       </div>
     </div>
   );
