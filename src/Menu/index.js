@@ -93,7 +93,7 @@ const Menu = () => {
 
   return (
     <div id="Menu" style={menuStyle}>
-      <div className="header">
+      <div className="menu-header">
         <div
           className="tab-menu-button header-btn"
           role="button"
@@ -137,7 +137,7 @@ const Menu = () => {
         </div>
       </div>
 
-      <div className="content">{selectMenu === 'feed' ? <FeedMenu /> : <TabMenu />}</div>
+      <div className="menu-content">{selectMenu === 'feed' ? <FeedMenu /> : <TabMenu />}</div>
     </div>
   );
 };

@@ -5,7 +5,7 @@
   flex-direction: column;
   padding: 0 2rem;
 
-  .header {
+  .menu-header {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -42,7 +42,7 @@
       border-top-right-radius: 3px;
     }
   }
-  .content {
+  .menu-content {
     flex-grow: 1;
     box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
     border: 2px solid #2bbbff;
