@@ -5,6 +5,7 @@ import { ADD_FEED, EDIT_FEED, DELETE_FEED, CLEAR_FEEDS, UPDATE_FEEDS_ITEMS } fro
 const feed = (state = [], action) => {
   switch (action.type) {
     case ADD_FEED:
+      state.push({ url: action.url, title: action.title, category: action.category, isHide: false });
       return state;
     case EDIT_FEED:
       return state;

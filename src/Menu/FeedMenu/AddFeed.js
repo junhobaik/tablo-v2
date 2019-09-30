@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import RSSParser from 'rss-parser';
+import { useDispatch } from 'react-redux';
 import { Input, Message, Icon, Select, Button } from 'semantic-ui-react';
+
+import { addFeed } from '../../redux/actions/feed';
 
 const AddFeed = () => {
   const [linkValue, setLinkValue] = useState('');
@@ -10,6 +13,7 @@ const AddFeed = () => {
   const [isNewCategory, setIsNewCategory] = useState(false);
   const [categoryValue, setCategoryValue] = useState('');
   const [newCategoryValue, setNewCategoryValue] = useState('');
+  const dispatch = useDispatch();
 
   const feedLinkCheck = (requestUrl, urlCheckCnt = 0) => {
     const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
@@ -182,13 +186,7 @@ const AddFeed = () => {
                 category = categoryValue;
               }
 
-              const result = {
-                url: verifiedUrl,
-                title: titleValue,
-                category,
-              };
-
-              console.log(result);
+              dispatch(addFeed(verifiedUrl, titleValue, category));
             }}
           >
             ADD

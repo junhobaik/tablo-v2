@@ -78,7 +78,7 @@ const FeedMenu = () => {
         <Icon name={isAddFeed ? 'close' : 'plus'} />
       </div>
       <div className="feed-menu-inner">
-        {isAddFeed ? (
+        {!isAddFeed ? (
           <div className="feed-list-wrap">
             <div className="feed-list">
               <div className="feed-list-header">
