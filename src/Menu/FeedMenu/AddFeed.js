@@ -5,8 +5,11 @@ import { Input, Message, Icon, Select, Button } from 'semantic-ui-react';
 const AddFeed = () => {
   const [linkValue, setLinkValue] = useState('');
   const [titleValue, setTitleValue] = useState('');
+  const [verifiedUrl, setVerifiedUrl] = useState('');
   const [linkStatus, setLinkStatus] = useState('info');
-  const [verifiedFeed, setVerifiedFeed] = useState({});
+  const [isNewCategory, setIsNewCategory] = useState(false);
+  const [categoryValue, setCategoryValue] = useState('');
+  const [newCategoryValue, setNewCategoryValue] = useState('');
 
   const feedLinkCheck = (requestUrl, urlCheckCnt = 0) => {
     const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
@@ -15,7 +18,7 @@ const AddFeed = () => {
     const urlCheck = ['rss', 'feed.xml', 'feed', 'd2.atom'];
 
     parser.parseURL(CORS_PROXY + requestUrl, (err, feed) => {
-      setVerifiedFeed({});
+      setVerifiedUrl();
       let modifiedUrl = requestUrl;
       if (requestUrl[requestUrl.length - 1] !== '/') modifiedUrl += '/';
 
@@ -32,7 +35,7 @@ const AddFeed = () => {
       } else if (err) {
         setLinkStatus('negative');
       } else {
-        setVerifiedFeed({ url: requestUrl, title: feed.title });
+        setVerifiedUrl(requestUrl);
         setTitleValue(feed.title);
         setLinkStatus('positive');
       }
@@ -56,13 +59,28 @@ const AddFeed = () => {
     setTitleValue(value);
   };
 
+  const toggleCategoryInput = () => {
+    setIsNewCategory(!isNewCategory);
+  };
+
+  const handleCategoryChange = (e, data) => {
+    const { value } = data;
+    if (value === 'new') toggleCategoryInput();
+    setCategoryValue(value);
+  };
+
+  const handleNewCategoryChange = e => {
+    const { value } = e.currentTarget;
+    setNewCategoryValue(value);
+  };
+
   const createMessage = () => {
     switch (linkStatus) {
       case 'positive':
         return (
           <Message positive>
             <Message.Header>주소가 유효합니다!</Message.Header>
-            <p>{`"${verifiedFeed.url}" 주소가 확인되었습니다. 추가하시려면 Add 버튼을 눌러주세요`}</p>
+            <p>{`"${verifiedUrl}" 주소가 확인되었습니다. 추가하시려면 Add 버튼을 눌러주세요`}</p>
           </Message>
         );
       case 'warning':
@@ -92,7 +110,7 @@ const AddFeed = () => {
   };
   const msg = createMessage();
 
-  const options = [{ key: 'Inbox', text: 'Inbox', value: 'Inbox' }];
+  const options = [{ key: 'Inbox', text: 'Inbox', value: 'Inbox' }, { key: 'new', text: 'New Category', value: 'new' }];
 
   return (
     <div id="AddFeed">
@@ -116,7 +134,36 @@ const AddFeed = () => {
             onChange={e => handleTitleChange(e)}
           />
 
-          <Select compact placeholder="Select Category" options={options} />
+          {isNewCategory ? (
+            <Input
+              icon={
+                // eslint-disable-next-line react/jsx-wrap-multilines
+                <Icon
+                  name="cancel"
+                  inverted
+                  circular
+                  link
+                  onClick={() => {
+                    toggleCategoryInput();
+                  }}
+                />
+              }
+              value={newCategoryValue}
+              onChange={e => {
+                handleNewCategoryChange(e);
+              }}
+              placeholder="Search..."
+            />
+          ) : (
+            <Select
+              compact
+              placeholder="Select Category"
+              options={options}
+              onChange={(e, data) => {
+                handleCategoryChange(e, data);
+              }}
+            />
+          )}
         </div>
 
         {msg}
@@ -124,8 +171,24 @@ const AddFeed = () => {
         {linkStatus === 'positive' ? (
           <Button
             type="submit"
+            color="blue"
             onClick={() => {
-              console.log('add');
+              let category;
+              if (isNewCategory && newCategoryValue !== '') {
+                category = newCategoryValue;
+              } else if (categoryValue === 'new' || categoryValue === '') {
+                category = 'Inbox';
+              } else {
+                category = categoryValue;
+              }
+
+              const result = {
+                url: verifiedUrl,
+                title: titleValue,
+                category,
+              };
+
+              console.log(result);
             }}
           >
             ADD
