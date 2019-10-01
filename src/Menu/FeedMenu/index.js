@@ -36,9 +36,11 @@ const FeedMenu = () => {
     }, 1000);
   };
 
+  const categories = new Set();
   const feedList = feeds.map(feed => {
+    categories.add(feed.category);
     return (
-      <div className="feed" key={feed.url}>
+      <div className="feed" key={feed.url} category={feed.category}>
         <div className="feed-visible">
           <div className={`visible-icon ${!feed.isHide ? 'visible' : null}`}></div>
         </div>
@@ -65,6 +67,36 @@ const FeedMenu = () => {
     );
   });
 
+  const sortCategory = category => {
+    const result = category.sort((a, b) => {
+      if (a === 'Inbox') return -1;
+      if (b === 'Inbox') return 1;
+      return a.toLowerCase().localeCompare(b.toLowerCase());
+    });
+    return result;
+  };
+
+  const sortedCategory = sortCategory(Array.from(categories));
+
+  const categoryList = sortedCategory.map(c => {
+    const feedsInCategroy = feedList.filter(v => v.props.category === c);
+
+    return (
+      <div className="feed-list" key={c}>
+        <div className="feed-list-header">
+          <div className="feed-list-title">
+            <span>{c}</span>
+          </div>
+          <div className="feed-list-setting">
+            <Icon name="eye" />
+            <Icon name="ellipsis horizontal" />
+          </div>
+        </div>
+        <div className="feed-list-content">{feedsInCategroy}</div>
+      </div>
+    );
+  });
+
   return (
     <div id="FeedMenu">
       <div
@@ -78,24 +110,7 @@ const FeedMenu = () => {
         <Icon name={isAddFeed ? 'close' : 'plus'} />
       </div>
       <div className="feed-menu-inner">
-        {!isAddFeed ? (
-          <div className="feed-list-wrap">
-            <div className="feed-list">
-              <div className="feed-list-header">
-                <div className="feed-list-title">
-                  <span>Category</span>
-                </div>
-                <div className="feed-list-setting">
-                  <Icon name="eye" />
-                  <Icon name="ellipsis horizontal" />
-                </div>
-              </div>
-              <div className="feed-list-content">{feedList}</div>
-            </div>
-          </div>
-        ) : (
-          <AddFeed />
-        )}
+        {!isAddFeed ? <div className="feed-list-wrap">{categoryList}</div> : <AddFeed />}
       </div>
     </div>
   );
