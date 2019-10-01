@@ -14,7 +14,31 @@ const preloadedState = {
     {
       url: 'https://junhobaik.github.io/rss',
       title: 'My blog',
-      category: 'Blog',
+      category: 'Inbox',
+      isHide: false,
+    },
+    {
+      url: 'https://d2.naver.com/d2.atom',
+      title: 'D2 Blog',
+      category: 'Development',
+      isHide: false,
+    },
+    {
+      url: 'http://www.bloter.net/feed',
+      title: 'Bloter',
+      category: 'IT',
+      isHide: true,
+    },
+    {
+      url: 'http://the-edit.co.kr/feed',
+      title: 'THE-EDIT',
+      category: 'IT',
+      isHide: false,
+    },
+    {
+      url: 'http://woowabros.github.io/feed',
+      title: '우아한형제들 기술블로그',
+      category: 'Development',
       isHide: false,
     },
   ],
