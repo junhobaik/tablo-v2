@@ -5,7 +5,7 @@ import { Icon, Input, Dropdown } from 'semantic-ui-react';
 
 import './index.scss';
 import { setSettingInfo } from '../../redux/actions/app';
-import { editFeed } from '../../redux/actions/feed';
+import { editFeed, editCategory } from '../../redux/actions/feed';
 import AddFeed from './AddFeed';
 
 const FeedMenu = () => {
@@ -17,6 +17,7 @@ const FeedMenu = () => {
   const [categoryValue, setCategoryValue] = useState('');
   const [isNewCategory, setIsNewCategory] = useState(false);
   const [newCategoryValue, setNewCategoryValue] = useState('');
+  const [editCategoryValue, setEditCategoryValue] = useState('');
 
   const forceUpdate = () => {
     _setForce(!_force);
@@ -106,6 +107,21 @@ const FeedMenu = () => {
 
   const handleNewCategoryChange = e => {
     setNewCategoryValue(e.currentTarget.value);
+  };
+
+  const handleChangeCategoryEdit = e => {
+    setEditCategoryValue(e.currentTarget.value);
+  };
+
+  const submitCategoryEdit = e => {
+    if (e.keyCode === 13) {
+      const { value } = e.currentTarget;
+      const categoryTitle = e.currentTarget.parentNode.parentNode.querySelector('span');
+      const oldCategory = categoryTitle.innerText;
+      dispatch(editCategory(oldCategory, value));
+      categoryTitle.style.display = 'inline';
+      forceUpdate();
+    }
   };
 
   const categories = new Set();
@@ -236,16 +252,33 @@ const FeedMenu = () => {
         <div className="feed-list-header">
           <div className="feed-list-title">
             <span>{c}</span>
+            <Input
+              type="text"
+              className="feed-list-title-input"
+              placeholder="Press ENTER to save"
+              value={editCategoryValue}
+              onChange={e => {
+                handleChangeCategoryEdit(e);
+              }}
+              onFocus={() => {
+                setEditCategoryValue(c);
+              }}
+              onKeyUp={e => {
+                submitCategoryEdit(e);
+              }}
+            />
           </div>
           <div className="feed-list-setting">
             <Icon name="eye" />
-            <Icon
-              name="ellipsis horizontal"
-              onMouseEnter={e => {
-                categorySettingMouseEnter(e);
-              }}
-              onMouseLeave={settingMouseLeave}
-            />
+            {c === 'Inbox' ? null : (
+              <Icon
+                name="ellipsis horizontal"
+                onMouseEnter={e => {
+                  categorySettingMouseEnter(e);
+                }}
+                onMouseLeave={settingMouseLeave}
+              />
+            )}
           </div>
         </div>
         <div className="feed-list-content">{feedsInCategroy}</div>

@@ -1,6 +1,14 @@
 import _ from 'lodash';
 
-import { ADD_FEED, EDIT_FEED, DELETE_FEED, CLEAR_FEEDS, UPDATE_FEEDS_ITEMS, DELETE_CATEGORY } from '../actions/feed';
+import {
+  ADD_FEED,
+  EDIT_FEED,
+  DELETE_FEED,
+  CLEAR_FEEDS,
+  UPDATE_FEEDS_ITEMS,
+  DELETE_CATEGORY,
+  EDIT_CATEGORY,
+} from '../actions/feed';
 
 const feed = (state = [], action) => {
   switch (action.type) {
@@ -28,6 +36,15 @@ const feed = (state = [], action) => {
     case DELETE_CATEGORY:
       _.remove(state, ['category', action.category]);
       return state;
+
+    case EDIT_CATEGORY: {
+      const { oldCategory, newCategory } = action;
+      // eslint-disable-next-line no-restricted-syntax, no-unused-vars
+      for (const f of state) {
+        if (f.category === oldCategory) f.category = newCategory;
+      }
+      return state;
+    }
 
     case CLEAR_FEEDS:
       return state;

@@ -12,13 +12,22 @@ const Setting = () => {
   const dispatch = useDispatch();
 
   const clickTitleEdit = () => {
-    const feeds = Array.from(document.querySelectorAll('.feed'));
-    const targetFeed = feeds.filter(feed => feed.attributes.url.value === settingInfo.url)[0];
-    targetFeed.style.width = '24rem';
-    targetFeed.style.maxWidth = '24rem';
-    targetFeed.querySelector('.title-a').style.display = 'none';
-    targetFeed.querySelector('.title-inputs').style.display = 'flex';
-    targetFeed.querySelector('.feed-setting').style.display = 'none';
+    if (settingInfo.target === 'feed') {
+      const feeds = Array.from(document.querySelectorAll('.feed'));
+      const targetFeed = feeds.filter(feed => feed.attributes.url.value === settingInfo.url)[0];
+      targetFeed.style.width = '24rem';
+      targetFeed.style.maxWidth = '24rem';
+      targetFeed.querySelector('.title-a').style.display = 'none';
+      targetFeed.querySelector('.title-inputs').style.display = 'flex';
+      targetFeed.querySelector('.feed-setting').style.display = 'none';
+    } else if (settingInfo.target === 'category') {
+      //
+      const categories = Array.from(document.querySelectorAll('.feed-list-title>span'));
+      const targetCategory = categories.filter(c => c.innerText === settingInfo.category)[0];
+
+      targetCategory.style.display = 'none';
+      targetCategory.parentNode.querySelector('.feed-list-title-input').style.display = 'block';
+    }
   };
 
   const clickRemoveFeed = () => {

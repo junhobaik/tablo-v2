@@ -55,6 +55,13 @@
           .feed-list-title {
             flex-grow: 1;
             font-weight: bold;
+
+            .feed-list-title-input {
+              display: none;
+              input {
+                padding: 0.1rem 0.25rem;
+              }
+            }
           }
           .feed-list-setting {
             .icon {

@@ -4,6 +4,7 @@ export const DELETE_FEED = 'DELETE_FEED';
 export const CLEAR_FEEDS = 'CLEAR_FEEDS';
 export const UPDATE_FEEDS_ITEMS = 'UPDATE_FEEDS_ITEMS';
 export const DELETE_CATEGORY = 'DELETE_CATEGORY';
+export const EDIT_CATEGORY = 'EDIT_CATEGORY';
 
 export const addFeed = (url, title, category) => {
   return { type: ADD_FEED, url, title, category };
@@ -27,4 +28,8 @@ export const clearFeeds = () => {
 
 export const updateFeedsItems = () => {
   return { type: UPDATE_FEEDS_ITEMS };
+};
+
+export const editCategory = (oldCategory, newCategory) => {
+  return { type: EDIT_CATEGORY, oldCategory, newCategory };
 };
