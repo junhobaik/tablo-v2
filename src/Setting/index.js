@@ -10,6 +10,14 @@ const Setting = () => {
   const { settingInfo } = useSelector(state => state.app);
   const dispatch = useDispatch();
 
+  const clickTitleEdit = () => {
+    const feeds = Array.from(document.querySelectorAll('.feed'));
+    const targetFeed = feeds.filter(feed => feed.attributes.url.value === settingInfo.url)[0];
+
+    targetFeed.querySelector('.title-a').style.display = 'none';
+    targetFeed.querySelector('.title-input').style.display = 'inline';
+  };
+
   return (
     <div
       className="setting-tt"
@@ -32,8 +40,7 @@ const Setting = () => {
         role="button"
         tabIndex="0"
         onClick={e => {
-          e.currentTarget.parentNode.parentNode.querySelector('.title-a').style.display = 'none';
-          e.currentTarget.parentNode.parentNode.querySelector('.title-input').style.display = 'inline';
+          clickTitleEdit(e);
         }}
       >
         <Icon name="edit" />
