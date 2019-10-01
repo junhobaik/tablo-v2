@@ -40,7 +40,7 @@ const FeedMenu = () => {
   const feedList = feeds.map(feed => {
     categories.add(feed.category);
     return (
-      <div className="feed" key={feed.url} category={feed.category}>
+      <div className="feed" key={feed.url} category={feed.category} url={feed.url}>
         <div className="feed-visible">
           <div className={`visible-icon ${!feed.isHide ? 'visible' : null}`}></div>
         </div>
