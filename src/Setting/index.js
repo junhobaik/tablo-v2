@@ -4,6 +4,7 @@ import { Icon } from 'semantic-ui-react';
 
 import './index.scss';
 import { deleteFeed } from '../redux/actions/feed';
+import { setSettingInfo } from '../redux/actions/app';
 
 const Setting = () => {
   const [isMouseIn, setIsMouseIn] = useState(false);
@@ -16,6 +17,15 @@ const Setting = () => {
 
     targetFeed.querySelector('.title-a').style.display = 'none';
     targetFeed.querySelector('.title-input').style.display = 'inline';
+  };
+
+  const clickRemoveFeed = () => {
+    if (settingInfo.target === 'feed') {
+      dispatch(deleteFeed(settingInfo.url));
+    } else {
+      // dispatch(deleteTab());
+    }
+    dispatch(setSettingInfo({ isVisible: false }));
   };
 
   return (
@@ -49,12 +59,8 @@ const Setting = () => {
         className="remove"
         role="button"
         tabIndex="0"
-        onClick={() => {
-          if (settingInfo.target === 'feed') {
-            dispatch(deleteFeed(settingInfo.url));
-          } else {
-            // dispatch(deleteTab());
-          }
+        onClick={e => {
+          clickRemoveFeed(e);
         }}
       >
         <Icon name="trash" />
