@@ -51,8 +51,10 @@ const preloadedState = {
     menuOpenStatus: 'hide',
     isMenuAlwaysOpen: true,
     settingInfo: {
+      target: '',
       isVisible: false,
       url: '#',
+      category: '',
       x: 0,
       y: 0,
     },
