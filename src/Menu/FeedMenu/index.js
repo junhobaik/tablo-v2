@@ -33,7 +33,7 @@ const FeedMenu = () => {
           isVisible: false,
         })
       );
-    }, 1000);
+    }, 500);
   };
 
   const categories = new Set();

@@ -24,7 +24,7 @@ const Setting = () => {
       onMouseLeave={() => {
         setTimeout(() => {
           setIsMouseIn(false);
-        }, 500);
+        }, 250);
       }}
     >
       <div
