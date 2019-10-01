@@ -1,10 +1,12 @@
+@import '../variables.scss';
+
 #Header {
   display: flex;
   border-bottom: 1px solid transparent;
   height: 3rem;
   justify-content: space-between;
   align-items: center;
-  background-color: #1465c0;
+  background-color: $header-background-color;
 
   .title,
   .setting {

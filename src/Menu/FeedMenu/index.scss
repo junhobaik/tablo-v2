@@ -8,6 +8,7 @@
     border-radius: 100%;
     transition: 0.3s;
     opacity: 0.5;
+
     .icon {
       margin: 0;
     }
@@ -29,7 +30,7 @@
 
   .feed-menu-inner {
     height: inherit;
-    // padding-right: 2.5rem;
+    margin: 0.25rem;
 
     .feed-list-wrap {
       height: inherit;
