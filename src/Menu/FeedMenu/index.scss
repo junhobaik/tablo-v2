@@ -208,9 +208,15 @@
           // min-width: auto;
         }
       }
-      .add-input {
+      .category-select {
         .visible.menu {
-          max-height: 7rem;
+          height: 8rem;
+          overflow-y: auto;
+
+          & > div {
+            max-height: 2rem;
+            padding: 0.5rem 0.25rem !important;
+          }
         }
       }
     }

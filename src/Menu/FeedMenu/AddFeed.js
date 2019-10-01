@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import RSSParser from 'rss-parser';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Input, Message, Icon, Select, Button } from 'semantic-ui-react';
 
 import { addFeed } from '../../redux/actions/feed';
 
 const AddFeed = () => {
+  const feeds = useSelector(state => state.feed);
   const [linkValue, setLinkValue] = useState('');
   const [titleValue, setTitleValue] = useState('');
   const [verifiedUrl, setVerifiedUrl] = useState('');
@@ -114,7 +115,21 @@ const AddFeed = () => {
   };
   const msg = createMessage();
 
-  const options = [{ key: 'Inbox', text: 'Inbox', value: 'Inbox' }, { key: 'new', text: 'New Category', value: 'new' }];
+  const createOptions = () => {
+    const categories = new Set();
+    // eslint-disable-next-line no-restricted-syntax, no-unused-vars
+    for (const { category } of feeds) {
+      categories.add('Inbox');
+      categories.add(category);
+    }
+    categories.add('new');
+
+    return Array.from(categories).map(c => {
+      if (c === 'new') return { key: c, text: '+ New Category', value: c };
+      return { key: c, text: c, value: c };
+    });
+  };
+  const options = createOptions();
 
   return (
     <div id="AddFeed">
@@ -160,6 +175,7 @@ const AddFeed = () => {
             />
           ) : (
             <Select
+              className="category-select"
               compact
               placeholder="Select Category"
               options={options}
