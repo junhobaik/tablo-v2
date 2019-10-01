@@ -131,7 +131,7 @@ const AddFeed = () => {
 
           <Input
             label="TITLE"
-            className="title-input"
+            className="title-inputs"
             type="text"
             placeholder="TITLE"
             value={titleValue}

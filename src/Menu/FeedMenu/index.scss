@@ -103,13 +103,61 @@
             .feed-title {
               padding: 0 0.5rem;
               flex-grow: 1;
-              .title-input {
+              // display: flex;
+
+              .title-inputs {
                 display: none;
-                input {
-                  // height: 1rem;
-                  padding: 0 0.2rem;
-                  margin: 0;
-                  width: 8rem;
+                align-items: center;
+                .title-input {
+                  flex-grow: 1;
+                  input {
+                    padding: 0.1rem 0.2rem;
+                    margin-right: 0.5rem;
+                  }
+                }
+
+                .category-select {
+                  display: flex;
+                  align-items: center;
+                  color: gray;
+
+                  & > div.text {
+                    max-width: 7rem;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                  }
+
+                  .visible.menu {
+                    height: 6rem;
+                    overflow-y: auto;
+
+                    & > div {
+                      max-height: 2rem;
+                      padding: 0.5rem 0.25rem !important;
+                    }
+                  }
+                }
+                .icons {
+                  display: flex;
+                  align-items: center;
+                  margin-left: 0.5rem;
+                  .save-button,
+                  .cancel-button {
+                    position: relative;
+                    top: -0.1rem;
+                    margin: 0;
+                    margin-left: 0.25rem;
+                    opacity: 0.3;
+                    cursor: pointer;
+
+                    &:hover {
+                      opacity: 0.7;
+                    }
+                  }
+                  .cancel-button {
+                    padding-right: 0.5rem;
+                  }
                 }
               }
             }

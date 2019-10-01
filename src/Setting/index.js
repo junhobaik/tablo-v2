@@ -14,10 +14,11 @@ const Setting = () => {
   const clickTitleEdit = () => {
     const feeds = Array.from(document.querySelectorAll('.feed'));
     const targetFeed = feeds.filter(feed => feed.attributes.url.value === settingInfo.url)[0];
-    targetFeed.style.width = '17rem';
-    targetFeed.style.maxWidth = '17rem';
+    targetFeed.style.width = '24rem';
+    targetFeed.style.maxWidth = '24rem';
     targetFeed.querySelector('.title-a').style.display = 'none';
-    targetFeed.querySelector('.title-input').style.display = 'inline';
+    targetFeed.querySelector('.title-inputs').style.display = 'flex';
+    targetFeed.querySelector('.feed-setting').style.display = 'none';
   };
 
   const clickRemoveFeed = () => {
