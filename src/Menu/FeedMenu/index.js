@@ -5,6 +5,7 @@ import { Icon, Input } from 'semantic-ui-react';
 
 import './index.scss';
 import { setSettingInfo } from '../../redux/actions/app';
+import { editFeed } from '../../redux/actions/feed';
 import AddFeed from './AddFeed';
 
 const FeedMenu = () => {
@@ -54,8 +55,12 @@ const FeedMenu = () => {
             className="title-input"
             onKeyUp={e => {
               if (e.keyCode === 13) {
+                const url = e.currentTarget.parentNode.parentNode.parentNode.attributes.url.value;
+                dispatch(editFeed(url, e.currentTarget.value));
+
                 e.currentTarget.style.display = 'none';
                 e.currentTarget.parentNode.parentNode.querySelector('.title-a').style.display = 'inline-block';
+                dispatch(setSettingInfo({ isVisible: true }));
               }
             }}
           />
