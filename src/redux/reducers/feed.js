@@ -11,13 +11,12 @@ const feed = (state = [], action) => {
     case EDIT_FEED: {
       const index = _.findIndex(state, ['url', action.url]);
       const originFeed = state[index];
-
       state.splice(index, 1, {
+        ...originFeed,
         title: action.title || originFeed.title,
         category: action.category || originFeed.category,
-        isHide: action.isHide || originFeed.isHide,
+        isHide: action.isHide === 'undefined' ? originFeed.isHide : action.isHide,
       });
-
       return state;
     }
 
