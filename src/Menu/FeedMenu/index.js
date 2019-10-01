@@ -11,11 +11,15 @@ import AddFeed from './AddFeed';
 const FeedMenu = () => {
   const feeds = useSelector(state => state.feed);
   const dispatch = useDispatch();
+  const [_force, _setForce] = useState(true);
   const [isAddFeed, setIsAddFeed] = useState(false);
+
+  const forceUpdate = () => {
+    _setForce(!_force);
+  };
 
   const feedSettingMouseEnter = e => {
     const { x, y } = e.currentTarget.getBoundingClientRect();
-
     dispatch(
       setSettingInfo({
         target: 'feed',
@@ -37,35 +41,62 @@ const FeedMenu = () => {
     }, 500);
   };
 
+  const submitTitleEdit = e => {
+    if (e.keyCode === 13) {
+      const url = e.currentTarget.parentNode.parentNode.parentNode.attributes.url.value;
+      dispatch(editFeed(url, e.currentTarget.value));
+
+      e.currentTarget.style.display = 'none';
+      e.currentTarget.parentNode.parentNode.querySelector('.title-a').style.display = 'inline-block';
+      dispatch(setSettingInfo({ isVisible: true }));
+    }
+  };
+
+  const toggleFeedVisible = (e, currentIsHide) => {
+    const target = e.currentTarget;
+    const url = target.parentNode.attributes.url.value;
+
+    dispatch(editFeed(url, null, null, !currentIsHide));
+    forceUpdate();
+  };
+
   const categories = new Set();
   const feedList = feeds.map(feed => {
     categories.add(feed.category);
+    const { url, title, category, isHide } = feed;
+
     return (
-      <div className="feed" key={feed.url} category={feed.category} url={feed.url}>
-        <div className="feed-visible">
-          <div className={`visible-icon ${!feed.isHide ? 'visible' : null}`}></div>
+      <div className="feed" key={`${url}-feed`} category={category} url={url}>
+        <div
+          key={`${url}-visible`}
+          className="feed-visible"
+          role="button"
+          tabIndex="0"
+          onClick={e => {
+            toggleFeedVisible(e, isHide);
+          }}
+        >
+          <div className={`visible-icon ${!isHide ? 'visible' : null}`} />
         </div>
-        <div className="feed-title title">
-          <a className="title-a" href={feed.url}>
-            {feed.title}
+        <div key={`${url}-title`} className="feed-title title">
+          <a className="title-a" href={url}>
+            {title}
           </a>
           <Input
             type="text"
-            placeholder={feed.title}
+            placeholder={title}
             className="title-input"
             onKeyUp={e => {
-              if (e.keyCode === 13) {
-                const url = e.currentTarget.parentNode.parentNode.parentNode.attributes.url.value;
-                dispatch(editFeed(url, e.currentTarget.value));
-
-                e.currentTarget.style.display = 'none';
-                e.currentTarget.parentNode.parentNode.querySelector('.title-a').style.display = 'inline-block';
-                dispatch(setSettingInfo({ isVisible: true }));
-              }
+              submitTitleEdit(e);
             }}
           />
         </div>
-        <div className="feed-setting" onMouseEnter={e => feedSettingMouseEnter(e)} onMouseLeave={feedSettingMouseLeave}>
+        <div
+          key={`${url}-setting`}
+          className="feed-setting"
+          onMouseEnter={e => feedSettingMouseEnter(e)}
+          onMouseLeave={feedSettingMouseLeave}
+        >
           <Icon name="ellipsis horizontal" />
         </div>
       </div>
