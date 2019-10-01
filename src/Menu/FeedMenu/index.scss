@@ -89,6 +89,7 @@
               padding-left: 0.25rem;
 
               .visible-icon {
+                pointer-events: none;
                 width: 0.75rem;
                 height: 0.75rem;
                 border-radius: 100%;
