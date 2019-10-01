@@ -15,6 +15,8 @@ const FeedMenu = () => {
   const [isAddFeed, setIsAddFeed] = useState(false);
   const [titleValue, setTitleValue] = useState('');
   const [categoryValue, setCategoryValue] = useState('');
+  const [isNewCategory, setIsNewCategory] = useState(false);
+  const [newCategoryValue, setNewCategoryValue] = useState('');
 
   const forceUpdate = () => {
     _setForce(!_force);
@@ -64,7 +66,8 @@ const FeedMenu = () => {
   const saveEdit = e => {
     const url = e.currentTarget.parentNode.parentNode.parentNode.parentNode.attributes.url.value;
     const title = titleValue === '' ? null : titleValue;
-    dispatch(editFeed(url, title, categoryValue));
+    const category = newCategoryValue !== '' ? newCategoryValue : categoryValue;
+    dispatch(editFeed(url, title, category));
     hideEdit(e);
     forceUpdate();
   };
@@ -83,6 +86,13 @@ const FeedMenu = () => {
 
   const handleChangeCategory = (e, data) => {
     setCategoryValue(data.value);
+    if (data.value === 'new') {
+      setIsNewCategory(true);
+    }
+  };
+
+  const handleNewCategoryChange = e => {
+    setNewCategoryValue(e.currentTarget.value);
   };
 
   const categories = new Set();
@@ -92,10 +102,12 @@ const FeedMenu = () => {
     categories.add('Inbox');
     categories.add(category);
   }
+  categories.add('new');
 
   const feedList = feeds.map(feed => {
     const { url, title, category, isHide } = feed;
     const options = Array.from(categories).map(c => {
+      if (c === 'new') return { key: c, text: '+ New Category', value: c };
       return { key: c, text: c, value: c };
     });
 
@@ -128,14 +140,38 @@ const FeedMenu = () => {
                 submitTitleEdit(e);
               }}
             />
-            <Dropdown
-              className="category-select"
-              options={options}
-              defaultValue={category}
-              onChange={(e, data) => {
-                handleChangeCategory(e, data);
-              }}
-            />
+            {isNewCategory ? (
+              <Input
+                className="new-category-input"
+                icon={
+                  // eslint-disable-next-line react/jsx-wrap-multilines
+                  <Icon
+                    name="cancel"
+                    // inverted
+                    // circular
+                    link
+                    onClick={() => {
+                      setIsNewCategory(false);
+                      setNewCategoryValue('');
+                    }}
+                  />
+                }
+                value={newCategoryValue}
+                onChange={e => {
+                  handleNewCategoryChange(e);
+                }}
+              />
+            ) : (
+              <Dropdown
+                className="category-select"
+                options={options}
+                defaultValue={category}
+                onChange={(e, data) => {
+                  handleChangeCategory(e, data);
+                }}
+              />
+            )}
+
             <div className="icons">
               <Icon
                 name="save"
@@ -175,11 +211,13 @@ const FeedMenu = () => {
     return result;
   };
 
+  categories.delete('new');
   const sortedCategory = sortCategory(Array.from(categories));
 
   const categoryList = sortedCategory.map(c => {
     const feedsInCategroy = feedList.filter(v => v.props.category === c);
-
+    if (!feedsInCategroy.length) return null;
+    
     return (
       <div className="feed-list" key={c}>
         <div className="feed-list-header">

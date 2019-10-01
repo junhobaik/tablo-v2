@@ -103,13 +103,14 @@
             .feed-title {
               padding: 0 0.5rem;
               flex-grow: 1;
-              // display: flex;
 
               .title-inputs {
                 display: none;
                 align-items: center;
+
                 .title-input {
                   flex-grow: 1;
+
                   input {
                     padding: 0.1rem 0.2rem;
                     margin-right: 0.5rem;
@@ -122,7 +123,7 @@
                   color: gray;
 
                   & > div.text {
-                    max-width: 7rem;
+                    max-width: 5rem;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
@@ -138,6 +139,27 @@
                     }
                   }
                 }
+
+                .new-category-input {
+                  width: 5rem;
+                  max-width: 5rem;
+                  display: flex;
+                  align-items: center;
+
+                  input {
+                    height: 100%;
+                    padding: 0 !important;
+                    padding: 0.1rem 0.2rem !important;
+                    padding-right: 1rem !important;
+                  }
+
+                  .icon {
+                    display: flex;
+                    max-width: 0.7rem;
+                    margin-right: 0.3rem;
+                  }
+                }
+
                 .icons {
                   display: flex;
                   align-items: center;
@@ -154,9 +176,6 @@
                     &:hover {
                       opacity: 0.7;
                     }
-                  }
-                  .cancel-button {
-                    padding-right: 0.5rem;
                   }
                 }
               }
