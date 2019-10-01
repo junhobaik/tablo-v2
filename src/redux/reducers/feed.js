@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { ADD_FEED, EDIT_FEED, DELETE_FEED, CLEAR_FEEDS, UPDATE_FEEDS_ITEMS } from '../actions/feed';
+import { ADD_FEED, EDIT_FEED, DELETE_FEED, CLEAR_FEEDS, UPDATE_FEEDS_ITEMS, DELETE_CATEGORY } from '../actions/feed';
 
 const feed = (state = [], action) => {
   switch (action.type) {
@@ -23,6 +23,10 @@ const feed = (state = [], action) => {
 
     case DELETE_FEED:
       _.remove(state, ['url', action.url]);
+      return state;
+
+    case DELETE_CATEGORY:
+      _.remove(state, ['category', action.category]);
       return state;
 
     case CLEAR_FEEDS:

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 
 import './index.scss';
-import { deleteFeed } from '../redux/actions/feed';
+import { deleteFeed, deleteCategory } from '../redux/actions/feed';
 import { setSettingInfo } from '../redux/actions/app';
 
 const Setting = () => {
@@ -24,6 +24,8 @@ const Setting = () => {
   const clickRemoveFeed = () => {
     if (settingInfo.target === 'feed') {
       dispatch(deleteFeed(settingInfo.url));
+    } else if (settingInfo.target === 'category') {
+      dispatch(deleteCategory(settingInfo.category));
     } else {
       // dispatch(deleteTab());
     }

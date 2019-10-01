@@ -35,7 +35,20 @@ const FeedMenu = () => {
     );
   };
 
-  const feedSettingMouseLeave = () => {
+  const categorySettingMouseEnter = e => {
+    const { x, y } = e.currentTarget.getBoundingClientRect();
+    dispatch(
+      setSettingInfo({
+        target: 'category',
+        x,
+        y,
+        isVisible: true,
+        category: e.currentTarget.parentNode.parentNode.querySelector('.feed-list-title>span').innerText,
+      })
+    );
+  };
+
+  const settingMouseLeave = () => {
     setTimeout(() => {
       dispatch(
         setSettingInfo({
@@ -194,7 +207,7 @@ const FeedMenu = () => {
           key={`${url}-setting`}
           className="feed-setting"
           onMouseEnter={e => feedSettingMouseEnter(e)}
-          onMouseLeave={feedSettingMouseLeave}
+          onMouseLeave={settingMouseLeave}
         >
           <Icon name="ellipsis horizontal" />
         </div>
@@ -217,7 +230,7 @@ const FeedMenu = () => {
   const categoryList = sortedCategory.map(c => {
     const feedsInCategroy = feedList.filter(v => v.props.category === c);
     if (!feedsInCategroy.length) return null;
-    
+
     return (
       <div className="feed-list" key={c}>
         <div className="feed-list-header">
@@ -226,7 +239,13 @@ const FeedMenu = () => {
           </div>
           <div className="feed-list-setting">
             <Icon name="eye" />
-            <Icon name="ellipsis horizontal" />
+            <Icon
+              name="ellipsis horizontal"
+              onMouseEnter={e => {
+                categorySettingMouseEnter(e);
+              }}
+              onMouseLeave={settingMouseLeave}
+            />
           </div>
         </div>
         <div className="feed-list-content">{feedsInCategroy}</div>
