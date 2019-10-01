@@ -8,8 +8,8 @@ export const addFeed = (url, title, category) => {
   return { type: ADD_FEED, url, title, category };
 };
 
-export const editFeed = (title, cateogry, isHide) => {
-  return { type: EDIT_FEED, title, cateogry, isHide };
+export const editFeed = (url, title, cateogry, isHide) => {
+  return { type: EDIT_FEED, url, title, cateogry, isHide };
 };
 
 export const deleteFeed = url => {
