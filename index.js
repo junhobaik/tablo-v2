@@ -49,7 +49,7 @@ const preloadedState = {
       feed: 'blank',
     },
     menuOpenStatus: 'hide',
-    isMenuAlwaysOpen: true,
+    isMenuAlwaysOpen: false,
     hideCategories: [],
     settingInfo: {
       target: '',
