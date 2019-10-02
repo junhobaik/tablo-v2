@@ -4,12 +4,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Icon, Input, Dropdown } from 'semantic-ui-react';
 
 import './index.scss';
-import { setSettingInfo } from '../../redux/actions/app';
+import { setSettingInfo, deleteHideCategory, addHideCategory } from '../../redux/actions/app';
 import { editFeed, editCategory } from '../../redux/actions/feed';
 import AddFeed from './AddFeed';
 
 const FeedMenu = () => {
   const feeds = useSelector(state => state.feed);
+  const { hideCategories } = useSelector(state => state.app);
   const dispatch = useDispatch();
   const [_force, _setForce] = useState(true);
   const [isAddFeed, setIsAddFeed] = useState(false);
@@ -246,6 +247,7 @@ const FeedMenu = () => {
   const categoryList = sortedCategory.map(c => {
     const feedsInCategroy = feedList.filter(v => v.props.category === c);
     if (!feedsInCategroy.length) return null;
+    const isHideCategory = hideCategories.indexOf(c) !== -1;
 
     return (
       <div className="feed-list" key={c}>
@@ -269,7 +271,22 @@ const FeedMenu = () => {
             />
           </div>
           <div className="feed-list-setting">
-            <Icon name="eye" />
+            {isHideCategory ? (
+              <Icon
+                name="eye slash"
+                onClick={() => {
+                  dispatch(deleteHideCategory(c));
+                }}
+              />
+            ) : (
+              <Icon
+                name="eye"
+                onClick={() => {
+                  dispatch(addHideCategory(c));
+                }}
+              />
+            )}
+
             {c === 'Inbox' ? null : (
               <Icon
                 name="ellipsis horizontal"

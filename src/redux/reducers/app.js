@@ -1,9 +1,13 @@
+import _ from 'lodash';
+
 import {
   SET_WINDOW,
   SET_LINK_METHOD,
   TOGGLE_MENU_ALWAYS_OPEN,
   SET_MENU_OPEN_STATUS,
   SET_SETTING_INFO,
+  ADD_HIDE_CATEGORY,
+  DELETE_HIDE_CATEGORY,
 } from '../actions/app';
 
 const app = (state = [], action) => {
@@ -31,6 +35,17 @@ const app = (state = [], action) => {
 
     case SET_SETTING_INFO:
       return { ...state, settingInfo: { ...state.settingInfo, ...action.info } };
+
+    case ADD_HIDE_CATEGORY: {
+      const { hideCategories } = state;
+      hideCategories.push(action.category);
+      return { ...state, hideCategories };
+    }
+    case DELETE_HIDE_CATEGORY: {
+      const { hideCategories } = state;
+      _.remove(hideCategories, c => c === action.category);
+      return { ...state, hideCategories };
+    }
 
     default:
       return state;

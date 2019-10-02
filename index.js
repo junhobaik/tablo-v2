@@ -50,6 +50,7 @@ const preloadedState = {
     },
     menuOpenStatus: 'hide',
     isMenuAlwaysOpen: true,
+    hideCategories: [],
     settingInfo: {
       target: '',
       isVisible: false,
