@@ -5,15 +5,18 @@ import {
   EDIT_FEED,
   DELETE_FEED,
   CLEAR_FEEDS,
-  UPDATE_FEEDS_ITEMS,
   DELETE_CATEGORY,
   EDIT_CATEGORY,
 } from '../actions/feed';
 
 const feed = (state = [], action) => {
   switch (action.type) {
-    case ADD_FEED:
-      return [...state, { url: action.url, title: action.title, category: action.category, isHide: false }];
+    case ADD_FEED: {
+      let link = action.url.split('/');
+      link.pop();
+      link = link.join('/');
+      return [...state, { url: action.url, link, title: action.title, category: action.category, isHide: false }];
+    }
 
     case EDIT_FEED: {
       const newState = _.cloneDeep(state);
@@ -52,9 +55,6 @@ const feed = (state = [], action) => {
 
     case CLEAR_FEEDS:
       return [];
-
-    case UPDATE_FEEDS_ITEMS:
-      return state;
 
     default:
       return state;
