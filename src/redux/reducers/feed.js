@@ -13,41 +13,45 @@ import {
 const feed = (state = [], action) => {
   switch (action.type) {
     case ADD_FEED:
-      state.push({ url: action.url, title: action.title, category: action.category, isHide: false });
-      return state;
+      return [...state, { url: action.url, title: action.title, category: action.category, isHide: false }];
 
     case EDIT_FEED: {
-      const index = _.findIndex(state, ['url', action.url]);
+      const newState = _.cloneDeep(state);
+      const index = _.findIndex(newState, ['url', action.url]);
       const originFeed = state[index];
-
-      state.splice(index, 1, {
+      newState.splice(index, 1, {
         ...originFeed,
         title: action.title || originFeed.title,
         category: action.cateogry || originFeed.category,
         isHide: action.isHide === 'undefined' ? originFeed.isHide : action.isHide,
       });
-      return state;
+      return newState;
     }
 
-    case DELETE_FEED:
-      _.remove(state, ['url', action.url]);
-      return state;
+    case DELETE_FEED: {
+      const newState = _.cloneDeep(state);
+      _.remove(newState, ['url', action.url]);
+      return newState;
+    }
 
-    case DELETE_CATEGORY:
-      _.remove(state, ['category', action.category]);
-      return state;
+    case DELETE_CATEGORY: {
+      const newState = _.cloneDeep(state);
+      _.remove(newState, ['category', action.category]);
+      return newState;
+    }
 
     case EDIT_CATEGORY: {
+      const newState = _.cloneDeep(state);
       const { oldCategory, newCategory } = action;
-      // eslint-disable-next-line no-restricted-syntax, no-unused-vars
-      for (const f of state) {
+      // eslint-disable-next-line no-unused-vars
+      for (const f of newState) {
         if (f.category === oldCategory) f.category = newCategory;
       }
-      return state;
+      return newState;
     }
 
     case CLEAR_FEEDS:
-      return state;
+      return [];
 
     case UPDATE_FEEDS_ITEMS:
       return state;
