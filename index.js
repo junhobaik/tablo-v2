@@ -50,7 +50,7 @@ const loadState = () => {
       },
     };
   } else {
-    app = JSON.parse(appState);
+    app = { ...JSON.parse(appState), menuOpenStatus: 'hide' };
   }
 
   return { feed, app };
