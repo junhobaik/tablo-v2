@@ -61,6 +61,7 @@ const FeedMenu = () => {
   };
 
   const hideEdit = e => {
+    setTitleValue('');
     const titleInputs = e.currentTarget.parentNode.parentNode;
     const feed = titleInputs.parentNode.parentNode;
     feed.style.width = '12rem';
@@ -316,7 +317,15 @@ const FeedMenu = () => {
         <Icon name={isAddFeed ? 'close' : 'plus'} />
       </div>
       <div className="feed-menu-inner">
-        {!isAddFeed ? <div className="feed-list-wrap">{categoryList}</div> : <AddFeed />}
+        {!isAddFeed ? (
+          <div className="feed-list-wrap">{categoryList}</div>
+        ) : (
+          <AddFeed
+            close={() => {
+              setIsAddFeed(false);
+            }}
+          />
+        )}
       </div>
     </div>
   );
