@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import RSSParser from 'rss-parser';
@@ -17,15 +18,31 @@ class Feeds extends Component {
   }
 
   componentDidMount() {
-    const pipe = (...funcs) => argument => funcs.reduce((acc, func) => func(acc), argument);
+    this.setItems(this.props.feeds);
+  }
 
-    const { feeds } = this.props;
+  shouldComponentUpdate(nextProps, nextStage) {
+    const isPropsChange = nextProps !== this.props;
+    const isStateChange = nextStage !== this.state;
+    if (isPropsChange) {
+      this.setState({
+        items: [],
+      });
+      this.setItems(nextProps.feeds);
+    }
+    return isPropsChange || isStateChange;
+  }
+
+  setItems(feeds) {
+    const pipe = (...funcs) => argument => funcs.reduce((acc, func) => func(acc), argument);
 
     const addFeedItems = async (requestUrl, feedTitle) => {
       const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
       const parser = new RSSParser();
 
       const result = await parser.parseURL(CORS_PROXY + requestUrl, (err, feed) => {
+        // eslint-disable-next-line no-console
+        console.log('Feed Request');
         for (const item of feed.items) {
           const { title, link, pubDate, contentSnippet } = item;
           this.setState(prevState => ({
@@ -50,6 +67,8 @@ class Feeds extends Component {
 
   render() {
     const { items } = this.state;
+    const { windowStatus } = this.props;
+    const isWindowStatusFeed = windowStatus === 'feed';
 
     const itemList = items.map(item => {
       const { title, link, pubDate, contentSnippet, feedTitle } = item;
@@ -69,7 +88,7 @@ class Feeds extends Component {
               <span className="date">{moment(pubDate).fromNow()}</span>
             </div>
             <div className="item-content">
-              <span>{contentSnippet}</span>
+              <span>{contentSnippet.substr(0, 140)}</span>
             </div>
           </div>
         </li>
@@ -77,7 +96,7 @@ class Feeds extends Component {
     });
 
     return (
-      <div id="Feeds">
+      <div id="Feeds" className={isWindowStatusFeed ? 'full-size ' : ''}>
         <ul className="item-list">{itemList}</ul>
       </div>
     );
@@ -87,12 +106,8 @@ class Feeds extends Component {
 const mapStateToProps = state => {
   return {
     feeds: state.feed,
+    windowStatus: state.app.windowStatus,
   };
 };
 
-const mapDispatchToProps = {};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Feeds);
+export default connect(mapStateToProps)(Feeds);
