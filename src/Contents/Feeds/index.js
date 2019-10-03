@@ -21,22 +21,6 @@ class Feeds extends Component {
     this.setItems(this.props.feeds);
   }
 
-  // shouldComponentUpdate(nextProps, nextStage) {
-  //   const isPropsChange = nextProps !== this.props;
-  //   const isStateChange = nextStage !== this.state;
-
-  //   for (const i in nextProps.feeds) {
-  //     if (nextProps.feeds[i].title !== this.props.feeds[i].title) {
-  //       this.setState({
-  //         items: [],
-  //       });
-  //       this.setItems(nextProps.feeds);
-  //       break;
-  //     }
-  //   }
-  //   return isStateChange;
-  // }
-
   shouldComponentUpdate(nextProps, nextStage) {
     const isPropsChange = nextProps !== this.props;
     const isStateChange = nextStage !== this.state;
@@ -63,17 +47,15 @@ class Feeds extends Component {
   setItems(feeds) {
     const pipe = (...funcs) => argument => funcs.reduce((acc, func) => func(acc), argument);
 
-    const addFeedItems = async (requestUrl, feedTitle) => {
+    const addFeedItems = async (requestUrl, feedTitle, feedLink) => {
       const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
       const parser = new RSSParser();
 
       const result = await parser.parseURL(CORS_PROXY + requestUrl, (err, feed) => {
-        // eslint-disable-next-line no-console
-        console.log('Feed Request');
         for (const item of feed.items) {
           const { title, link, pubDate, contentSnippet } = item;
           this.setState(prevState => ({
-            items: [...prevState.items, { title, link, pubDate, contentSnippet, feedTitle }].sort((a, b) => {
+            items: [...prevState.items, { title, link, pubDate, contentSnippet, feedTitle, feedLink }].sort((a, b) => {
               const aDate = parseInt(moment(a.pubDate).format('YYYYMMDD'), 10);
               const bDate = parseInt(moment(b.pubDate).format('YYYYMMDD'), 10);
               return aDate > bDate ? -1 : 1;
@@ -86,7 +68,7 @@ class Feeds extends Component {
 
     const setAllFeedItems = pipe(
       ...feeds.map(feed => {
-        return () => addFeedItems(feed.url, feed.title);
+        return () => addFeedItems(feed.url, feed.title, feed.link);
       })
     );
     setAllFeedItems();
@@ -102,7 +84,7 @@ class Feeds extends Component {
     }
 
     const itemList = items.map(item => {
-      const { title, link, pubDate, contentSnippet, feedTitle } = item;
+      const { title, link, pubDate, contentSnippet, feedTitle, feedLink } = item;
 
       if (hideFeedTitle.indexOf(feedTitle) > -1) return null;
 
@@ -118,7 +100,9 @@ class Feeds extends Component {
               <Icon name="cart" />
             </div>
             <div className="item-info">
-              <span className="title">{`"${feedTitle}"`}</span>
+              <a className="title" href={feedLink}>
+                <span>{`"${feedTitle}"`}</span>
+              </a>
               <span className="date">{moment(pubDate).fromNow()}</span>
             </div>
             <div className="item-content">
