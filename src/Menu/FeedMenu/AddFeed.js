@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import RSSParser from 'rss-parser';
 import { useSelector, useDispatch } from 'react-redux';
@@ -6,7 +7,7 @@ import _ from 'lodash';
 
 import { addFeed } from '../../redux/actions/feed';
 
-const AddFeed = () => {
+const AddFeed = ({ close }) => {
   const feeds = useSelector(state => state.feed);
   const [linkValue, setLinkValue] = useState('');
   const [titleValue, setTitleValue] = useState('');
@@ -217,6 +218,8 @@ const AddFeed = () => {
               }
 
               dispatch(addFeed(verifiedUrl, titleValue, category));
+
+              close();
             }}
           >
             ADD
