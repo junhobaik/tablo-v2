@@ -80,11 +80,12 @@ class Feeds extends Component {
 
   render() {
     const { items } = this.state;
-    const { feeds, windowStatus, isFeedItemMinimize } = this.props;
+    const { feeds, hideCategories, windowStatus, isFeedItemMinimize } = this.props;
     const isWindowStatusFeed = windowStatus === 'feed';
+
     const hideFeedTitle = [];
     for (const v of feeds) {
-      if (v.isHide) hideFeedTitle.push(v.title);
+      if (v.isHide || hideCategories.indexOf(v.category) > -1) hideFeedTitle.push(v.title);
     }
 
     const itemList = items.map(item => {
@@ -130,6 +131,7 @@ class Feeds extends Component {
 
 const mapStateToProps = state => {
   return {
+    hideCategories: state.app.hideCategories,
     feeds: state.feed,
     windowStatus: state.app.windowStatus,
     isFeedItemMinimize: state.app.isFeedItemMinimize,
