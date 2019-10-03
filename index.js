@@ -9,54 +9,69 @@ import './index.scss';
 import App from './src/App';
 import rootReducer from './src/redux/reducers';
 
-const preloadedState = {
-  feed: [
-    {
-      url: 'https://junhobaik.github.io/rss',
-      title: 'My blog',
-      category: 'Inbox',
-      isHide: false,
-    },
-    {
-      url: 'https://d2.naver.com/d2.atom',
-      title: 'D2 Blog',
-      category: 'Development',
-      isHide: false,
-    },
-    {
-      url: 'http://www.bloter.net/feed',
-      title: 'Bloter',
-      category: 'IT',
-      isHide: true,
-    },
-    {
-      url: 'http://woowabros.github.io/feed',
-      title: '우아한형제들 기술블로그',
-      category: 'Development',
-      isHide: false,
-    },
-  ],
-  app: {
-    windowStatus: 'both',
-    linkMethod: {
-      tab: 'blank',
-      feed: 'blank',
-    },
-    menuOpenStatus: 'hide',
-    isMenuAlwaysOpen: false,
-    hideCategories: [],
-    settingInfo: {
-      target: '',
-      isVisible: false,
-      url: '#',
-      category: '',
-      x: 0,
-      y: 0,
-    },
-  },
+const loadState = () => {
+  const feedState = localStorage.getItem('feed');
+  const appState = localStorage.getItem('app');
+
+  let feed = [];
+  if (feedState === null) {
+    feed = [
+      {
+        link: 'https://junhobaik.github.io',
+        url: 'https://junhobaik.github.io/rss',
+        title: 'junhobaik.github.io',
+        category: 'Inbox',
+        isHide: false,
+      },
+    ];
+  } else {
+    feed = JSON.parse(feedState);
+  }
+
+  let app = [];
+  if (appState === null) {
+    app = {
+      windowStatus: 'both',
+      linkMethod: {
+        tab: 'blank',
+        feed: 'blank',
+      },
+      menuOpenStatus: 'hide',
+      isMenuAlwaysOpen: false,
+      hideCategories: [],
+      isFeedItemMinimize: false,
+      settingInfo: {
+        target: '',
+        isVisible: false,
+        url: '#',
+        category: '',
+        x: 0,
+        y: 0,
+      },
+    };
+  } else {
+    app = JSON.parse(appState);
+  }
+
+  return { feed, app };
 };
 
+const preloadedState = loadState();
+
 const store = createStore(rootReducer, preloadedState, composeWithDevTools());
+
+const saveState = state => {
+  const feed = JSON.stringify(state.feed);
+  const app = JSON.stringify(state.app);
+  localStorage.setItem('feed', feed);
+  localStorage.setItem('app', app);
+};
+
+// eslint-disable-next-line no-unused-vars
+const unsubscribe = store.subscribe(() => {
+  const { feed, app } = store.getState();
+  saveState({ feed, app });
+});
 
 ReactDom.render(
   <Provider store={store}>
