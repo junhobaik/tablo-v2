@@ -21,15 +21,42 @@ class Feeds extends Component {
     this.setItems(this.props.feeds);
   }
 
+  // shouldComponentUpdate(nextProps, nextStage) {
+  //   const isPropsChange = nextProps !== this.props;
+  //   const isStateChange = nextStage !== this.state;
+
+  //   for (const i in nextProps.feeds) {
+  //     if (nextProps.feeds[i].title !== this.props.feeds[i].title) {
+  //       this.setState({
+  //         items: [],
+  //       });
+  //       this.setItems(nextProps.feeds);
+  //       break;
+  //     }
+  //   }
+  //   return isStateChange;
+  // }
+
   shouldComponentUpdate(nextProps, nextStage) {
     const isPropsChange = nextProps !== this.props;
     const isStateChange = nextStage !== this.state;
-    if (isPropsChange) {
+
+    const setItems = () => {
       this.setState({
         items: [],
       });
       this.setItems(nextProps.feeds);
+    };
+
+    if (nextProps.feeds.length !== this.props.feeds.length) setItems();
+
+    for (const i in this.props.feeds) {
+      if (nextProps.feeds[i].title !== this.props.feeds[i].title) {
+        setItems();
+        break;
+      }
     }
+
     return isPropsChange || isStateChange;
   }
 
@@ -77,7 +104,7 @@ class Feeds extends Component {
     const itemList = items.map(item => {
       const { title, link, pubDate, contentSnippet, feedTitle } = item;
 
-      if (hideFeedTitle.indexOf > -1) return null;
+      if (hideFeedTitle.indexOf(feedTitle) > -1) return null;
 
       return (
         <li className="item" key={link}>
