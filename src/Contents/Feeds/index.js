@@ -32,9 +32,13 @@ class Feeds extends Component {
       this.setItems(nextProps.feeds);
     };
 
-    if (nextProps.feeds.length !== this.props.feeds.length) setItems();
+    const prevLength = this.props.feeds.length;
+    const nextLength = nextProps.feeds.length;
+    const lowerLengthFeeds = prevLength > nextLength ? nextProps.feeds : this.props.feeds;
 
-    for (const i in this.props.feeds) {
+    if (prevLength !== nextLength) setItems();
+
+    for (const i in lowerLengthFeeds) {
       if (nextProps.feeds[i].title !== this.props.feeds[i].title) {
         setItems();
         break;
