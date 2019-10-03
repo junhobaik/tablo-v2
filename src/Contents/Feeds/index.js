@@ -67,11 +67,18 @@ class Feeds extends Component {
 
   render() {
     const { items } = this.state;
-    const { windowStatus } = this.props;
+    const { feeds, windowStatus } = this.props;
     const isWindowStatusFeed = windowStatus === 'feed';
+    const hideFeedTitle = [];
+    for (const v of feeds) {
+      if (v.isHide) hideFeedTitle.push(v.title);
+    }
 
     const itemList = items.map(item => {
       const { title, link, pubDate, contentSnippet, feedTitle } = item;
+
+      if (hideFeedTitle.indexOf > -1) return null;
+
       return (
         <li className="item" key={link}>
           <div className="item-inner">

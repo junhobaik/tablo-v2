@@ -30,12 +30,6 @@ const preloadedState = {
       isHide: true,
     },
     {
-      url: 'http://the-edit.co.kr/feed',
-      title: 'THE-EDIT',
-      category: 'IT',
-      isHide: false,
-    },
-    {
       url: 'http://woowabros.github.io/feed',
       title: '우아한형제들 기술블로그',
       category: 'Development',
