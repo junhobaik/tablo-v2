@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import RSSParser from 'rss-parser';
 import { useSelector, useDispatch } from 'react-redux';
 import { Input, Message, Icon, Select, Button } from 'semantic-ui-react';
+import _ from 'lodash';
 
 import { addFeed } from '../../redux/actions/feed';
 
@@ -10,53 +11,59 @@ const AddFeed = () => {
   const [linkValue, setLinkValue] = useState('');
   const [titleValue, setTitleValue] = useState('');
   const [verifiedUrl, setVerifiedUrl] = useState('');
-  const [linkStatus, setLinkStatus] = useState('info');
+  const [linkStatus, setLinkStatus] = useState('');
   const [isNewCategory, setIsNewCategory] = useState(false);
   const [categoryValue, setCategoryValue] = useState('');
   const [newCategoryValue, setNewCategoryValue] = useState('');
   const dispatch = useDispatch();
 
   const feedLinkCheck = (requestUrl, urlCheckCnt = 0) => {
-    const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
-    const parser = new RSSParser();
+    const isContain = _.findIndex(feeds, ['url', requestUrl]) > -1 || _.findIndex(feeds, ['link', requestUrl]) > -1;
 
-    const urlCheck = ['rss', 'feed.xml', 'feed', 'd2.atom'];
+    if (isContain) {
+      setLinkStatus('info');
+    } else {
+      const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
+      const parser = new RSSParser();
 
-    parser.parseURL(CORS_PROXY + requestUrl, (err, feed) => {
-      setVerifiedUrl();
-      let modifiedUrl = requestUrl;
-      if (requestUrl[requestUrl.length - 1] !== '/') modifiedUrl += '/';
+      const urlCheck = ['rss', 'feed.xml', 'feed', 'd2.atom'];
 
-      if (err && urlCheckCnt !== urlCheck.length) {
-        let reduceCnt = modifiedUrl.length;
-        if (urlCheckCnt > 0) {
-          reduceCnt -= urlCheck[urlCheckCnt - 1].length + 1;
-        }
-
-        modifiedUrl = modifiedUrl.substr(0, reduceCnt) + urlCheck[urlCheckCnt];
-
+      parser.parseURL(CORS_PROXY + requestUrl, (err, feed) => {
+        setVerifiedUrl('');
         setLinkStatus('warning');
-        feedLinkCheck(modifiedUrl, urlCheckCnt + 1);
-      } else if (err) {
-        setLinkStatus('negative');
-      } else {
-        setVerifiedUrl(requestUrl);
-        setTitleValue(feed.title);
-        setLinkStatus('positive');
-      }
-    });
+        let modifiedUrl = requestUrl;
+        if (requestUrl[requestUrl.length - 1] !== '/') modifiedUrl += '/';
+
+        if (err && urlCheckCnt !== urlCheck.length) {
+          let reduceCnt = modifiedUrl.length;
+          if (urlCheckCnt > 0) {
+            reduceCnt -= urlCheck[urlCheckCnt - 1].length + 1;
+          }
+
+          modifiedUrl = modifiedUrl.substr(0, reduceCnt) + urlCheck[urlCheckCnt];
+
+          feedLinkCheck(modifiedUrl, urlCheckCnt + 1);
+        } else if (err) {
+          setLinkStatus('negative');
+        } else {
+          setVerifiedUrl(requestUrl);
+          setTitleValue(feed.title);
+          setLinkStatus('positive');
+        }
+      });
+    }
   };
 
   const handleChange = e => {
     const { value } = e.currentTarget;
     setLinkValue(value);
 
-    if (value === '') setLinkStatus('info');
+    if (value === '') setLinkStatus('');
 
     setTimeout(() => {
       const currentValue = document.querySelector('.url-input>input').value;
       if (value !== '' && value === currentValue) feedLinkCheck(value);
-    }, 1500);
+    }, 1000);
   };
 
   const handleTitleChange = e => {
@@ -104,9 +111,16 @@ const AddFeed = () => {
           </Message>
         );
 
-      default:
+      case 'info':
         return (
           <Message info>
+            <Message.Header>이미 추가된 사이트입니다.</Message.Header>
+          </Message>
+        );
+
+      default:
+        return (
+          <Message>
             <Message.Header>추가할 사이트의 피드 주소를 입력해주세요.</Message.Header>
             <p>주소에는 http:// 또는 https:// 가 반드시 들어가야합니다.</p>
           </Message>
