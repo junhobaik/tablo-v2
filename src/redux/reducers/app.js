@@ -8,6 +8,7 @@ import {
   SET_SETTING_INFO,
   ADD_HIDE_CATEGORY,
   DELETE_HIDE_CATEGORY,
+  SET_FEED_ITEM_STYLE
 } from '../actions/app';
 
 const app = (state = [], action) => {
@@ -41,11 +42,15 @@ const app = (state = [], action) => {
       hideCategories.push(action.category);
       return { ...state, hideCategories };
     }
+
     case DELETE_HIDE_CATEGORY: {
       const { hideCategories } = state;
       _.remove(hideCategories, c => c === action.category);
       return { ...state, hideCategories };
     }
+
+    case SET_FEED_ITEM_STYLE:
+      return { ...state, isFeedItemMinimize: action.isFeedItemMinimize };
 
     default:
       return state;
