@@ -76,7 +76,7 @@ class Feeds extends Component {
 
   render() {
     const { items } = this.state;
-    const { feeds, windowStatus } = this.props;
+    const { feeds, windowStatus, isFeedItemMinimize } = this.props;
     const isWindowStatusFeed = windowStatus === 'feed';
     const hideFeedTitle = [];
     for (const v of feeds) {
@@ -114,7 +114,10 @@ class Feeds extends Component {
     });
 
     return (
-      <div id="Feeds" className={isWindowStatusFeed ? 'full-size ' : ''}>
+      <div
+        id="Feeds"
+        className={`${isWindowStatusFeed ? 'full-size ' : ''} ${isFeedItemMinimize ? 'minimize' : 'standard'}`}
+      >
         <ul className="item-list">{itemList}</ul>
       </div>
     );
@@ -125,6 +128,7 @@ const mapStateToProps = state => {
   return {
     feeds: state.feed,
     windowStatus: state.app.windowStatus,
+    isFeedItemMinimize: state.app.isFeedItemMinimize,
   };
 };
 

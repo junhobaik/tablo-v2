@@ -30,6 +30,8 @@
           }
 
           .icon {
+            margin: 0;
+            margin-left: 0.25rem;
             opacity: 0.3;
             cursor: pointer;
 
@@ -49,6 +51,48 @@
           .title {
             color: gray;
             margin-right: 0.5rem;
+          }
+        }
+      }
+    }
+  }
+
+  &.minimize {
+    .item-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      .item {
+        margin: 0 0.25rem 0.5rem 0.25rem;
+
+        .item-inner {
+          padding: 0.25rem 0.5rem;
+          .item-header {
+            .title {
+              a {
+                h3 {
+                  font-size: 0.9rem;
+                }
+              }
+            }
+
+            .icon {
+              font-size: 0.8rem;
+            }
+          }
+
+          .item-info,
+          .item-content {
+            font-size: 0.8rem;
+          }
+
+          .item-info {
+            margin: 0;
+          }
+
+          .item-content {
+            display: none;
           }
         }
       }
