@@ -8,7 +8,7 @@ import {
   SET_SETTING_INFO,
   ADD_HIDE_CATEGORY,
   DELETE_HIDE_CATEGORY,
-  SET_FEED_ITEM_STYLE
+  TOGGLE_FEED_ITEM_MINIMIZE,
 } from '../actions/app';
 
 const app = (state = [], action) => {
@@ -49,8 +49,8 @@ const app = (state = [], action) => {
       return { ...state, hideCategories };
     }
 
-    case SET_FEED_ITEM_STYLE:
-      return { ...state, isFeedItemMinimize: action.isFeedItemMinimize };
+    case TOGGLE_FEED_ITEM_MINIMIZE:
+      return { ...state, isFeedItemMinimize: !state.isFeedItemMinimize };
 
     default:
       return state;
