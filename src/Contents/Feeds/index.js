@@ -80,8 +80,9 @@ class Feeds extends Component {
 
   render() {
     const { items } = this.state;
-    const { feeds, hideCategories, windowStatus, isFeedItemMinimize } = this.props;
+    const { feeds, hideCategories, windowStatus, isFeedItemMinimize, linkMethod } = this.props;
     const isWindowStatusFeed = windowStatus === 'feed';
+    const aTarget = linkMethod === 'blank' ? '_blank' : '_self';
 
     const hideFeedTitle = [];
     for (const v of feeds) {
@@ -98,14 +99,14 @@ class Feeds extends Component {
           <div className="item-inner">
             <div className="item-header">
               <div className="title">
-                <a href={link}>
+                <a href={link} target={aTarget}>
                   <h3>{title}</h3>
                 </a>
               </div>
               <Icon name="cart" />
             </div>
             <div className="item-info">
-              <a className="title" href={feedLink}>
+              <a className="title" href={feedLink} target={aTarget}>
                 <span>{`"${feedTitle}"`}</span>
               </a>
               <span className="date">{moment(pubDate).fromNow()}</span>
@@ -131,6 +132,7 @@ class Feeds extends Component {
 
 const mapStateToProps = state => {
   return {
+    linkMethod: state.app.linkMethod.tab,
     hideCategories: state.app.hideCategories,
     feeds: state.feed,
     windowStatus: state.app.windowStatus,
