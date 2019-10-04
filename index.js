@@ -9,6 +9,24 @@ import './index.scss';
 import App from './src/App';
 import rootReducer from './src/redux/reducers';
 
+const tab = {
+  tabs: [
+    {
+      link: 'https://junhobaik.github.io',
+      title: 'BLOG',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, eum?',
+      cateogry: 'Inbox',
+    },
+  ],
+  cart: [
+    {
+      link: 'https://junhobaik.github.io/mac-terminal-setting/',
+      title: 'mac terminal setting',
+      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, reiciendis.',
+    },
+  ],
+};
+
 const loadState = () => {
   const feedState = localStorage.getItem('feed');
   const appState = localStorage.getItem('app');
@@ -53,7 +71,7 @@ const loadState = () => {
     app = { ...JSON.parse(appState), menuOpenStatus: 'hide' };
   }
 
-  return { feed, app };
+  return { feed, app, tab };
 };
 
 const preloadedState = loadState();
