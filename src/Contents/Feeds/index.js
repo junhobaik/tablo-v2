@@ -103,7 +103,12 @@ class Feeds extends Component {
                   <h3>{title}</h3>
                 </a>
               </div>
-              <Icon name="cart" />
+              <Icon
+                name="cart"
+                onClick={() => {
+                  this.props.addCartItem(link, title, contentSnippet);
+                }}
+              />
             </div>
             <div className="item-info">
               <a className="title" href={feedLink} target={aTarget}>
@@ -140,4 +145,13 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Feeds);
+const mapDispatchToProps = dispatch => {
+  return {
+    addCartItem: (link, title, description) => dispatch({ type: 'ADD_CART_ITEM', link, title, description }),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Feeds);
