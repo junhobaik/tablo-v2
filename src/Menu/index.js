@@ -10,7 +10,7 @@ import { setMenuOpenStatus } from '../redux/actions/app';
 const Menu = () => {
   const { windowStatus, isMenuAlwaysOpen, menuOpenStatus } = useSelector(state => state.app);
   const dispatch = useDispatch();
-  const [selectMenu, setSelectMenu] = useState('feed');
+  const [selectMenu, setSelectMenu] = useState('tab');
 
   let menuStatus = menuOpenStatus;
   if (menuOpenStatus === 'hide' && isMenuAlwaysOpen) menuStatus = 'default';
@@ -137,7 +137,7 @@ const Menu = () => {
         </div>
       </div>
 
-      <div className="menu-content">{selectMenu === 'feed' ? <FeedMenu /> : <TabMenu />}</div>
+      <div className="menu-content">{selectMenu !== 'feed' ? <TabMenu /> : <FeedMenu />}</div>
     </div>
   );
 };
