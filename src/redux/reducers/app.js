@@ -16,7 +16,7 @@ const app = (state = [], action) => {
     case SET_WINDOW:
       return {
         ...state,
-        windowStatus: action.status,
+        windowStatus: action.windowStatus,
       };
 
     case SET_LINK_METHOD:

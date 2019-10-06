@@ -8,8 +8,8 @@ export const ADD_HIDE_CATEGORY = 'ADD_HIDE_CATEGORY';
 export const DELETE_HIDE_CATEGORY = 'DELETE_HIDE_CATEGORY';
 export const TOGGLE_FEED_ITEM_MINIMIZE = 'TOGGLE_FEED_ITEM_MINIMIZE';
 
-export const setWindow = status => {
-  return { type: SET_WINDOW, status };
+export const setWindow = windowStatus => {
+  return { type: SET_WINDOW, windowStatus };
 };
 
 export const setLinkMethod = (tabLinkMethod, feedLinkMethod) => {
