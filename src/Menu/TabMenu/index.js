@@ -11,10 +11,11 @@ const TabMenu = () => {
   const linkMethod = useSelector(state => state.app.linkMethod.tab);
   const aTarget = linkMethod === 'blank' ? '_blank' : '_self';
 
-  const cartItems = cart.map(item => {
+  const cartItems = cart.map((item, i) => {
     const { link, title, description } = item;
     return (
-      <li className="cart-item" key={link}>
+      // eslint-disable-next-line react/no-array-index-key
+      <li className="cart-item" key={`${link}-${i}`}>
         <div className="drag-handle"></div>
         <div className="item-content">
           <div className="cart-item-header">
