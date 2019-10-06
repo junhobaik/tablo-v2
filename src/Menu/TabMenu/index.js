@@ -1,10 +1,12 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 
 import './index.scss';
+import { deleteCartItem } from '../../redux/actions/tab';
 
 const TabMenu = () => {
+  const dispatch = useDispatch();
   const { cart } = useSelector(state => state.tab);
   const linkMethod = useSelector(state => state.app.linkMethod.tab);
   const aTarget = linkMethod === 'blank' ? '_blank' : '_self';
@@ -21,7 +23,14 @@ const TabMenu = () => {
                 <h3>{title}</h3>
               </a>
             </div>
-            <div className="icon-wrap">
+            <div
+              className="icon-wrap"
+              role="button"
+              tabIndex="0"
+              onClick={() => {
+                dispatch(deleteCartItem(link));
+              }}
+            >
               <Icon name="cancel" />
             </div>
           </div>
