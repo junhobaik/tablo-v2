@@ -70,7 +70,6 @@ const Tabs = () => {
           <ul
             className="tab-list"
             onDragEnter={e => {
-              console.log('onDragEnter', e.target);
               if (e.target.className === 'tab-list') setDragEnterStyle(e);
               dispatch(setDragInfo({ ...dragInfo, category: c }));
             }}
@@ -78,16 +77,12 @@ const Tabs = () => {
               e.preventDefault();
             }}
             onDragLeave={e => {
-              console.log('onDragLeave', e.target);
               if (e.target.className === 'tab-list') setDragEnterStyle(e, false);
               dispatch(setDragInfo({ ...dragInfo, category: null }));
             }}
             onDrop={e => {
-              console.log('onDrop');
               setDragEnterStyle(e, false);
-
               const { link, title, description, category } = dragInfo;
-              console.log(dragInfo);
               if (link && title && description && category) {
                 dispatch(addTabItem(link, title, description, category));
               }
@@ -102,7 +97,9 @@ const Tabs = () => {
   });
   categoryList.push(
     <li className="category-add" key="tab-category-add-row">
-      <Icon name="plus" />
+      <div className="add-icon">
+        <Icon name="plus" />
+      </div>
     </li>
   );
 
