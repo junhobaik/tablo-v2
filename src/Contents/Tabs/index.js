@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Icon, Input } from 'semantic-ui-react';
 
 import './index.scss';
-import { setDragInfo } from '../../redux/actions/app';
+import { setDragInfo, setSettingInfo } from '../../redux/actions/app';
 import { addTabItem } from '../../redux/actions/tab';
 
 const Tabs = () => {
@@ -27,6 +27,44 @@ const Tabs = () => {
     }
   };
 
+  const tabCategorySettingMouseEnter = e => {
+    const { x, y } = e.currentTarget.getBoundingClientRect();
+
+    dispatch(
+      setSettingInfo({
+        target: 'tab-category',
+        x,
+        y,
+        isVisible: true,
+        category: e.currentTarget.parentNode.querySelector('h3').innerText,
+      })
+    );
+  };
+
+  const tabItemSettingMouseEnter = e => {
+    const { x, y } = e.currentTarget.getBoundingClientRect();
+
+    dispatch(
+      setSettingInfo({
+        target: 'tab-item',
+        x,
+        y,
+        isVisible: true,
+        link: e.currentTarget.parentNode.querySelector('a').href,
+      })
+    );
+  };
+
+  const settingMouseLeave = () => {
+    setTimeout(() => {
+      dispatch(
+        setSettingInfo({
+          isVisible: false,
+        })
+      );
+    }, 500);
+  };
+
   const categoryList = categories.map(c => {
     const tabList = tabs
       .filter(v => v.category === c)
@@ -42,7 +80,15 @@ const Tabs = () => {
                     <h3>{title}</h3>
                   </a>
                 </div>
-                <div className="setting">
+                <div
+                  className="setting"
+                  onMouseEnter={e => {
+                    tabItemSettingMouseEnter(e);
+                  }}
+                  onMouseLeave={() => {
+                    settingMouseLeave();
+                  }}
+                >
                   <Icon name="ellipsis horizontal" />
                 </div>
               </div>
@@ -62,7 +108,15 @@ const Tabs = () => {
             <Input className="title-input" type="text" placeholder="Press ENTER to save"></Input>
           </div>
 
-          <div className="setting" onMouseEnter={() => {}} onMouseLeave={() => {}}>
+          <div
+            className="setting"
+            onMouseEnter={e => {
+              tabCategorySettingMouseEnter(e);
+            }}
+            onMouseLeave={() => {
+              settingMouseLeave();
+            }}
+          >
             <Icon name="ellipsis horizontal" />
           </div>
         </div>
