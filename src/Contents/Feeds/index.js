@@ -104,7 +104,7 @@ class Feeds extends Component {
                 </a>
               </div>
               <Icon
-                name="cart"
+                name="add to cart"
                 onClick={() => {
                   this.props.addCartItem(link, title, contentSnippet);
                 }}

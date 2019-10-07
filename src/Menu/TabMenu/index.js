@@ -61,10 +61,14 @@ const TabMenu = () => {
 
   return (
     <div id="TabMenu">
-      <div className="tabs"></div>
+      <div className="tabs">
+        <div className="title">
+          <Icon name="window restore outline" />
+        </div>
+        <ul className="tabs-item-list"></ul>
+      </div>
       <div className="cart">
         <div className="title">
-          {/* <h2>Cart</h2> */}
           <Icon name="cart" />
         </div>
         <ul className="cart-item-list">{cartItems}</ul>
