@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import _ from 'lodash';
 
-import { ADD_CART_ITEM, DELETE_CART_ITEM } from '../actions/tab';
+import { ADD_CART_ITEM, DELETE_CART_ITEM, ADD_TAB_ITEM } from '../actions/tab';
 
 const tab = (state = [], action) => {
   switch (action.type) {
@@ -20,6 +20,15 @@ const tab = (state = [], action) => {
       newState.cart.splice(index, 1);
       return newState;
     }
+
+    case ADD_TAB_ITEM:
+      return {
+        ...state,
+        tabs: [
+          ...state.tabs,
+          { link: action.link, title: action.title, description: action.description, category: action.category },
+        ],
+      };
 
     default:
       return state;
