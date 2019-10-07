@@ -9,6 +9,7 @@ import {
   ADD_HIDE_CATEGORY,
   DELETE_HIDE_CATEGORY,
   TOGGLE_FEED_ITEM_MINIMIZE,
+  SET_DRAG_INFO,
 } from '../actions/app';
 
 const app = (state = [], action) => {
@@ -36,6 +37,13 @@ const app = (state = [], action) => {
 
     case SET_SETTING_INFO:
       return { ...state, settingInfo: { ...state.settingInfo, ...action.info } };
+
+    case SET_DRAG_INFO: {
+      const { link, title, description } = action.info;
+      let { category } = action.info;
+      if (!category) category = null;
+      return { ...state, dragInfo: { ...state.dragInfo, link, title, description, category } };
+    }
 
     case ADD_HIDE_CATEGORY: {
       const { hideCategories } = state;

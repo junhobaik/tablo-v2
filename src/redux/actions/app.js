@@ -7,6 +7,7 @@ export const SET_SETTING_INFO = 'SET_SETTING_INFO';
 export const ADD_HIDE_CATEGORY = 'ADD_HIDE_CATEGORY';
 export const DELETE_HIDE_CATEGORY = 'DELETE_HIDE_CATEGORY';
 export const TOGGLE_FEED_ITEM_MINIMIZE = 'TOGGLE_FEED_ITEM_MINIMIZE';
+export const SET_DRAG_INFO = 'SET_DRAG_INFO';
 
 export const setWindow = windowStatus => {
   return { type: SET_WINDOW, windowStatus };
@@ -26,6 +27,10 @@ export const setMenuOpenStatus = status => {
 
 export const setSettingInfo = info => {
   return { type: SET_SETTING_INFO, info };
+};
+
+export const setDragInfo = info => {
+  return { type: SET_DRAG_INFO, info };
 };
 
 export const addHideCategory = category => {

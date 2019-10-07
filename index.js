@@ -10,12 +10,13 @@ import App from './src/App';
 import rootReducer from './src/redux/reducers';
 
 const tab = {
+  categories: ['Inbox'],
   tabs: [
     {
       link: 'https://junhobaik.github.io',
       title: 'BLOG',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, eum?',
-      cateogry: 'Inbox',
+      category: 'Inbox',
     },
   ],
   cart: [
@@ -65,6 +66,12 @@ const loadState = () => {
         category: '',
         x: 0,
         y: 0,
+      },
+      dragInfo: {
+        link: null,
+        title: null,
+        description: null,
+        category: null,
       },
     };
   } else {

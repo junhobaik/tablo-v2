@@ -1,12 +1,16 @@
-import React from 'react';
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 
 import './index.scss';
 import { deleteCartItem } from '../../redux/actions/tab';
+import { setDragInfo } from '../../redux/actions/app';
 
 const TabMenu = () => {
   const dispatch = useDispatch();
+  const [dragTarget, setDragTarget] = useState();
   const { cart } = useSelector(state => state.tab);
   const linkMethod = useSelector(state => state.app.linkMethod.tab);
   const aTarget = linkMethod === 'blank' ? '_blank' : '_self';
@@ -14,8 +18,20 @@ const TabMenu = () => {
   const cartItems = cart.map((item, i) => {
     const { link, title, description } = item;
     return (
-      // eslint-disable-next-line react/no-array-index-key
-      <li className="cart-item" key={`${link}-${i}`}>
+      <li
+        className="cart-item"
+        // eslint-disable-next-line react/no-array-index-key
+        key={`${link}-${i}`}
+        draggable
+        onDragStart={e => {
+          console.log('dragStart', e.currentTarget.querySelector('a').href);
+          dispatch(setDragInfo({ link, title, description }));
+        }}
+        onDragEnd={e => {
+          console.log('dragEnd');
+          dispatch(setDragInfo({ link: null, title: null, description: null }));
+        }}
+      >
         <div className="drag-handle"></div>
         <div className="item-content">
           <div className="cart-item-header">
