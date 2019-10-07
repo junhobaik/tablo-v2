@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 import React from 'react';
@@ -6,10 +7,12 @@ import { Icon, Input } from 'semantic-ui-react';
 
 import './index.scss';
 import { setDragInfo } from '../../redux/actions/app';
+import { addTabItem } from '../../redux/actions/tab';
 
 const Tabs = () => {
   const dispatch = useDispatch();
   const { tabs, categories } = useSelector(state => state.tab);
+  const { dragInfo } = useSelector(state => state.app);
   const aTarget = '_blank'; //
 
   const setDragEnterStyle = (e, isEnter = true) => {
@@ -27,10 +30,10 @@ const Tabs = () => {
   const categoryList = categories.map(c => {
     const tabList = tabs
       .filter(v => v.category === c)
-      .map(tab => {
+      .map((tab, i) => {
         const { title, link, description } = tab;
         return (
-          <li className="tab-item" key={`tab-item-${tab.link}`}>
+          <li className="tab-item" key={`tab-item-${tab.link}-${i}`}>
             <div className="drag-handle"></div>
             <div className="item-content">
               <div className="item-header">
@@ -69,7 +72,7 @@ const Tabs = () => {
             onDragEnter={e => {
               console.log('onDragEnter', e.target);
               if (e.target.className === 'tab-list') setDragEnterStyle(e);
-              dispatch(setDragInfo({ category: c }));
+              dispatch(setDragInfo({ ...dragInfo, category: c }));
             }}
             onDragOver={e => {
               e.preventDefault();
@@ -77,13 +80,18 @@ const Tabs = () => {
             onDragLeave={e => {
               console.log('onDragLeave', e.target);
               if (e.target.className === 'tab-list') setDragEnterStyle(e, false);
-              dispatch(setDragInfo({ category: null }));
+              dispatch(setDragInfo({ ...dragInfo, category: null }));
             }}
             onDrop={e => {
               console.log('onDrop');
               setDragEnterStyle(e, false);
-              // tabs에 추가
-              dispatch(setDragInfo({ category: null }));
+
+              const { link, title, description, category } = dragInfo;
+              console.log(dragInfo);
+              if (link && title && description && category) {
+                dispatch(addTabItem(link, title, description, category));
+              }
+              dispatch(setDragInfo({ link: null, title: null, description: null, category: null }));
             }}
           >
             {tabList}
