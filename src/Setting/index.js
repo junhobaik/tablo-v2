@@ -31,7 +31,7 @@ const Setting = () => {
     }
   };
 
-  const clickRemoveFeed = () => {
+  const clickRemove = () => {
     switch (settingInfo.target) {
       case 'feed':
         dispatch(deleteFeed(settingInfo.url));
@@ -83,7 +83,7 @@ const Setting = () => {
         role="button"
         tabIndex="0"
         onClick={e => {
-          clickRemoveFeed(e);
+          clickRemove(e);
         }}
       >
         <Icon name="trash" />
