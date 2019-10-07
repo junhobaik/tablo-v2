@@ -5,6 +5,7 @@ import { Icon } from 'semantic-ui-react';
 import './index.scss';
 import { deleteFeed, deleteCategory } from '../redux/actions/feed';
 import { setSettingInfo } from '../redux/actions/app';
+import { deleteTabCategory, deleteTabItem } from '../redux/actions/tab';
 
 const Setting = () => {
   const [isMouseIn, setIsMouseIn] = useState(false);
@@ -31,12 +32,21 @@ const Setting = () => {
   };
 
   const clickRemoveFeed = () => {
-    if (settingInfo.target === 'feed') {
-      dispatch(deleteFeed(settingInfo.url));
-    } else if (settingInfo.target === 'category') {
-      dispatch(deleteCategory(settingInfo.category));
-    } else {
-      // dispatch(deleteTab());
+    switch (settingInfo.target) {
+      case 'feed':
+        dispatch(deleteFeed(settingInfo.url));
+        break;
+      case 'category':
+        dispatch(deleteCategory(settingInfo.category));
+        break;
+      case 'tab-category':
+        dispatch(deleteTabCategory(settingInfo.category));
+        break;
+      case 'tab-item':
+        dispatch(deleteTabItem(settingInfo.link));
+        break;
+      default:
+        break;
     }
     dispatch(setSettingInfo({ isVisible: false }));
   };
