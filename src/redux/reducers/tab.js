@@ -9,6 +9,7 @@ import {
   DELETE_TAB_ITEM,
   ADD_TAB_CATEGORY,
   EDIT_TAB_ITEM,
+  EDIT_TAB_CATEGORY,
 } from '../actions/tab';
 
 const tab = (state = [], action) => {
@@ -45,6 +46,20 @@ const tab = (state = [], action) => {
       const description =
         action.description || action.description === '' ? action.description : newState.tabs[index].description;
       newState.tabs[index] = { ...newState.tabs[index], title, description };
+      return newState;
+    }
+
+    case EDIT_TAB_CATEGORY: {
+      if (action.newCategory === '') return state;
+      const newState = _.cloneDeep(state);
+      for (const i in newState.tabs) {
+        if (newState.tabs[i].category === action.oldCategory) {
+          newState.tabs[i].category = action.newCategory;
+        }
+      }
+      const index = newState.categories.indexOf(action.oldCategory);
+      newState.categories.splice(index, 1);
+      newState.categories.push(action.newCategory);
       return newState;
     }
 

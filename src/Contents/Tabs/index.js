@@ -7,7 +7,7 @@ import { Icon, Input, TextArea } from 'semantic-ui-react';
 
 import './index.scss';
 import { setDragInfo, setSettingInfo } from '../../redux/actions/app';
-import { addTabItem, addTabCategory, editTabItem } from '../../redux/actions/tab';
+import { addTabItem, addTabCategory, editTabItem, editTabCategory } from '../../redux/actions/tab';
 
 const Tabs = () => {
   const dispatch = useDispatch();
@@ -118,7 +118,7 @@ const Tabs = () => {
                       setTabTitleValue(titleValue);
                     }}
                     onBlur={e => {
-                      // save state
+                      dispatch(editTabItem(link, e.currentTarget.value, null));
                       hideTabTitleInput(e);
                     }}
                     onKeyDown={e => {
@@ -176,12 +176,12 @@ const Tabs = () => {
                 setCategoryTitleValue(titleValue);
               }}
               onBlur={e => {
-                // save state
+                dispatch(editTabCategory(c, e.currentTarget.value));
                 hideCategoryInput(e);
               }}
               onKeyDown={e => {
                 if (e.keyCode === 13) {
-                  // save state
+                  dispatch(editTabCategory(c, e.currentTarget.value));
                   hideCategoryInput(e);
                 }
               }}
