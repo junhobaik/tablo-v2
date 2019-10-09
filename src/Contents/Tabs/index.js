@@ -176,13 +176,21 @@ const Tabs = () => {
                 setCategoryTitleValue(titleValue);
               }}
               onBlur={e => {
-                dispatch(editTabCategory(c, e.currentTarget.value));
-                hideCategoryInput(e);
+                if (categories.indexOf(e.currentTarget.value) === -1) {
+                  dispatch(editTabCategory(c, e.currentTarget.value));
+                  hideCategoryInput(e);
+                } else {
+                  // 중복된 카테고리명
+                }
               }}
               onKeyDown={e => {
                 if (e.keyCode === 13) {
-                  dispatch(editTabCategory(c, e.currentTarget.value));
-                  hideCategoryInput(e);
+                  if (categories.indexOf(e.currentTarget.value) === -1) {
+                    dispatch(editTabCategory(c, e.currentTarget.value));
+                    hideCategoryInput(e);
+                  } else {
+                    // 중복된 카테고리명
+                  }
                 }
               }}
             />
