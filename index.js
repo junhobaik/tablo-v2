@@ -10,13 +10,19 @@ import App from './src/App';
 import rootReducer from './src/redux/reducers';
 
 const tab = {
-  categories: ['Inbox'],
+  categories: ['Inbox', 'cateogry2'],
   tabs: [
     {
       link: 'https://junhobaik.github.io',
       title: 'BLOG',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, eum?',
       category: 'Inbox',
+    },
+    {
+      link: 'https://junhobaik.github.io/rss',
+      title: 'BLOG RSS',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, eum?',
+      category: 'cateogry2',
     },
   ],
   cart: [
