@@ -13,21 +13,54 @@ const Setting = () => {
   const dispatch = useDispatch();
 
   const clickTitleEdit = () => {
-    if (settingInfo.target === 'feed') {
-      const feeds = Array.from(document.querySelectorAll('.feed'));
-      const targetFeed = feeds.filter(feed => feed.attributes.url.value === settingInfo.url)[0];
-      targetFeed.style.width = '24rem';
-      targetFeed.style.maxWidth = '24rem';
-      targetFeed.querySelector('.title-a').style.display = 'none';
-      targetFeed.querySelector('.title-inputs').style.display = 'flex';
-      targetFeed.querySelector('.feed-setting').style.display = 'none';
-    } else if (settingInfo.target === 'category') {
-      //
-      const categories = Array.from(document.querySelectorAll('.feed-list-title>span'));
-      const targetCategory = categories.filter(c => c.innerText === settingInfo.category)[0];
+    switch (settingInfo.target) {
+      case 'feed': {
+        const feeds = Array.from(document.querySelectorAll('.feed'));
+        const targetFeed = feeds.filter(feed => feed.attributes.url.value === settingInfo.url)[0];
+        targetFeed.style.width = '24rem';
+        targetFeed.style.maxWidth = '24rem';
+        targetFeed.querySelector('.title-a').style.display = 'none';
+        targetFeed.querySelector('.title-inputs').style.display = 'flex';
+        targetFeed.querySelector('.feed-setting').style.display = 'none';
+        break;
+      }
 
-      targetCategory.style.display = 'none';
-      targetCategory.parentNode.querySelector('.feed-list-title-input').style.display = 'block';
+      case 'category': {
+        const categories = Array.from(document.querySelectorAll('.feed-list-title>span'));
+        const targetCategory = categories.filter(c => c.innerText === settingInfo.category)[0];
+        targetCategory.style.display = 'none';
+        targetCategory.parentNode.querySelector('.feed-list-title-input').style.display = 'block';
+        break;
+      }
+
+      case 'tab-category': {
+        const categoryTitles = Array.from(document.querySelectorAll('#Tabs .category-header>.title'));
+        for (const ct of categoryTitles) {
+          ct.childNodes[0].style.display = 'inline';
+          ct.childNodes[1].style.display = 'none';
+        }
+        const categories = Array.from(document.querySelectorAll('#Tabs .category-header>.title>.title-text'));
+        const targetCategory = categories.filter(c => c.innerText === settingInfo.category)[0];
+        targetCategory.style.display = 'none';
+        targetCategory.parentNode.querySelector('.title-input').style.display = 'block';
+        break;
+      }
+
+      case 'tab-item': {
+        const tabTitles = Array.from(document.querySelectorAll('#Tabs .item-header>.title'));
+        let targetTitle;
+        for (const tt of tabTitles) {
+          const titleA = tt.childNodes[0];
+          titleA.style.display = 'inline';
+          tt.childNodes[1].style.display = 'none';
+          if (settingInfo.link === titleA.href) targetTitle = tt;
+        }
+        targetTitle.firstChild.style.display = 'none';
+        targetTitle.lastChild.style.display = 'inline';
+        break;
+      }
+      default:
+        break;
     }
   };
 

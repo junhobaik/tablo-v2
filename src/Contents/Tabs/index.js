@@ -1,9 +1,9 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Icon, Input } from 'semantic-ui-react';
+import { Icon, Input, TextArea } from 'semantic-ui-react';
 
 import './index.scss';
 import { setDragInfo, setSettingInfo } from '../../redux/actions/app';
@@ -13,6 +13,9 @@ const Tabs = () => {
   const dispatch = useDispatch();
   const { tabs, categories } = useSelector(state => state.tab);
   const { dragInfo } = useSelector(state => state.app);
+  const [categoryTitleValue, setCategoryTitleValue] = useState('');
+  const [tabTitleValue, setTabTitleValue] = useState('');
+  const [descriptionValue, setDescriptionValue] = useState({});
   const aTarget = '_blank'; //
 
   const setDragEnterStyle = (e, isEnter = true) => {
@@ -65,6 +68,29 @@ const Tabs = () => {
     }, 500);
   };
 
+  const handleCategoryValue = e => {
+    setCategoryTitleValue(e.currentTarget.value);
+  };
+
+  const handleTabTitleValue = e => {
+    setTabTitleValue(e.currentTarget.value);
+  };
+
+  const hideCategoryInput = e => {
+    setCategoryTitleValue('');
+    const target = e.currentTarget.parentNode;
+    console.log(target);
+    target.style.display = 'none';
+    target.parentNode.querySelector('.title-text').style.display = 'inline';
+  };
+
+  const hideTabTitleInput = e => {
+    setTabTitleValue('');
+    const target = e.currentTarget.parentNode;
+    target.style.display = 'none';
+    target.parentNode.querySelector('.title-a').style.display = 'inline';
+  };
+
   const categoryList = categories.map(c => {
     const tabList = tabs
       .filter(v => v.category === c)
@@ -76,9 +102,32 @@ const Tabs = () => {
             <div className="item-content">
               <div className="item-header">
                 <div className="title">
-                  <a href={link} target={aTarget}>
+                  <a className="title-a" href={link} target={aTarget}>
                     <h3>{title}</h3>
                   </a>
+                  <Input
+                    className="title-input"
+                    type="text"
+                    placeholder="Press ENTER to save"
+                    value={tabTitleValue}
+                    onChange={e => {
+                      handleTabTitleValue(e);
+                    }}
+                    onFocus={e => {
+                      const titleValue = e.currentTarget.parentNode.parentNode.querySelector('.title-a>h3').innerText;
+                      setTabTitleValue(titleValue);
+                    }}
+                    onBlur={e => {
+                      // save state
+                      hideTabTitleInput(e);
+                    }}
+                    onKeyDown={e => {
+                      if (e.keyCode === 13) {
+                        // save state
+                        hideTabTitleInput(e);
+                      }
+                    }}
+                  />
                 </div>
                 <div
                   className="setting"
@@ -93,7 +142,15 @@ const Tabs = () => {
                 </div>
               </div>
               <div className="item-description">
-                <span>{description}</span>
+                <textarea
+                  row="2"
+                  value={descriptionValue[link] === undefined ? description : descriptionValue[link]}
+                  onChange={e => {
+                    const { value } = e.currentTarget;
+                    setDescriptionValue({ ...descriptionValue, [link]: value });
+                    // save state;
+                  }}
+                />
               </div>
             </div>
           </li>
@@ -105,7 +162,29 @@ const Tabs = () => {
         <div className="category-header">
           <div className="title">
             <h3 className="title-text">{c}</h3>
-            <Input className="title-input" type="text" placeholder="Press ENTER to save"></Input>
+            <Input
+              className="title-input"
+              type="text"
+              placeholder="Press ENTER to save"
+              value={categoryTitleValue}
+              onChange={e => {
+                handleCategoryValue(e);
+              }}
+              onFocus={e => {
+                const titleValue = e.currentTarget.parentNode.parentNode.querySelector('.title-text').innerText;
+                setCategoryTitleValue(titleValue);
+              }}
+              onBlur={e => {
+                // save state
+                hideCategoryInput(e);
+              }}
+              onKeyDown={e => {
+                if (e.keyCode === 13) {
+                  // save state
+                  hideCategoryInput(e);
+                }
+              }}
+            />
           </div>
 
           <div
@@ -151,7 +230,14 @@ const Tabs = () => {
   });
   categoryList.push(
     <li className="category-add" key="tab-category-add-row">
-      <div className="add-icon">
+      <div
+        className="add-icon"
+        role="button"
+        tabIndex="0"
+        onClick={e => {
+          // addTabCategory(`Category ${categories.length + 1}`);
+        }}
+      >
         <Icon name="plus" />
       </div>
     </li>
@@ -165,15 +251,3 @@ const Tabs = () => {
 };
 
 export default Tabs;
-
-/**
- *       onDragEnter={() => {
-        console.log('onDragEnter');
-      }}
-      onDragOver={() => {
-        // console.log('onDragOver');
-      }}
-      onDragLeave={() => {
-        console.log('onDragLeave');
-      }}
- */
