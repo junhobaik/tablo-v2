@@ -7,7 +7,7 @@ import { Icon, Input, TextArea } from 'semantic-ui-react';
 
 import './index.scss';
 import { setDragInfo, setSettingInfo } from '../../redux/actions/app';
-import { addTabItem } from '../../redux/actions/tab';
+import { addTabItem, addTabCategory } from '../../redux/actions/tab';
 
 const Tabs = () => {
   const dispatch = useDispatch();
@@ -235,7 +235,7 @@ const Tabs = () => {
         role="button"
         tabIndex="0"
         onClick={e => {
-          // addTabCategory(`Category ${categories.length + 1}`);
+          dispatch(addTabCategory(`Category ${categories.length + 1}`));
         }}
       >
         <Icon name="plus" />

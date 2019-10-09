@@ -1,7 +1,14 @@
 /* eslint-disable no-unused-vars */
 import _ from 'lodash';
 
-import { ADD_CART_ITEM, DELETE_CART_ITEM, ADD_TAB_ITEM, DELETE_TAB_CATEGORY, DELETE_TAB_ITEM } from '../actions/tab';
+import {
+  ADD_CART_ITEM,
+  DELETE_CART_ITEM,
+  ADD_TAB_ITEM,
+  DELETE_TAB_CATEGORY,
+  DELETE_TAB_ITEM,
+  ADD_TAB_CATEGORY,
+} from '../actions/tab';
 
 const tab = (state = [], action) => {
   switch (action.type) {
@@ -37,6 +44,9 @@ const tab = (state = [], action) => {
       _.remove(newState.tabs, ['category', action.category]);
       return newState;
     }
+
+    case ADD_TAB_CATEGORY:
+      return { ...state, categories: [...state.categories, action.category] };
 
     case DELETE_TAB_ITEM: {
       const newState = _.cloneDeep(state);
