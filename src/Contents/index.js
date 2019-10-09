@@ -7,7 +7,7 @@ import Tabs from './Tabs';
 import './index.scss';
 
 const Contents = () => {
-  const { windowStatus, menuOpenStatus } = useSelector(state => state.app);
+  const { windowStatus, menuOpenStatus, isMenuAlwaysOpen } = useSelector(state => state.app);
   const [paddingBottom, setPaddingBottom] = useState('0');
 
   const style = {
@@ -17,7 +17,11 @@ const Contents = () => {
   useEffect(() => {
     switch (menuOpenStatus) {
       case 'hide':
-        setPaddingBottom('3rem');
+        if (isMenuAlwaysOpen) {
+          setPaddingBottom('17rem');
+        } else {
+          setPaddingBottom('3rem');
+        }
         break;
       case 'default':
         setPaddingBottom('17rem');
@@ -28,7 +32,7 @@ const Contents = () => {
       default:
         break;
     }
-  }, [menuOpenStatus]);
+  }, [menuOpenStatus, isMenuAlwaysOpen]);
 
   return (
     <div id="Contents">
