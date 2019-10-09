@@ -1,11 +1,14 @@
 @import '../../variables.scss';
 
 #Tabs {
-  height: 100%;
-
   .category-list {
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     &,
     ul {
@@ -19,8 +22,8 @@
 
     .category {
       display: flex;
-      min-height: 6rem;
-      margin: 1rem;
+      min-height: 9rem;
+      margin: 0.5rem 1rem;
       flex-direction: column;
       border-radius: 5px;
       padding: 0.5rem 1rem;
