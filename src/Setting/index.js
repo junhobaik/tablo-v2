@@ -54,7 +54,7 @@ const Setting = () => {
           const titleA = tt.childNodes[0];
           titleA.style.display = 'inline';
           tt.childNodes[1].style.display = 'none';
-          if (settingInfo.id === tt.parentNode.parentNode.parentNode.attributes._id.value) targetTitle = tt;
+          if (settingInfo.id === tt.parentNode.parentNode.parentNode.parentNode.attributes._id.value) targetTitle = tt;
         }
         targetTitle.firstChild.style.display = 'none';
         targetTitle.lastChild.style.display = 'inline';

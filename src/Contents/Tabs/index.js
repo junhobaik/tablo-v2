@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
@@ -16,6 +17,8 @@ const Tabs = () => {
   const [categoryTitleValue, setCategoryTitleValue] = useState('');
   const [tabTitleValue, setTabTitleValue] = useState('');
   const [descriptionValue, setDescriptionValue] = useState({});
+  const [dragEl, setDragEl] = useState();
+
   const aTarget = '_blank'; //
 
   const setDragEnterStyle = (e, isEnter = true) => {
@@ -53,7 +56,7 @@ const Tabs = () => {
         x,
         y,
         isVisible: true,
-        id: e.currentTarget.parentNode.parentNode.parentNode.attributes._id.value,
+        id: e.currentTarget.parentNode.parentNode.parentNode.parentNode.attributes._id.value,
       })
     );
   };
@@ -90,83 +93,144 @@ const Tabs = () => {
     target.parentNode.querySelector('.title-a').style.display = 'inline';
   };
 
+  const categoryDragSpace = (
+    <div
+      className="category-drop-space"
+      onDragEnter={e => {
+        if (dragInfo.target === 'tab-category') e.target.style.height = '5rem';
+      }}
+      onDragOver={e => {
+        e.preventDefault();
+      }}
+      onDragLeave={e => {
+        if (dragInfo.target === 'tab-category') e.target.style.height = '0.5rem';
+      }}
+      onDrop={e => {
+        e.target.style.height = '0.5rem';
+        const space = Array.from(e.target.parentNode.querySelectorAll('.category-drop-space'));
+        const targetIndex = space.indexOf(e.target);
+        console.log(targetIndex);
+        // sort category
+      }}
+    />
+  );
+
   const categoryList = categories.map(c => {
     const tabList = tabs
       .filter(v => v.category === c)
       .map(tab => {
         const { title, link, description, id } = tab;
 
+        const getTarget = e => {
+          const els = Array.from(e.currentTarget.parentNode.querySelectorAll('.tab-item'));
+          const targetIndex = els.indexOf(e.currentTarget);
+          return els[targetIndex];
+        };
+        const setChildPointerEvent = (target, isDisabled) => {
+          for (const cn of target.childNodes) {
+            cn.style.pointerEvents = isDisabled ? 'none' : 'all';
+          }
+        };
+
         return (
           <li
             className="tab-item"
-            key={`tab-item-${id}`}
             _id={id}
+            key={`tab-item-${id}`}
             draggable
-            onDragStart={e => {
+            onDragEnter={e => {
+              if (e.target.className === 'tab-item' && dragEl !== e.currentTarget) {
+                const target = getTarget(e);
+                console.log('item dragEnter');
+                setChildPointerEvent(target, true);
+                target.style.paddingLeft = '15rem';
+              }
+            }}
+            onDragOver={e => {
+              e.preventDefault();
+            }}
+            onDragLeave={e => {
               e.stopPropagation();
+              if (e.target.className === 'tab-item') {
+                console.log('item dragLeave');
+                const target = getTarget(e);
+                setChildPointerEvent(target, false);
+                target.style.paddingLeft = '0.5rem';
+              }
+            }}
+            onDragStart={e => {
               console.log('item dragStart');
+              e.stopPropagation();
+              setDragEl(e.currentTarget);
               dispatch(setDragInfo({ id, title, link, description, target: 'tab-item' }));
             }}
             onDragEnd={e => {
-              e.stopPropagation();
               console.log('item dragEnd');
+              e.stopPropagation();
               dispatch(clearDragInfo());
             }}
+            onDrop={e => {
+              console.log('item Drop');
+              const target = getTarget(e);
+              target.style.paddingLeft = '0.5rem';
+            }}
           >
-            <div className="drag-handle"></div>
-            <div className="item-content">
-              <div className="item-header">
-                <div className="title">
-                  <a className="title-a" href={link} target={aTarget}>
-                    <h3>{title}</h3>
-                  </a>
-                  <Input
-                    className="title-input"
-                    type="text"
-                    placeholder="Press ENTER to save"
-                    value={tabTitleValue}
-                    onChange={e => {
-                      handleTabTitleValue(e);
-                    }}
-                    onFocus={e => {
-                      const titleValue = e.currentTarget.parentNode.parentNode.querySelector('.title-a>h3').innerText;
-                      setTabTitleValue(titleValue);
-                    }}
-                    onBlur={e => {
-                      dispatch(editTabItem(id, e.currentTarget.value, null));
-                      hideTabTitleInput(e);
-                    }}
-                    onKeyDown={e => {
-                      if (e.keyCode === 13) {
+            <div className="item-inner">
+              <div className="drag-handle" />
+              <div className="item-content">
+                <div className="item-header">
+                  <div className="title">
+                    <a className="title-a" href={link} target={aTarget}>
+                      <h3>{title}</h3>
+                    </a>
+                    <Input
+                      className="title-input"
+                      type="text"
+                      placeholder="Press ENTER to save"
+                      value={tabTitleValue}
+                      onChange={e => {
+                        handleTabTitleValue(e);
+                      }}
+                      onFocus={e => {
+                        const titleValue = e.currentTarget.parentNode.parentNode.querySelector('.title-a>h3').innerText;
+                        setTabTitleValue(titleValue);
+                      }}
+                      onBlur={e => {
                         dispatch(editTabItem(id, e.currentTarget.value, null));
                         hideTabTitleInput(e);
-                      }
+                      }}
+                      onKeyDown={e => {
+                        if (e.keyCode === 13) {
+                          dispatch(editTabItem(id, e.currentTarget.value, null));
+                          hideTabTitleInput(e);
+                        }
+                      }}
+                    />
+                  </div>
+                  <div
+                    className="setting"
+                    onMouseEnter={e => {
+                      tabItemSettingMouseEnter(e);
+                    }}
+                    onMouseLeave={() => {
+                      settingMouseLeave();
+                    }}
+                  >
+                    <Icon name="ellipsis horizontal" />
+                  </div>
+                </div>
+                <div className="item-description">
+                  <textarea
+                    row="2"
+                    spellCheck="false"
+                    value={descriptionValue[id] === undefined ? description : descriptionValue[id]}
+                    onChange={e => {
+                      const { value } = e.currentTarget;
+                      setDescriptionValue({ ...descriptionValue, [id]: value });
+                      dispatch(editTabItem(id, null, value));
                     }}
                   />
                 </div>
-                <div
-                  className="setting"
-                  onMouseEnter={e => {
-                    tabItemSettingMouseEnter(e);
-                  }}
-                  onMouseLeave={() => {
-                    settingMouseLeave();
-                  }}
-                >
-                  <Icon name="ellipsis horizontal" />
-                </div>
-              </div>
-              <div className="item-description">
-                <textarea
-                  row="2"
-                  spellCheck="false"
-                  value={descriptionValue[id] === undefined ? description : descriptionValue[id]}
-                  onChange={e => {
-                    const { value } = e.currentTarget;
-                    setDescriptionValue({ ...descriptionValue, [id]: value });
-                    dispatch(editTabItem(id, null, value));
-                  }}
-                />
               </div>
             </div>
           </li>
@@ -174,89 +238,93 @@ const Tabs = () => {
       });
 
     return (
-      <li
-        className="category"
-        key={`tab-category-${c}`}
-        draggable
-        onDragStart={() => {
-          console.log('category dragStart');
-        }}
-        onDragEnd={() => {
-          console.log('category dragEnd');
-        }}
-      >
-        <div className="category-header">
-          <div className="title">
-            <h3 className="title-text">{c}</h3>
-            <Input
-              className="title-input"
-              type="text"
-              placeholder="Press ENTER to save"
-              value={categoryTitleValue}
-              onChange={e => {
-                handleCategoryValue(e);
-              }}
-              onFocus={e => {
-                const titleValue = e.currentTarget.parentNode.parentNode.querySelector('.title-text').innerText;
-                setCategoryTitleValue(titleValue);
-              }}
-              onBlur={e => {
-                dispatch(editTabCategory(c, e.currentTarget.value));
-                hideCategoryInput(e);
-              }}
-              onKeyDown={e => {
-                if (e.keyCode === 13) {
+      <React.Fragment key={`${c}-fragment`}>
+        <li
+          className="category"
+          draggable
+          onDragStart={() => {
+            console.log('category dragStart');
+            dispatch(setDragInfo({ category: c, target: 'tab-category' }));
+          }}
+          onDragEnd={() => {
+            console.log('category dragEnd');
+            dispatch(clearDragInfo());
+          }}
+        >
+          <div className="category-header">
+            <div className="title">
+              <h3 className="title-text">{c}</h3>
+              <Input
+                className="title-input"
+                type="text"
+                placeholder="Press ENTER to save"
+                value={categoryTitleValue}
+                onChange={e => {
+                  handleCategoryValue(e);
+                }}
+                onFocus={e => {
+                  const titleValue = e.currentTarget.parentNode.parentNode.querySelector('.title-text').innerText;
+                  setCategoryTitleValue(titleValue);
+                }}
+                onBlur={e => {
                   dispatch(editTabCategory(c, e.currentTarget.value));
                   hideCategoryInput(e);
-                }
-              }}
-            />
-          </div>
+                }}
+                onKeyDown={e => {
+                  if (e.keyCode === 13) {
+                    dispatch(editTabCategory(c, e.currentTarget.value));
+                    hideCategoryInput(e);
+                  }
+                }}
+              />
+            </div>
 
-          <div
-            className="setting"
-            onMouseEnter={e => {
-              tabCategorySettingMouseEnter(e);
-            }}
-            onMouseLeave={() => {
-              settingMouseLeave();
-            }}
-          >
-            <Icon name="ellipsis horizontal" />
+            <div
+              className="setting"
+              onMouseEnter={e => {
+                tabCategorySettingMouseEnter(e);
+              }}
+              onMouseLeave={() => {
+                settingMouseLeave();
+              }}
+            >
+              <Icon name="ellipsis horizontal" />
+            </div>
           </div>
-        </div>
-        <div className="category-content">
-          <ul
-            className="tab-list"
-            onDragEnter={e => {
-              if (e.target.className === 'tab-list') setDragEnterStyle(e);
-              dispatch(setDragInfo({ ...dragInfo, category: c }));
-            }}
-            onDragOver={e => {
-              e.preventDefault();
-            }}
-            onDragLeave={e => {
-              if (e.target.className === 'tab-list') setDragEnterStyle(e, false);
-              dispatch(setDragInfo({ ...dragInfo, category: null }));
-            }}
-            onDrop={e => {
-              setDragEnterStyle(e, false);
-              const { link, title, description, category, target } = dragInfo;
-              if (target === 'cart-item') {
-                const id = uuidv4();
-                dispatch(addTabItem(id, link, title, description, category));
-              }
-              if (target === 'tab-item') {
-                console.log('tab-item drop');
-                //
-              }
-              dispatch(setDragInfo({ link: null, title: null, description: null, category: null }));
-            }}
-          >
-            {tabList}
-          </ul>
-        </div>
-      </li>
+          <div className="category-content">
+            <ul
+              className="tab-list"
+              onDragEnter={e => {
+                if (e.target.className === 'tab-list') setDragEnterStyle(e);
+                dispatch(setDragInfo({ ...dragInfo, category: c }));
+              }}
+              onDragOver={e => {
+                e.preventDefault();
+              }}
+              onDragLeave={e => {
+                if (e.target.className === 'tab-list') setDragEnterStyle(e, false);
+                dispatch(setDragInfo({ ...dragInfo, category: null }));
+              }}
+              onDrop={e => {
+                setDragEnterStyle(e, false);
+                const { link, title, description, category, target } = dragInfo;
+                if (target === 'cart-item') {
+                  const id = uuidv4();
+                  dispatch(addTabItem(id, link, title, description, category));
+                }
+                if (target === 'tab-item') {
+                  console.log('tab-item drop');
+                  //
+                }
+                dispatch(setDragInfo({ link: null, title: null, description: null, category: null }));
+              }}
+            >
+              {tabList}
+            </ul>
+          </div>
+        </li>
+        {categoryDragSpace}
+      </React.Fragment>
     );
   });
   categoryList.push(
@@ -276,7 +344,10 @@ const Tabs = () => {
 
   return (
     <div id="Tabs">
-      <ul className="category-list">{categoryList}</ul>
+      <ul className="category-list">
+        {categoryDragSpace}
+        {categoryList}
+      </ul>
     </div>
   );
 };
