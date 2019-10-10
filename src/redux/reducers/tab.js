@@ -65,6 +65,7 @@ const tab = (state = [], action) => {
       }
       const index = newState.categories.indexOf(action.oldCategory);
       newState.categories.splice(index, 1);
+      if (newState.categories.indexOf(action.newCategory) > -1) return newState;
       newState.categories.push(action.newCategory);
       return newState;
     }
