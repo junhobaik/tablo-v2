@@ -15,12 +15,12 @@ export const deleteCartItem = link => {
   return { type: DELETE_CART_ITEM, link };
 };
 
-export const addTabItem = (link, title, description, category) => {
-  return { type: ADD_TAB_ITEM, link, title, description, category };
+export const addTabItem = (id, link, title, description, category) => {
+  return { type: ADD_TAB_ITEM, id, link, title, description, category };
 };
 
-export const deleteTabItem = link => {
-  return { type: DELETE_TAB_ITEM, link };
+export const deleteTabItem = id => {
+  return { type: DELETE_TAB_ITEM, id };
 };
 
 export const addTabCategory = category => {
@@ -35,6 +35,6 @@ export const editTabCategory = (oldCategory, newCategory) => {
   return { type: EDIT_TAB_CATEGORY, oldCategory, newCategory };
 };
 
-export const editTabItem = (link, title, description) => {
-  return { type: EDIT_TAB_ITEM, link, title, description };
+export const editTabItem = (id, title, description) => {
+  return { type: EDIT_TAB_ITEM, id, title, description };
 };

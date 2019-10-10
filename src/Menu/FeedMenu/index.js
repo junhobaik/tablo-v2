@@ -32,7 +32,7 @@ const FeedMenu = () => {
         x,
         y,
         isVisible: true,
-        url: e.currentTarget.parentNode.querySelector('a').href,
+        id: e.currentTarget.parentNode.attributes.id.value,
       })
     );
   };
@@ -73,17 +73,17 @@ const FeedMenu = () => {
 
   const submitTitleEdit = e => {
     if (e.keyCode === 13) {
-      const url = e.currentTarget.parentNode.parentNode.parentNode.parentNode.attributes.url.value;
-      dispatch(editFeed(url, e.currentTarget.value));
+      const id = e.currentTarget.parentNode.parentNode.parentNode.parentNode.attributes.id.value;
+      dispatch(editFeed(id, e.currentTarget.value));
       hideEdit(e);
     }
   };
 
   const saveEdit = e => {
-    const url = e.currentTarget.parentNode.parentNode.parentNode.parentNode.attributes.url.value;
+    const id = e.currentTarget.parentNode.parentNode.parentNode.parentNode.attributes.id.value;
     const title = titleValue === '' ? null : titleValue;
     const category = newCategoryValue !== '' ? newCategoryValue : categoryValue;
-    dispatch(editFeed(url, title, category));
+    dispatch(editFeed(id, title, category));
     hideEdit(e);
     forceUpdate();
   };
@@ -94,9 +94,9 @@ const FeedMenu = () => {
 
   const toggleFeedVisible = (e, currentIsHide) => {
     const target = e.currentTarget;
-    const url = target.parentNode.attributes.url.value;
+    const id = target.parentNode.attributes.id.value;
 
-    dispatch(editFeed(url, null, null, !currentIsHide));
+    dispatch(editFeed(id, null, null, !currentIsHide));
     forceUpdate();
   };
 
@@ -136,14 +136,14 @@ const FeedMenu = () => {
   categories.add('new');
 
   const feedList = feeds.map(feed => {
-    const { url, title, category, isHide } = feed;
+    const { id, url, title, category, isHide } = feed;
     const options = Array.from(categories).map(c => {
       if (c === 'new') return { key: c, text: '+ New Category', value: c };
       return { key: c, text: c, value: c };
     });
 
     return (
-      <div className="feed" key={`${url}-feed`} category={category} url={url}>
+      <div className="feed" key={`${id}-feed`} category={category} id={id}>
         <div
           key={`${url}-visible`}
           className="feed-visible"

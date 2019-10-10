@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
@@ -16,7 +17,7 @@ const Setting = () => {
     switch (settingInfo.target) {
       case 'feed': {
         const feeds = Array.from(document.querySelectorAll('.feed'));
-        const targetFeed = feeds.filter(feed => feed.attributes.url.value === settingInfo.url)[0];
+        const targetFeed = feeds.filter(feed => feed.attributes.id.value === settingInfo.id)[0];
         targetFeed.style.width = '24rem';
         targetFeed.style.maxWidth = '24rem';
         targetFeed.querySelector('.title-a').style.display = 'none';
@@ -53,7 +54,7 @@ const Setting = () => {
           const titleA = tt.childNodes[0];
           titleA.style.display = 'inline';
           tt.childNodes[1].style.display = 'none';
-          if (settingInfo.link === titleA.href) targetTitle = tt;
+          if (settingInfo.id === tt.parentNode.parentNode.parentNode.attributes._id.value) targetTitle = tt;
         }
         targetTitle.firstChild.style.display = 'none';
         targetTitle.lastChild.style.display = 'inline';
@@ -76,7 +77,7 @@ const Setting = () => {
         dispatch(deleteTabCategory(settingInfo.category));
         break;
       case 'tab-item':
-        dispatch(deleteTabItem(settingInfo.link));
+        dispatch(deleteTabItem(settingInfo.id));
         break;
       default:
         break;

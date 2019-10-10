@@ -35,13 +35,19 @@ const tab = (state = [], action) => {
         ...state,
         tabs: [
           ...state.tabs,
-          { link: action.link, title: action.title, description: action.description, category: action.category },
+          {
+            id: action.id,
+            link: action.link,
+            title: action.title,
+            description: action.description,
+            category: action.category,
+          },
         ],
       };
 
     case EDIT_TAB_ITEM: {
       const newState = _.cloneDeep(state);
-      const index = _.findIndex(newState.tabs, ['link', action.link]);
+      const index = _.findIndex(newState.tabs, ['id', action.id]);
       const title = !action.title ? newState.tabs[index].title : action.title;
       const description =
         action.description || action.description === '' ? action.description : newState.tabs[index].description;

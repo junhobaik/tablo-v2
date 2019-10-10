@@ -1,26 +1,20 @@
 import _ from 'lodash';
-
-import {
-  ADD_FEED,
-  EDIT_FEED,
-  DELETE_FEED,
-  CLEAR_FEEDS,
-  DELETE_CATEGORY,
-  EDIT_CATEGORY,
-} from '../actions/feed';
+import uuidv4 from 'uuid/v4';
+import { ADD_FEED, EDIT_FEED, DELETE_FEED, CLEAR_FEEDS, DELETE_CATEGORY, EDIT_CATEGORY } from '../actions/feed';
 
 const feed = (state = [], action) => {
   switch (action.type) {
     case ADD_FEED: {
+      const id = uuidv4();
       let link = action.url.split('/');
       link.pop();
       link = link.join('/');
-      return [...state, { url: action.url, link, title: action.title, category: action.category, isHide: false }];
+      return [...state, { id, url: action.url, link, title: action.title, category: action.category, isHide: false }];
     }
 
     case EDIT_FEED: {
       const newState = _.cloneDeep(state);
-      const index = _.findIndex(newState, ['url', action.url]);
+      const index = _.findIndex(newState, ['id', action.id]);
       const originFeed = state[index];
       newState.splice(index, 1, {
         ...originFeed,
@@ -33,7 +27,7 @@ const feed = (state = [], action) => {
 
     case DELETE_FEED: {
       const newState = _.cloneDeep(state);
-      _.remove(newState, ['url', action.url]);
+      _.remove(newState, ['id', action.id]);
       return newState;
     }
 

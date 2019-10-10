@@ -1,9 +1,11 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Icon, Input, TextArea } from 'semantic-ui-react';
+import { Icon, Input } from 'semantic-ui-react';
+import uuidv4 from 'uuid/v4';
 
 import './index.scss';
 import { setDragInfo, setSettingInfo } from '../../redux/actions/app';
@@ -53,7 +55,7 @@ const Tabs = () => {
         x,
         y,
         isVisible: true,
-        link: e.currentTarget.parentNode.querySelector('a').href,
+        id: e.currentTarget.parentNode.parentNode.parentNode.attributes._id.value,
       })
     );
   };
@@ -95,9 +97,10 @@ const Tabs = () => {
     const tabList = tabs
       .filter(v => v.category === c)
       .map((tab, i) => {
-        const { title, link, description } = tab;
+        const { title, link, description, id } = tab;
+
         return (
-          <li className="tab-item" key={`tab-item-${tab.link}-${i}`}>
+          <li className="tab-item" key={`tab-item-${id}`} _id={id}>
             <div className="drag-handle"></div>
             <div className="item-content">
               <div className="item-header">
@@ -118,12 +121,12 @@ const Tabs = () => {
                       setTabTitleValue(titleValue);
                     }}
                     onBlur={e => {
-                      dispatch(editTabItem(link, e.currentTarget.value, null));
+                      dispatch(editTabItem(id, e.currentTarget.value, null));
                       hideTabTitleInput(e);
                     }}
                     onKeyDown={e => {
                       if (e.keyCode === 13) {
-                        dispatch(editTabItem(link, e.currentTarget.value, null));
+                        dispatch(editTabItem(id, e.currentTarget.value, null));
                         hideTabTitleInput(e);
                       }
                     }}
@@ -145,11 +148,11 @@ const Tabs = () => {
                 <textarea
                   row="2"
                   spellCheck="false"
-                  value={descriptionValue[link] === undefined ? description : descriptionValue[link]}
+                  value={descriptionValue[id] === undefined ? description : descriptionValue[id]}
                   onChange={e => {
                     const { value } = e.currentTarget;
-                    setDescriptionValue({ ...descriptionValue, [link]: value });
-                    dispatch(editTabItem(link, null, value));
+                    setDescriptionValue({ ...descriptionValue, [id]: value });
+                    dispatch(editTabItem(id, null, value));
                   }}
                 />
               </div>
@@ -226,7 +229,8 @@ const Tabs = () => {
               setDragEnterStyle(e, false);
               const { link, title, description, category } = dragInfo;
               if (link && title && description && category) {
-                dispatch(addTabItem(link, title, description, category));
+                const id = uuidv4();
+                dispatch(addTabItem(id, link, title, description, category));
               }
               dispatch(setDragInfo({ link: null, title: null, description: null, category: null }));
             }}

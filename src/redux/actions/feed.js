@@ -9,12 +9,12 @@ export const addFeed = (url, title, category) => {
   return { type: ADD_FEED, url, title, category };
 };
 
-export const editFeed = (url, title, cateogry, isHide) => {
-  return { type: EDIT_FEED, url, title, cateogry, isHide };
+export const editFeed = (id, title, cateogry, isHide) => {
+  return { type: EDIT_FEED, id, title, cateogry, isHide };
 };
 
-export const deleteFeed = url => {
-  return { type: DELETE_FEED, url };
+export const deleteFeed = id => {
+  return { type: DELETE_FEED, id };
 };
 
 export const deleteCategory = category => {
