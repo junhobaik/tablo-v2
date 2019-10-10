@@ -1,7 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Icon, Input } from 'semantic-ui-react';
@@ -81,7 +78,6 @@ const Tabs = () => {
   const hideCategoryInput = e => {
     setCategoryTitleValue('');
     const target = e.currentTarget.parentNode;
-    console.log(target);
     target.style.display = 'none';
     target.parentNode.querySelector('.title-text').style.display = 'inline';
   };
@@ -96,7 +92,7 @@ const Tabs = () => {
   const categoryList = categories.map(c => {
     const tabList = tabs
       .filter(v => v.category === c)
-      .map((tab, i) => {
+      .map(tab => {
         const { title, link, description, id } = tab;
 
         return (
@@ -247,7 +243,7 @@ const Tabs = () => {
         className="add-icon"
         role="button"
         tabIndex="0"
-        onClick={e => {
+        onClick={() => {
           dispatch(addTabCategory(`Category ${categories.length + 1}`));
         }}
       >
