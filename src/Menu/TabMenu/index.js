@@ -6,11 +6,10 @@ import { Icon } from 'semantic-ui-react';
 
 import './index.scss';
 import { deleteCartItem } from '../../redux/actions/tab';
-import { setDragInfo } from '../../redux/actions/app';
+import { setDragInfo, clearDragInfo } from '../../redux/actions/app';
 
 const TabMenu = () => {
   const dispatch = useDispatch();
-  const [dragTarget, setDragTarget] = useState();
   const { cart } = useSelector(state => state.tab);
   const linkMethod = useSelector(state => state.app.linkMethod.tab);
   const aTarget = linkMethod === 'blank' ? '_blank' : '_self';
@@ -25,11 +24,11 @@ const TabMenu = () => {
         draggable
         onDragStart={e => {
           console.log('dragStart', e.currentTarget.querySelector('a').href);
-          dispatch(setDragInfo({ link, title, description }));
+          dispatch(setDragInfo({ link, title, description, target: 'cart-item' }));
         }}
         onDragEnd={e => {
           console.log('dragEnd');
-          dispatch(setDragInfo({ link: null, title: null, description: null }));
+          dispatch(clearDragInfo());
         }}
       >
         <div className="drag-handle"></div>

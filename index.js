@@ -77,6 +77,8 @@ const loadState = () => {
         y: 0,
       },
       dragInfo: {
+        target: null,
+        id: null,
         link: null,
         title: null,
         description: null,

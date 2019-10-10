@@ -10,6 +10,7 @@ import {
   DELETE_HIDE_CATEGORY,
   TOGGLE_FEED_ITEM_MINIMIZE,
   SET_DRAG_INFO,
+  CLEAR_DRAG_INFO,
 } from '../actions/app';
 
 const app = (state = [], action) => {
@@ -39,10 +40,17 @@ const app = (state = [], action) => {
       return { ...state, settingInfo: { ...state.settingInfo, ...action.info } };
 
     case SET_DRAG_INFO: {
-      const { link, title, description } = action.info;
+      const { id, link, title, description, target } = action.info;
       let { category } = action.info;
       if (!category) category = null;
-      return { ...state, dragInfo: { ...state.dragInfo, link, title, description, category } };
+      return { ...state, dragInfo: { ...state.dragInfo, id, link, title, description, category, target } };
+    }
+
+    case CLEAR_DRAG_INFO: {
+      return {
+        ...state,
+        dragInfo: { target: null, id: null, link: null, title: null, description: null, category: null },
+      };
     }
 
     case ADD_HIDE_CATEGORY: {

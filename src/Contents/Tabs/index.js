@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -5,7 +6,7 @@ import { Icon, Input } from 'semantic-ui-react';
 import uuidv4 from 'uuid/v4';
 
 import './index.scss';
-import { setDragInfo, setSettingInfo } from '../../redux/actions/app';
+import { setDragInfo, setSettingInfo, clearDragInfo } from '../../redux/actions/app';
 import { addTabItem, addTabCategory, editTabItem, editTabCategory } from '../../redux/actions/tab';
 
 const Tabs = () => {
@@ -96,7 +97,22 @@ const Tabs = () => {
         const { title, link, description, id } = tab;
 
         return (
-          <li className="tab-item" key={`tab-item-${id}`} _id={id}>
+          <li
+            className="tab-item"
+            key={`tab-item-${id}`}
+            _id={id}
+            draggable
+            onDragStart={e => {
+              e.stopPropagation();
+              console.log('item dragStart');
+              dispatch(setDragInfo({ id, title, link, description, target: 'tab-item' }));
+            }}
+            onDragEnd={e => {
+              e.stopPropagation();
+              console.log('item dragEnd');
+              dispatch(clearDragInfo());
+            }}
+          >
             <div className="drag-handle"></div>
             <div className="item-content">
               <div className="item-header">
@@ -158,7 +174,17 @@ const Tabs = () => {
       });
 
     return (
-      <li className="category" key={`tab-category-${c}`}>
+      <li
+        className="category"
+        key={`tab-category-${c}`}
+        draggable
+        onDragStart={() => {
+          console.log('category dragStart');
+        }}
+        onDragEnd={() => {
+          console.log('category dragEnd');
+        }}
+      >
         <div className="category-header">
           <div className="title">
             <h3 className="title-text">{c}</h3>
@@ -215,10 +241,14 @@ const Tabs = () => {
             }}
             onDrop={e => {
               setDragEnterStyle(e, false);
-              const { link, title, description, category } = dragInfo;
-              if (link && title && description && category) {
+              const { link, title, description, category, target } = dragInfo;
+              if (target === 'cart-item') {
                 const id = uuidv4();
                 dispatch(addTabItem(id, link, title, description, category));
+              }
+              if (target === 'tab-item') {
+                console.log('tab-item drop');
+                //
               }
               dispatch(setDragInfo({ link: null, title: null, description: null, category: null }));
             }}
