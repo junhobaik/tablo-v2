@@ -83,7 +83,7 @@ const tab = (state = [], action) => {
 
     case DELETE_TAB_ITEM: {
       const newState = _.cloneDeep(state);
-      _.remove(newState.tabs, ['link', action.link]);
+      _.remove(newState.tabs, ['id', action.id]);
       return newState;
     }
 

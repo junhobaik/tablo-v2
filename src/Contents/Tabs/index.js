@@ -21,9 +21,8 @@ const Tabs = () => {
 
   const aTarget = '_blank'; //
 
-  const setDragEnterStyle = (e, isEnter = true) => {
-    const target = e.currentTarget;
-
+  const setDragEnterStyle = (_target, isEnter = true) => {
+    const target = _target;
     if (isEnter) {
       target.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
       target.style.boxShadow = 'inset 0 0 2px rgba(0, 0, 0, 0.2)';
@@ -121,119 +120,117 @@ const Tabs = () => {
       .map(tab => {
         const { title, link, description, id } = tab;
 
-        const getTarget = e => {
-          const els = Array.from(e.currentTarget.parentNode.querySelectorAll('.tab-item'));
+        const getTarget = (e, isReturnIndex = false) => {
+          const els = Array.from(e.currentTarget.parentNode.querySelectorAll('.tab-item-wrap'));
           const targetIndex = els.indexOf(e.currentTarget);
+          if (isReturnIndex) return targetIndex;
           return els[targetIndex];
-        };
-        const setChildPointerEvent = (target, isDisabled) => {
-          for (const cn of target.childNodes) {
-            cn.style.pointerEvents = isDisabled ? 'none' : 'all';
-          }
         };
 
         return (
-          <li
-            className="tab-item"
-            _id={id}
+          <div
+            className="tab-item-wrap"
             key={`tab-item-${id}`}
-            draggable
             onDragEnter={e => {
-              if (e.target.className === 'tab-item' && dragEl !== e.currentTarget) {
-                const target = getTarget(e);
-                console.log('item dragEnter');
-                setChildPointerEvent(target, true);
+              const target = e.currentTarget;
+              if (dragEl !== target.firstChild) {
                 target.style.paddingLeft = '15rem';
+                setDragEnterStyle(target.parentNode, true);
               }
-            }}
-            onDragOver={e => {
-              e.preventDefault();
             }}
             onDragLeave={e => {
-              e.stopPropagation();
-              if (e.target.className === 'tab-item') {
-                console.log('item dragLeave');
+              if (e.target.className === 'tab-item-wrap') {
                 const target = getTarget(e);
-                setChildPointerEvent(target, false);
                 target.style.paddingLeft = '0.5rem';
+                setDragEnterStyle(target.parentNode, false);
               }
             }}
-            onDragStart={e => {
-              console.log('item dragStart');
-              e.stopPropagation();
-              setDragEl(e.currentTarget);
-              dispatch(setDragInfo({ id, title, link, description, target: 'tab-item' }));
-            }}
-            onDragEnd={e => {
-              console.log('item dragEnd');
-              e.stopPropagation();
-              dispatch(clearDragInfo());
-            }}
             onDrop={e => {
-              console.log('item Drop');
-              const target = getTarget(e);
-              target.style.paddingLeft = '0.5rem';
+              const targetIndex = getTarget(e, true);
+              e.currentTarget.style.paddingLeft = '0.5rem';
+              // redux item 이동
             }}
           >
-            <div className="item-inner">
-              <div className="drag-handle" />
-              <div className="item-content">
-                <div className="item-header">
-                  <div className="title">
-                    <a className="title-a" href={link} target={aTarget}>
-                      <h3>{title}</h3>
-                    </a>
-                    <Input
-                      className="title-input"
-                      type="text"
-                      placeholder="Press ENTER to save"
-                      value={tabTitleValue}
-                      onChange={e => {
-                        handleTabTitleValue(e);
-                      }}
-                      onFocus={e => {
-                        const titleValue = e.currentTarget.parentNode.parentNode.querySelector('.title-a>h3').innerText;
-                        setTabTitleValue(titleValue);
-                      }}
-                      onBlur={e => {
-                        dispatch(editTabItem(id, e.currentTarget.value, null));
-                        hideTabTitleInput(e);
-                      }}
-                      onKeyDown={e => {
-                        if (e.keyCode === 13) {
+            <li
+              className="tab-item"
+              _id={id}
+              draggable
+              onDragOver={e => {
+                e.preventDefault();
+              }}
+              onDragStart={e => {
+                console.log('item dragStart');
+                e.stopPropagation();
+                setDragEl(e.currentTarget);
+                dispatch(setDragInfo({ id, title, link, description, target: 'tab-item' }));
+              }}
+              onDragEnd={e => {
+                console.log('item dragEnd');
+                e.stopPropagation();
+                dispatch(clearDragInfo());
+              }}
+            >
+              <div className="item-inner">
+                <div className="drag-handle" />
+                <div className="item-content">
+                  <div className="item-header">
+                    <div className="title">
+                      <a className="title-a" href={link} target={aTarget}>
+                        <h3>{title}</h3>
+                      </a>
+                      <Input
+                        className="title-input"
+                        type="text"
+                        placeholder="Press ENTER to save"
+                        value={tabTitleValue}
+                        onChange={e => {
+                          handleTabTitleValue(e);
+                        }}
+                        onFocus={e => {
+                          const titleValue = e.currentTarget.parentNode.parentNode.querySelector('.title-a>h3')
+                            .innerText;
+                          setTabTitleValue(titleValue);
+                        }}
+                        onBlur={e => {
                           dispatch(editTabItem(id, e.currentTarget.value, null));
                           hideTabTitleInput(e);
-                        }
+                        }}
+                        onKeyDown={e => {
+                          if (e.keyCode === 13) {
+                            dispatch(editTabItem(id, e.currentTarget.value, null));
+                            hideTabTitleInput(e);
+                          }
+                        }}
+                      />
+                    </div>
+                    <div
+                      className="setting"
+                      onMouseEnter={e => {
+                        tabItemSettingMouseEnter(e);
+                      }}
+                      onMouseLeave={() => {
+                        settingMouseLeave();
+                      }}
+                    >
+                      <Icon name="ellipsis horizontal" />
+                    </div>
+                  </div>
+                  <div className="item-description">
+                    <textarea
+                      row="2"
+                      spellCheck="false"
+                      value={descriptionValue[id] === undefined ? description : descriptionValue[id]}
+                      onChange={e => {
+                        const { value } = e.currentTarget;
+                        setDescriptionValue({ ...descriptionValue, [id]: value });
+                        dispatch(editTabItem(id, null, value));
                       }}
                     />
                   </div>
-                  <div
-                    className="setting"
-                    onMouseEnter={e => {
-                      tabItemSettingMouseEnter(e);
-                    }}
-                    onMouseLeave={() => {
-                      settingMouseLeave();
-                    }}
-                  >
-                    <Icon name="ellipsis horizontal" />
-                  </div>
-                </div>
-                <div className="item-description">
-                  <textarea
-                    row="2"
-                    spellCheck="false"
-                    value={descriptionValue[id] === undefined ? description : descriptionValue[id]}
-                    onChange={e => {
-                      const { value } = e.currentTarget;
-                      setDescriptionValue({ ...descriptionValue, [id]: value });
-                      dispatch(editTabItem(id, null, value));
-                    }}
-                  />
                 </div>
               </div>
-            </div>
-          </li>
+            </li>
+          </div>
         );
       });
 
@@ -295,18 +292,18 @@ const Tabs = () => {
             <ul
               className="tab-list"
               onDragEnter={e => {
-                if (e.target.className === 'tab-list') setDragEnterStyle(e);
+                if (e.target.className === 'tab-list') setDragEnterStyle(e.currentTarget);
                 dispatch(setDragInfo({ ...dragInfo, category: c }));
               }}
               onDragOver={e => {
                 e.preventDefault();
               }}
               onDragLeave={e => {
-                if (e.target.className === 'tab-list') setDragEnterStyle(e, false);
+                if (e.target.className === 'tab-list') setDragEnterStyle(e.currentTarget, false);
                 dispatch(setDragInfo({ ...dragInfo, category: null }));
               }}
               onDrop={e => {
-                setDragEnterStyle(e, false);
+                setDragEnterStyle(e.currentTarget, false);
                 const { link, title, description, category, target } = dragInfo;
                 if (target === 'cart-item') {
                   const id = uuidv4();
