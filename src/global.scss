@@ -1,8 +1,77 @@
-#App {  
+#App {
   div[role='button'],
   button {
     &:focus {
       outline: 0;
+    }
+  }
+
+  .item-style {
+    border-radius: 5px;
+    transition: 0.3s;
+    list-style: none;
+
+    .item-inner {
+      display: flex;
+      background-color: #fff;
+      list-style: none;
+      width: 14rem;
+      max-width: 14rem;
+      max-height: 7rem;
+      border-radius: 3px;
+      border: 1px solid rgba(20, 101, 192, 0.5);
+
+      .drag-handle {
+        cursor: grab;
+        min-width: 1rem;
+        background-color: rgba(20, 101, 192, 0.7);
+        &:active {
+          cursor: grabbing;
+        }
+        &:focus:hover {
+          cursor: grabbing;
+        }
+      }
+
+      .item-content {
+        flex-grow: 1;
+        margin: 0.25rem;
+
+        .item-header {
+          display: flex;
+
+          .title {
+            display: flex;
+            min-height: 1.5rem;
+            flex-grow: 1;
+            margin-bottom: 0.25rem;
+            line-height: 1rem;
+            align-items: flex-start;
+
+            a {
+              padding-top: 0.2rem;
+
+              h3 {
+                display: inline;
+                font-size: 0.9rem;
+                line-height: 1.1rem;
+              }
+            }
+          }
+        }
+
+        .item-description {
+          font-size: 0.8rem;
+          opacity: 0.6;
+
+          span {
+            display: inline-block;
+            line-height: 1rem;
+            max-height: 2rem;
+            overflow: hidden;
+          }
+        }
+      }
     }
   }
 }

@@ -18,7 +18,7 @@ const TabMenu = () => {
     const { link, title, description } = item;
     return (
       <li
-        className="cart-item"
+        className="cart-item item-style"
         // eslint-disable-next-line react/no-array-index-key
         key={`${link}-${i}`}
         draggable
@@ -31,27 +31,29 @@ const TabMenu = () => {
           dispatch(clearDragInfo());
         }}
       >
-        <div className="drag-handle"></div>
-        <div className="item-content">
-          <div className="cart-item-header">
-            <div className="title">
-              <a href={link} target={aTarget}>
-                <h3>{title}</h3>
-              </a>
+        <div className="item-inner">
+          <div className="drag-handle"></div>
+          <div className="item-content">
+            <div className="item-header">
+              <div className="title">
+                <a href={link} target={aTarget}>
+                  <h3>{title}</h3>
+                </a>
+              </div>
+              <div
+                className="icon-wrap"
+                role="button"
+                tabIndex="0"
+                onClick={() => {
+                  dispatch(deleteCartItem(link));
+                }}
+              >
+                <Icon name="cancel" />
+              </div>
             </div>
-            <div
-              className="icon-wrap"
-              role="button"
-              tabIndex="0"
-              onClick={() => {
-                dispatch(deleteCartItem(link));
-              }}
-            >
-              <Icon name="cancel" />
+            <div className="item-description">
+              <span>{description}</span>
             </div>
-          </div>
-          <div className="cart-item-description">
-            <span>{description}</span>
           </div>
         </div>
       </li>

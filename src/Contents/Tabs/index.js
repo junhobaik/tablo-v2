@@ -167,7 +167,7 @@ const Tabs = () => {
             }}
           >
             <li
-              className="tab-item"
+              className="tab-item item-style"
               _id={id}
               draggable
               onDragOver={e => {
