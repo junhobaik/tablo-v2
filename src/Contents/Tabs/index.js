@@ -45,6 +45,7 @@ const Tabs = () => {
         x,
         y,
         isVisible: true,
+        category: e.currentTarget.parentNode.querySelector('h3').innerText,
       })
     );
   };
