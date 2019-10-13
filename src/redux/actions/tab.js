@@ -16,8 +16,8 @@ export const deleteCartItem = link => {
   return { type: DELETE_CART_ITEM, link };
 };
 
-export const addTabItem = (id, link, title, description, category) => {
-  return { type: ADD_TAB_ITEM, id, link, title, description, category };
+export const addTabItem = (id, link, title, description, category, index) => {
+  return { type: ADD_TAB_ITEM, id, link, title, description, category, index };
 };
 
 export const deleteTabItem = id => {

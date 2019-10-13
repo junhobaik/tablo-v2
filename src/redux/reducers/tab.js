@@ -31,7 +31,22 @@ const tab = (state = [], action) => {
       return newState;
     }
 
-    case ADD_TAB_ITEM:
+    case ADD_TAB_ITEM: {
+      if (action.index !== undefined) {
+        const newState = _.cloneDeep(state);
+        const categoryTabs = _.cloneDeep(_.filter(newState.tabs, ['category', action.category]));
+        const elseTabs = _.cloneDeep(_.filter(newState.tabs, v => v.category !== action.category));
+        categoryTabs.splice(action.index, 0, {
+          id: action.id,
+          link: action.link,
+          title: action.title,
+          description: action.description,
+          category: action.category,
+        });
+        newState.tabs = [...categoryTabs, ...elseTabs];
+        return newState;
+      }
+
       return {
         ...state,
         tabs: [
@@ -45,6 +60,7 @@ const tab = (state = [], action) => {
           },
         ],
       };
+    }
 
     case EDIT_TAB_ITEM: {
       const newState = _.cloneDeep(state);

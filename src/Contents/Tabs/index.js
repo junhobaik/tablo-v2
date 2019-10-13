@@ -151,11 +151,17 @@ const Tabs = () => {
               }
             }}
             onDrop={e => {
+              console.log('drop tab-item, target: ', dragInfo.target);
+              e.stopPropagation();
               const targetIndex = getTarget(e, true);
               e.currentTarget.style.paddingLeft = '0.5rem';
               e.currentTarget.firstChild.style.pointerEvents = 'all';
 
-              dispatch(moveTabItem(dragInfo.id, c, targetIndex));
+              if (dragInfo.target === 'tab-item') {
+                dispatch(moveTabItem(dragInfo.id, c, targetIndex));
+              } else if (dragInfo.target === 'cart-item') {
+                dispatch(addTabItem(uuidv4(), dragInfo.link, dragInfo.title, dragInfo.description, c, targetIndex));
+              }
               setDragEnterStyle(e.currentTarget, false);
             }}
           >
@@ -311,6 +317,7 @@ const Tabs = () => {
                 dispatch(setDragInfo({ ...dragInfo, category: null }));
               }}
               onDrop={e => {
+                console.log('drop tab-list');
                 setDragEnterStyle(e.currentTarget, false);
                 const { link, title, description, category, target } = dragInfo;
                 if (target === 'cart-item') {
