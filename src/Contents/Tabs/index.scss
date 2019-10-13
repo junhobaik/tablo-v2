@@ -75,8 +75,12 @@
           // padding-top: 0.5rem;
 
           .tab-item-wrap {
+            border-radius: 5px;
             padding: 0.5rem;
             transition: 0.3s;
+            display: flex;
+            justify-content: flex-end;
+            max-width: 30rem;
           }
           .tab-item {
             border-radius: 5px;

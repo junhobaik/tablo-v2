@@ -138,7 +138,7 @@ const Tabs = () => {
             onDragEnter={e => {
               const target = e.currentTarget;
               if (dragEl !== target.firstChild) {
-                target.style.paddingLeft = '15rem';
+                target.style.flexGrow = '1';
                 target.firstChild.style.pointerEvents = 'none';
                 setDragEnterStyle(target, true);
               }
@@ -146,7 +146,7 @@ const Tabs = () => {
             onDragLeave={e => {
               if (e.target.className === 'tab-item-wrap') {
                 const target = getTarget(e);
-                target.style.paddingLeft = '0.5rem';
+                target.style.flexGrow = '0';
                 target.firstChild.style.pointerEvents = 'all';
                 setDragEnterStyle(target, false);
               }
@@ -155,7 +155,7 @@ const Tabs = () => {
               console.log('drop tab-item, target: ', dragInfo.target);
               e.stopPropagation();
               const targetIndex = getTarget(e, true);
-              e.currentTarget.style.paddingLeft = '0.5rem';
+              e.currentTarget.style.flexGrow = '0';
               e.currentTarget.firstChild.style.pointerEvents = 'all';
 
               if (dragInfo.target === 'tab-item') {
