@@ -327,7 +327,7 @@ const Tabs = () => {
                 }
                 if (target === 'tab-item') {
                   // console.log(e.currentTarget.childNodes.length);
-                  dispatch(moveTabItem(dragInfo.id, category, e.currentTarget.childNodes.length - 1));
+                  dispatch(moveTabItem(dragInfo.id, category, e.currentTarget.childNodes.length));
                 }
                 dispatch(setDragInfo({ link: null, title: null, description: null, category: null }));
               }}
