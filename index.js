@@ -13,14 +13,14 @@ const tab = {
   categories: ['Inbox', 'cateogry2'],
   tabs: [
     {
-      id: 1,
+      id: "id1",
       link: 'https://junhobaik.github.io',
       title: 'BLOG',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, eum?',
       category: 'Inbox',
     },
     {
-      id: 2,
+      id: 'id2',
       link: 'https://junhobaik.github.io/rss',
       title: 'BLOG RSS',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, eum?',
@@ -44,7 +44,7 @@ const loadState = () => {
   if (feedState === null) {
     feed = [
       {
-        id: 12345,
+        id: 'id12345',
         link: 'https://junhobaik.github.io',
         url: 'https://junhobaik.github.io/rss',
         title: 'junhobaik.github.io',
