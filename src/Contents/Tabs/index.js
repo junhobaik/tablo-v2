@@ -173,13 +173,13 @@ const Tabs = () => {
                 e.preventDefault();
               }}
               onDragStart={e => {
-                console.log('item dragStart');
+                console.log('dragStart tab-item');
                 e.stopPropagation();
                 setDragEl(e.currentTarget);
                 dispatch(setDragInfo({ id, title, link, description, target: 'tab-item' }));
               }}
               onDragEnd={e => {
-                console.log('item dragEnd');
+                console.log('dragEnd tab-item');
                 e.stopPropagation();
                 dispatch(clearDragInfo());
               }}
@@ -254,11 +254,11 @@ const Tabs = () => {
           className="category"
           draggable
           onDragStart={() => {
-            console.log('category dragStart');
+            console.log('dragStart category');
             dispatch(setDragInfo({ category: c, target: 'tab-category' }));
           }}
           onDragEnd={() => {
-            console.log('category dragEnd');
+            console.log('dragEnd category');
             dispatch(clearDragInfo());
           }}
         >
@@ -325,8 +325,8 @@ const Tabs = () => {
                   dispatch(addTabItem(id, link, title, description, category));
                 }
                 if (target === 'tab-item') {
-                  console.log('tab-item drop');
-                  //
+                  // console.log(e.currentTarget.childNodes.length);
+                  dispatch(moveTabItem(dragInfo.id, category, e.currentTarget.childNodes.length - 1));
                 }
                 dispatch(setDragInfo({ link: null, title: null, description: null, category: null }));
               }}
