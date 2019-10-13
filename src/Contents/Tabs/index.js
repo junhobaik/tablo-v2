@@ -27,7 +27,11 @@ const Tabs = () => {
       target.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
       target.style.boxShadow = 'inset 0 0 2px rgba(0, 0, 0, 0.2)';
     } else {
-      target.style.backgroundColor = '#fff';
+      if (target.className === 'tab-list') {
+        target.style.backgroundColor = '#fff';
+      } else {
+        target.style.backgroundColor = 'transparent';
+      }
       target.style.boxShadow = 'none';
     }
   };
@@ -135,7 +139,7 @@ const Tabs = () => {
               if (dragEl !== target.firstChild) {
                 target.style.paddingLeft = '15rem';
                 target.firstChild.style.pointerEvents = 'none';
-                setDragEnterStyle(target.parentNode, true);
+                setDragEnterStyle(target, true);
               }
             }}
             onDragLeave={e => {
@@ -143,14 +147,16 @@ const Tabs = () => {
                 const target = getTarget(e);
                 target.style.paddingLeft = '0.5rem';
                 target.firstChild.style.pointerEvents = 'all';
-                setDragEnterStyle(target.parentNode, false);
+                setDragEnterStyle(target, false);
               }
             }}
             onDrop={e => {
               const targetIndex = getTarget(e, true);
-              e.currentTarget.firstChild.style.pointerEvents = 'all';
               e.currentTarget.style.paddingLeft = '0.5rem';
+              e.currentTarget.firstChild.style.pointerEvents = 'all';
+
               dispatch(moveTabItem(dragInfo.id, c, targetIndex));
+              setDragEnterStyle(e.currentTarget, false);
             }}
           >
             <li
