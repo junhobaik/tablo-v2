@@ -54,15 +54,17 @@ const app = (state = [], action) => {
     }
 
     case ADD_HIDE_CATEGORY: {
-      const { hideCategories } = state;
+      const newState = _.cloneDeep(state);
+      const { hideCategories } = newState;
       hideCategories.push(action.category);
-      return { ...state, hideCategories };
+      return newState;
     }
 
     case DELETE_HIDE_CATEGORY: {
-      const { hideCategories } = state;
+      const newState = _.cloneDeep(state);
+      const { hideCategories } = newState;
       _.remove(hideCategories, c => c === action.category);
-      return { ...state, hideCategories };
+      return newState;
     }
 
     case TOGGLE_FEED_ITEM_MINIMIZE:
