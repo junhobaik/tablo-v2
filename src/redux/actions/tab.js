@@ -6,6 +6,7 @@ export const DELETE_TAB_ITEM = 'DELETE_TAB_ITEM';
 export const ADD_TAB_CATEGORY = 'ADD_TAB_CATEGORY';
 export const EDIT_TAB_ITEM = 'EDIT_TAB_ITEM';
 export const EDIT_TAB_CATEGORY = 'EDIT_TAB_CATEGORY';
+export const MOVE_TAB_ITEM = 'MOVE_TAB_ITEM';
 
 export const addCartItem = (url, title, description) => {
   return { type: ADD_CART_ITEM, url, title, description };
@@ -37,4 +38,8 @@ export const editTabCategory = (oldCategory, newCategory) => {
 
 export const editTabItem = (id, title, description) => {
   return { type: EDIT_TAB_ITEM, id, title, description };
+};
+
+export const moveTabItem = (id, category, index) => {
+  return { type: MOVE_TAB_ITEM, id, category, index };
 };

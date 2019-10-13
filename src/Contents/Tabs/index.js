@@ -8,7 +8,7 @@ import uuidv4 from 'uuid/v4';
 
 import './index.scss';
 import { setDragInfo, setSettingInfo, clearDragInfo } from '../../redux/actions/app';
-import { addTabItem, addTabCategory, editTabItem, editTabCategory } from '../../redux/actions/tab';
+import { addTabItem, addTabCategory, editTabItem, editTabCategory, moveTabItem } from '../../redux/actions/tab';
 
 const Tabs = () => {
   const dispatch = useDispatch();
@@ -41,7 +41,6 @@ const Tabs = () => {
         x,
         y,
         isVisible: true,
-        category: e.currentTarget.parentNode.querySelector('h3').innerText,
       })
     );
   };
@@ -135,6 +134,7 @@ const Tabs = () => {
               const target = e.currentTarget;
               if (dragEl !== target.firstChild) {
                 target.style.paddingLeft = '15rem';
+                target.firstChild.style.pointerEvents = 'none';
                 setDragEnterStyle(target.parentNode, true);
               }
             }}
@@ -142,13 +142,15 @@ const Tabs = () => {
               if (e.target.className === 'tab-item-wrap') {
                 const target = getTarget(e);
                 target.style.paddingLeft = '0.5rem';
+                target.firstChild.style.pointerEvents = 'all';
                 setDragEnterStyle(target.parentNode, false);
               }
             }}
             onDrop={e => {
               const targetIndex = getTarget(e, true);
+              e.currentTarget.firstChild.style.pointerEvents = 'all';
               e.currentTarget.style.paddingLeft = '0.5rem';
-              // redux item 이동
+              dispatch(moveTabItem(dragInfo.id, c, targetIndex));
             }}
           >
             <li
