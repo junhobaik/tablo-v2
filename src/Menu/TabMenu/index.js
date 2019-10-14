@@ -29,7 +29,7 @@ const TabMenu = () => {
         className="current-tab-item item-style"
         draggable
         onDragStart={e => {
-          dispatch(setDragInfo({ url, title, target: 'current-tab-item' }));
+          dispatch(setDragInfo({ link: url, title, target: 'current-tab-item' }));
         }}
         onDragEnd={e => {
           dispatch(clearDragInfo());

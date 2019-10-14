@@ -160,8 +160,12 @@ const Tabs = () => {
 
               if (dragInfo.target === 'tab-item') {
                 dispatch(moveTabItem(dragInfo.id, c, targetIndex));
-              } else if (dragInfo.target === 'cart-item') {
+              }
+              if (dragInfo.target === 'cart-item') {
                 dispatch(addTabItem(uuidv4(), dragInfo.link, dragInfo.title, dragInfo.description, c, targetIndex));
+              }
+              if (dragInfo.target === 'current-tab-item') {
+                dispatch(addTabItem(uuidv4(), dragInfo.link, dragInfo.title, '', c, targetIndex));
               }
               setDragEnterStyle(e.currentTarget, false);
             }}
@@ -326,8 +330,11 @@ const Tabs = () => {
                   dispatch(addTabItem(id, link, title, description, category));
                 }
                 if (target === 'tab-item') {
-                  // console.log(e.currentTarget.childNodes.length);
                   dispatch(moveTabItem(dragInfo.id, category, e.currentTarget.childNodes.length));
+                }
+                if (target === 'current-tab-item') {
+                  const id = uuidv4();
+                  dispatch(addTabItem(id, link, title, '', category));
                 }
                 dispatch(setDragInfo({ link: null, title: null, description: null, category: null }));
               }}
