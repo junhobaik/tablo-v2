@@ -37,12 +37,28 @@
   }
 
   .tabs {
+    display: flex;
     flex-direction: row-reverse;
+
     & > .title {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
       border-top-left-radius: 20px;
       border-bottom-left-radius: 20px;
+    }
+
+    ul.current-tab-item-list {
+      display: flex;
+      flex-wrap: wrap;
+      flex-grow: 1;
+      padding: 1rem;
+      margin: 0;
+      align-content: flex-start;
+
+      li.current-tab-item {
+        height: 2.5rem;
+        margin: 0.25rem;
+      }
     }
   }
 

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
@@ -14,12 +15,47 @@ const TabMenu = () => {
   const linkMethod = useSelector(state => state.app.linkMethod.tab);
   const aTarget = linkMethod === 'blank' ? '_blank' : '_self';
 
+  const dummyCurrentTabs = [
+    { url: '#', title: 'current tabs 1' },
+    { url: '#', title: 'current tabs 2' },
+    { url: '#', title: 'current tabs 3' },
+  ];
+
+  const currentTabs = dummyCurrentTabs.map((tab, i) => {
+    const { url, title } = tab;
+    return (
+      <li
+        key={`current-tab-${i}`}
+        className="current-tab-item item-style"
+        draggable
+        onDragStart={e => {
+          dispatch(setDragInfo({ url, title, target: 'current-tab-item' }));
+        }}
+        onDragEnd={e => {
+          dispatch(clearDragInfo());
+        }}
+      >
+        <div className="item-inner">
+          <div className="drag-handle"></div>
+          <div className="item-content">
+            <div className="item-header">
+              <div className="title">
+                <a href={url} target={aTarget}>
+                  <h3>{title}</h3>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    );
+  });
+
   const cartItems = cart.map((item, i) => {
     const { link, title, description } = item;
     return (
       <li
         className="cart-item item-style"
-        // eslint-disable-next-line react/no-array-index-key
         key={`${link}-${i}`}
         draggable
         onDragStart={e => {
@@ -66,7 +102,7 @@ const TabMenu = () => {
         <div className="title">
           <Icon name="window restore outline" />
         </div>
-        <ul className="tabs-item-list"></ul>
+        <ul className="current-tab-item-list">{currentTabs}</ul>
       </div>
       <div className="cart">
         <div className="title">
