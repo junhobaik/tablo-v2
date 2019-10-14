@@ -1,7 +1,8 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 
@@ -14,14 +15,42 @@ const TabMenu = () => {
   const { cart } = useSelector(state => state.tab);
   const linkMethod = useSelector(state => state.app.linkMethod.tab);
   const aTarget = linkMethod === 'blank' ? '_blank' : '_self';
+  const [currentTabList, setCurrentTabList] = useState([]);
 
-  const dummyCurrentTabs = [
-    { url: '#', title: 'current tabs 1' },
-    { url: '#', title: 'current tabs 2' },
-    { url: '#', title: 'current tabs 3' },
-  ];
+  const getAllTabs = () => {
+    // eslint-disable-next-line no-undef
+    chrome.windows.getAll({ populate: true }, windows => {
+      const list = [];
+      for (const window of windows) {
+        for (const tab of window.tabs) {
+          const { title, url, favIconUrl } = tab;
+          if (url !== 'chrome://newtab/') list.push({ title, url, favIconUrl });
+        }
+      }
+      setCurrentTabList(list);
+    });
+  };
 
-  const currentTabs = dummyCurrentTabs.map((tab, i) => {
+  useEffect(() => {
+    if (chrome.windows && chrome.tabs) {
+      getAllTabs();
+      chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+        if (changeInfo.status === 'complete') getAllTabs();
+      });
+
+      chrome.tabs.onRemoved.addListener(() => {
+        getAllTabs();
+      });
+    } else {
+      setCurrentTabList([
+        { url: '#', title: 'current tabs 1' },
+        { url: '#', title: 'current tabs 2' },
+        { url: '#', title: 'current tabs 3' },
+      ]);
+    }
+  }, [setCurrentTabList]);
+
+  const currentTabs = currentTabList.map((tab, i) => {
     const { url, title } = tab;
     return (
       <li
