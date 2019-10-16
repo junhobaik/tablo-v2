@@ -11,10 +11,14 @@ import {
   EDIT_TAB_ITEM,
   EDIT_TAB_CATEGORY,
   MOVE_TAB_ITEM,
+  RESET_TAB,
 } from '../actions/tab';
 
 const tab = (state = [], action) => {
   switch (action.type) {
+    case RESET_TAB:
+      return action.state;
+
     case ADD_CART_ITEM:
       return {
         ...state,

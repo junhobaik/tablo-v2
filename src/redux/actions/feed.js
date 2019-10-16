@@ -4,6 +4,11 @@ export const DELETE_FEED = 'DELETE_FEED';
 export const CLEAR_FEEDS = 'CLEAR_FEEDS';
 export const DELETE_CATEGORY = 'DELETE_CATEGORY';
 export const EDIT_CATEGORY = 'EDIT_CATEGORY';
+export const RESET_FEED = 'RESET_FEED';
+
+export const resetFeed = state => {
+  return { type: RESET_FEED, state };
+};
 
 export const addFeed = (url, title, category) => {
   return { type: ADD_FEED, url, title, category };

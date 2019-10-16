@@ -1,9 +1,20 @@
 import _ from 'lodash';
 import uuidv4 from 'uuid/v4';
-import { ADD_FEED, EDIT_FEED, DELETE_FEED, CLEAR_FEEDS, DELETE_CATEGORY, EDIT_CATEGORY } from '../actions/feed';
+import {
+  ADD_FEED,
+  EDIT_FEED,
+  DELETE_FEED,
+  CLEAR_FEEDS,
+  DELETE_CATEGORY,
+  EDIT_CATEGORY,
+  RESET_FEED,
+} from '../actions/feed';
 
 const feed = (state = [], action) => {
   switch (action.type) {
+    case RESET_FEED:
+      return action.state;
+
     case ADD_FEED: {
       const id = uuidv4();
       let link = action.url.split('/');

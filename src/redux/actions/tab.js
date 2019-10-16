@@ -7,6 +7,11 @@ export const ADD_TAB_CATEGORY = 'ADD_TAB_CATEGORY';
 export const EDIT_TAB_ITEM = 'EDIT_TAB_ITEM';
 export const EDIT_TAB_CATEGORY = 'EDIT_TAB_CATEGORY';
 export const MOVE_TAB_ITEM = 'MOVE_TAB_ITEM';
+export const RESET_TAB = 'RESET_TAB';
+
+export const resetTab = state => {
+  return { type: RESET_TAB, state };
+};
 
 export const addCartItem = (url, title, description) => {
   return { type: ADD_CART_ITEM, url, title, description };

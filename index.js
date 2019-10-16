@@ -1,62 +1,21 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import 'semantic-ui-css/semantic.min.css';
+import _ from 'lodash';
 
 import './index.scss';
 import App from './src/App';
 import rootReducer from './src/redux/reducers';
 
-const tab = {
-  categories: ['Inbox', 'cateogry2'],
-  tabs: [
-    {
-      id: "id1",
-      link: 'https://junhobaik.github.io',
-      title: 'BLOG',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, eum?',
-      category: 'Inbox',
-    },
-    {
-      id: 'id2',
-      link: 'https://junhobaik.github.io/rss',
-      title: 'BLOG RSS',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, eum?',
-      category: 'cateogry2',
-    },
-  ],
-  cart: [
-    {
-      link: 'https://junhobaik.github.io/mac-terminal-setting/',
-      title: 'mac terminal setting',
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, reiciendis.',
-    },
-  ],
-};
-
-const loadState = () => {
-  const feedState = localStorage.getItem('feed');
-  const appState = localStorage.getItem('app');
-
-  let feed = [];
-  if (feedState === null) {
-    feed = [
-      {
-        id: 'id12345',
-        link: 'https://junhobaik.github.io',
-        url: 'https://junhobaik.github.io/rss',
-        title: 'junhobaik.github.io',
-        category: 'Inbox',
-        isHide: false,
-      },
-    ];
-  } else {
-    feed = JSON.parse(feedState);
-  }
-
-  let app = [];
+const firstLoadState = () => {
+  let app;
+  const appState = localStorage.getItem('tablo_v2_app');
   if (appState === null) {
     app = {
       windowStatus: 'both',
@@ -86,28 +45,57 @@ const loadState = () => {
       },
     };
   } else {
-    app = { ...JSON.parse(appState), menuOpenStatus: 'hide' };
+    app = JSON.parse(appState);
   }
 
-  return { feed, app, tab };
+  return {
+    tab: {
+      categories: [],
+      tabs: [],
+      cart: [],
+    },
+    feed: [],
+    app,
+  };
 };
 
-const preloadedState = loadState();
-
+const preloadedState = firstLoadState();
 const store = createStore(rootReducer, preloadedState, composeWithDevTools());
 
-const saveState = state => {
-  const feed = JSON.stringify(state.feed);
-  const app = JSON.stringify(state.app);
-  localStorage.setItem('feed', feed);
-  localStorage.setItem('app', app);
-};
+chrome.storage.sync.set({ tablo_v2_sync: 0 }); // sync
+let sync = 0; // sync
 
-// eslint-disable-next-line no-unused-vars
 const unsubscribe = store.subscribe(() => {
-  const { feed, app } = store.getState();
-  saveState({ feed, app });
+  const { feed, app, tab } = store.getState();
+
+  chrome.storage.sync.set(
+    {
+      tablo_v2_tab: tab,
+      tablo_v2_feed: feed,
+    },
+    () => {}
+  );
+  localStorage.setItem('tablo_v2_app', JSON.stringify(app));
+
+  // sync
+  chrome.storage.sync.set({
+    tablo_v2_sync: sync + 1,
+  });
+  sync += 1;
 });
+
+// sync
+setInterval(() => {
+  if (chrome.storage) {
+    chrome.storage.sync.get('tablo_v2_sync', items => {
+      if (sync !== items.tablo_v2_sync) {
+        setTimeout(() => {
+          window.location.reload(true);
+        }, 1000);
+      }
+    });
+  }
+}, 3000);
 
 ReactDom.render(
   <Provider store={store}>
