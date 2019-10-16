@@ -1,4 +1,6 @@
+# Custom
 dist/
+build/
 TODO.md
 
 # Logs
@@ -80,7 +82,6 @@ typings/
 
 # gatsby files
 .cache/
-public
 
 # vuepress build output
 .vuepress/dist
