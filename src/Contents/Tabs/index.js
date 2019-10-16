@@ -227,7 +227,18 @@ const Tabs = () => {
                   <div className="item-header">
                     <div className="title">
                       <a className="title-a" href={link} target={aTarget}>
-                        <h3>{title}</h3>
+                        <h3
+                          onMouseEnter={e => {
+                            const parentWidth = e.currentTarget.parentNode.getBoundingClientRect().width;
+                            const targetWidth = e.currentTarget.getBoundingClientRect().width;
+                            e.currentTarget.style.left = `-${targetWidth - parentWidth}px`;
+                          }}
+                          onMouseLeave={e => {
+                            e.currentTarget.style.left = '0';
+                          }}
+                        >
+                          {title}
+                        </h3>
                       </a>
                       <Input
                         className="title-input"
@@ -263,6 +274,7 @@ const Tabs = () => {
                         settingMouseLeave();
                       }}
                     >
+                      <div className="gradient-space" />
                       <Icon name="ellipsis horizontal" />
                     </div>
                   </div>

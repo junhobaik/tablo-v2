@@ -109,7 +109,8 @@
               margin-top: 0.25rem;
               overflow: hidden;
               box-sizing: border-box;
-              max-width: 11rem;
+              width: 12rem;
+              max-width: 12rem;
 
               h3 {
                 display: inline-block;
@@ -117,15 +118,36 @@
                 left: 0%;
                 font-size: 0.9rem;
                 white-space: nowrap;
-                overflow: hidden;
                 text-overflow: ellipsis;
-                transition: left 3s, width 3s;
-                width: 100%;
+                transition: left 6s;
+                padding-right: 1.5rem;
+              }
+            }
+          }
 
-                &:hover {
-                  left: -100%;
-                  width: 200%;
-                }
+          .setting,
+          .icon-wrap {
+            display: flex;
+            position: relative;
+            top: 0;
+            right: 2rem;
+            justify-content: flex-end;
+            align-items: center;
+            min-width: 2.3rem;
+            background-image: linear-gradient(
+              to right,
+              rgba(255, 255, 255, 0),
+              rgba(255, 255, 255, 50) 50%,
+              rgba(255, 255, 255, 1)
+            );
+            text-align: right;
+
+            .icon {
+              opacity: 0.2;
+              margin: 0;
+              margin-bottom: 0.1rem;
+              &:hover {
+                opacity: 0.5;
               }
             }
           }
@@ -138,9 +160,11 @@
 
           span {
             display: inline-block;
+            max-width: 12rem;
             line-height: 1rem;
             max-height: 2rem;
             overflow: hidden;
+            word-break: break-all;
           }
         }
       }
