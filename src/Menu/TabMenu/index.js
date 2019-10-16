@@ -181,10 +181,10 @@ const TabMenu = () => {
         <ul className="current-tab-item-list">{currentTabs}</ul>
       </div>
       <div className="cart">
+        <ul className="cart-item-list">{cartItems}</ul>
         <div className="title">
           <Icon name="cart" />
         </div>
-        <ul className="cart-item-list">{cartItems}</ul>
       </div>
     </div>
   );

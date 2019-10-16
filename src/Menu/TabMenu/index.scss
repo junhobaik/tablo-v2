@@ -22,8 +22,8 @@
       text-align: center;
       padding: 0.25rem;
       box-shadow: 0 0 2px rgba(20, 101, 192, 1);
-      border-top-right-radius: 20px;
-      border-bottom-right-radius: 20px;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
 
       h2 {
         font-size: 1.2rem;
@@ -37,14 +37,12 @@
   }
 
   .tabs {
-    display: flex;
-    flex-direction: row-reverse;
-
+    border-right: 1px solid rgba(20, 101, 192, 0.5);
     & > .title {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      border-top-left-radius: 20px;
-      border-bottom-left-radius: 20px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px;
     }
 
     ul.current-tab-item-list {
