@@ -1,0 +1,13 @@
+{
+  "manifest_version": 2,
+  "name": "Tablo v2",
+  "description": "",
+  "version": "0.1.0",
+  "icons": {
+    "128": "icon.png"
+  },
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "permissions": ["tabs", "storage"]
+}
