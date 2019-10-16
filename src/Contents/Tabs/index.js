@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/mouse-events-have-key-events */
+/* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
@@ -174,6 +177,12 @@ const Tabs = () => {
               className="tab-item item-style"
               _id={id}
               draggable
+              onMouseEnter={e => {
+                e.currentTarget.querySelector('.handle-icon').style.opacity = 0.2;
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.querySelector('.handle-icon').style.opacity = 0;
+              }}
               onDragOver={e => {
                 e.preventDefault();
               }}
@@ -190,7 +199,30 @@ const Tabs = () => {
               }}
             >
               <div className="item-inner">
-                <div className="drag-handle" />
+                <div className="drag-handle">
+                  <div className="no-favicon">
+                    <div>
+                      <span>{title.substr(0, 1)}</span>
+                    </div>
+                  </div>
+                  <div className="favicon">
+                    <img
+                      src={`${link
+                        .split('/')
+                        .splice(0, 3)
+                        .join('/')}/favicon.ico`}
+                      alt="a"
+                      onError={e => {
+                        console.log(`${link} error`);
+                        e.currentTarget.parentNode.parentNode.firstChild.style.display = 'flex';
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                  <div className="handle-icon">
+                    <Icon name="bars" />
+                  </div>
+                </div>
                 <div className="item-content">
                   <div className="item-header">
                     <div className="title">

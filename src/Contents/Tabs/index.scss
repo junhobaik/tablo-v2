@@ -1,6 +1,7 @@
 @import '../../variables.scss';
 
 #Tabs {
+  
   .category-list {
     display: flex;
     overflow-y: scroll;
@@ -99,9 +100,9 @@
                       }
                     }
                     .setting {
-                      opacity: 0.3;
+                      opacity: 0.2;
                       &:hover {
-                        opacity: 0.7;
+                        opacity: 0.5;
                       }
                     }
                   }

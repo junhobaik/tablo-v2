@@ -65,7 +65,26 @@ const TabMenu = () => {
         }}
       >
         <div className="item-inner">
-          <div className="drag-handle"></div>
+          <div className="drag-handle">
+            <div className="no-favicon">
+              <div>
+                <span>{title.substr(0, 1)}</span>
+              </div>
+            </div>
+            <div className="favicon">
+              <img
+                src={`${url
+                  .split('/')
+                  .splice(0, 3)
+                  .join('/')}/favicon.ico`}
+                alt="a"
+                onError={e => {
+                  e.currentTarget.parentNode.parentNode.firstChild.style.display = 'flex';
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            </div>
+          </div>
           <div className="item-content">
             <div className="item-header">
               <div className="title">
@@ -87,6 +106,12 @@ const TabMenu = () => {
         className="cart-item item-style"
         key={`${link}-${i}`}
         draggable
+        onMouseEnter={e => {
+          e.currentTarget.querySelector('.handle-icon').style.opacity = 0.2;
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.querySelector('.handle-icon').style.opacity = 0;
+        }}
         onDragStart={e => {
           console.log('dragStart', e.currentTarget.querySelector('a').href);
           dispatch(setDragInfo({ link, title, description, target: 'cart-item' }));
@@ -97,7 +122,29 @@ const TabMenu = () => {
         }}
       >
         <div className="item-inner">
-          <div className="drag-handle"></div>
+          <div className="drag-handle">
+            <div className="no-favicon">
+              <div>
+                <span>{title.substr(0, 1)}</span>
+              </div>
+            </div>
+            <div className="favicon">
+              <img
+                src={`${link
+                  .split('/')
+                  .splice(0, 3)
+                  .join('/')}/favicon.ico`}
+                alt="a"
+                onError={e => {
+                  e.currentTarget.parentNode.parentNode.firstChild.style.display = 'flex';
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            </div>
+            <div className="handle-icon">
+              <Icon name="bars" />
+            </div>
+          </div>
           <div className="item-content">
             <div className="item-header">
               <div className="title">
