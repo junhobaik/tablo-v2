@@ -68,7 +68,7 @@ const Setting = () => {
   const clickRemove = () => {
     switch (settingInfo.target) {
       case 'feed':
-        dispatch(deleteFeed(settingInfo.url));
+        dispatch(deleteFeed(settingInfo.id));
         break;
       case 'category':
         dispatch(deleteCategory(settingInfo.category));
