@@ -116,7 +116,11 @@ const tab = (state = [], action) => {
       const elseTabs = _.cloneDeep(_.filter(newState.tabs, v => v.category !== action.category));
       const newTab = { ...originTab, category: action.category };
       if (action.category) {
-        categoryTabs.splice(action.index - 1, 0, newTab);
+        if (Math.round(state.tabs.length / 2) - 1 > action.index) {
+          categoryTabs.splice(action.index, 0, newTab);
+        } else {
+          categoryTabs.splice(action.index - 1, 0, newTab);
+        }
       } else {
         elseTabs.push(originTab);
       }
