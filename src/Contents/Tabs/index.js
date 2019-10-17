@@ -4,7 +4,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Icon, Input } from 'semantic-ui-react';
 import uuidv4 from 'uuid/v4';
@@ -21,8 +21,22 @@ const Tabs = () => {
   const [tabTitleValue, setTabTitleValue] = useState('');
   const [descriptionValue, setDescriptionValue] = useState({});
   const [dragEl, setDragEl] = useState();
+  const [itemTitleWidths, setItemTitleWidths] = useState({});
 
   const aTarget = '_blank'; //
+
+  useEffect(() => {
+    const items = Array.from(document.querySelectorAll('.tab-item'));
+    let widths = {};
+    for (const item of items) {
+      const id = item.attributes._id.value;
+      const { width } = item.querySelector('h3').getBoundingClientRect();
+      widths = { ...widths, [id]: width };
+      item.querySelector('h3').style.width = '100%';
+    }
+    setItemTitleWidths(widths);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tabs]);
 
   const setDragEnterStyle = (_target, isEnter = true) => {
     const target = _target;
@@ -229,11 +243,14 @@ const Tabs = () => {
                       <a className="title-a" href={link} target={aTarget}>
                         <h3
                           onMouseEnter={e => {
-                            const parentWidth = e.currentTarget.parentNode.getBoundingClientRect().width;
-                            const targetWidth = e.currentTarget.getBoundingClientRect().width;
-                            e.currentTarget.style.left = `-${targetWidth - parentWidth}px`;
+                            const { width } = e.currentTarget.getBoundingClientRect();
+                            e.currentTarget.style.transition = 'left 6s';
+                            e.currentTarget.style.width = `${itemTitleWidths[id]}px`;
+                            e.currentTarget.style.left = `-${itemTitleWidths[id] - width}px`;
                           }}
                           onMouseLeave={e => {
+                            e.currentTarget.style.transition = 'left 0.2s';
+                            e.currentTarget.style.width = '100%';
                             e.currentTarget.style.left = '0';
                           }}
                         >

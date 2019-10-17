@@ -16,6 +16,7 @@ const TabMenu = () => {
   const linkMethod = useSelector(state => state.app.linkMethod.tab);
   const aTarget = linkMethod === 'blank' ? '_blank' : '_self';
   const [currentTabList, setCurrentTabList] = useState([]);
+  const [cartItemTitleWidths, setCartItemTitleWidths] = useState({});
 
   const getAllTabs = () => {
     // eslint-disable-next-line no-undef
@@ -32,23 +33,33 @@ const TabMenu = () => {
   };
 
   useEffect(() => {
-    if (chrome.windows && chrome.tabs) {
-      getAllTabs();
-      chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
-        if (changeInfo.status === 'complete') getAllTabs();
-      });
+    getAllTabs();
+    chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+      if (changeInfo.status === 'complete') getAllTabs();
+    });
 
-      chrome.tabs.onRemoved.addListener(() => {
-        getAllTabs();
-      });
-    } else {
-      setCurrentTabList([
-        { url: '#', title: 'current tabs 1' },
-        { url: '#', title: 'current tabs 2' },
-        { url: '#', title: 'current tabs 3' },
-      ]);
+    chrome.tabs.onRemoved.addListener(() => {
+      getAllTabs();
+    });
+  }, []);
+
+  useEffect(() => {
+    const items = Array.from(document.querySelectorAll('.cart-item'));
+    let widths = {};
+    for (const item of items) {
+      // eslint-disable-next-line no-underscore-dangle
+      const url = item.querySelector('a').href;
+      const { width } = item.querySelector('h3').getBoundingClientRect();
+      widths = { ...widths, [url]: width };
+      item.querySelector('h3').style.width = '100%';
     }
-  }, [setCurrentTabList]);
+    setCartItemTitleWidths(widths);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cart]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTabList, setCurrentTabList]);
 
   const currentTabs = currentTabList.map((tab, i) => {
     const { url, title } = tab;
@@ -88,20 +99,9 @@ const TabMenu = () => {
           <div className="item-content">
             <div className="item-header">
               <div className="title">
-                <a href={url} target={aTarget}>
-                  <h3
-                    onMouseEnter={e => {
-                      const parentWidth = e.currentTarget.parentNode.getBoundingClientRect().width;
-                      const targetWidth = e.currentTarget.getBoundingClientRect().width;
-                      e.currentTarget.style.left = `-${targetWidth - parentWidth}px`;
-                    }}
-                    onMouseLeave={e => {
-                      e.currentTarget.style.left = '0';
-                    }}
-                  >
-                    {title}
-                  </h3>
-                </a>
+                {/* <a href={url} target={aTarget}> */}
+                <h3>{title}</h3>
+                {/* </a> */}
               </div>
             </div>
           </div>
@@ -162,11 +162,14 @@ const TabMenu = () => {
                 <a href={link} target={aTarget}>
                   <h3
                     onMouseEnter={e => {
-                      const parentWidth = e.currentTarget.parentNode.getBoundingClientRect().width;
-                      const targetWidth = e.currentTarget.getBoundingClientRect().width;
-                      e.currentTarget.style.left = `-${targetWidth - parentWidth + 20}px`;
+                      const { width } = e.currentTarget.getBoundingClientRect();
+                      e.currentTarget.style.transition = 'left 6s';
+                      e.currentTarget.style.width = `${cartItemTitleWidths[link]}px`;
+                      e.currentTarget.style.left = `-${cartItemTitleWidths[link] - width}px`;
                     }}
                     onMouseLeave={e => {
+                      e.currentTarget.style.transition = 'left 0.2s';
+                      e.currentTarget.style.width = '100%';
                       e.currentTarget.style.left = '0';
                     }}
                   >

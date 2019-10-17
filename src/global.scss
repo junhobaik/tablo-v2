@@ -118,8 +118,6 @@
                 left: 0%;
                 font-size: 0.9rem;
                 white-space: nowrap;
-                text-overflow: ellipsis;
-                transition: left 6s;
                 padding-right: 1.5rem;
               }
             }
@@ -157,10 +155,10 @@
           font-size: 0.8rem;
           opacity: 0.4;
           height: 2.2rem;
+          max-width: 12rem;
 
           span {
             display: inline-block;
-            max-width: 12rem;
             line-height: 1rem;
             max-height: 2rem;
             overflow: hidden;
