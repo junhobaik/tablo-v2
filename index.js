@@ -62,9 +62,6 @@ const firstLoadState = () => {
 const preloadedState = firstLoadState();
 const store = createStore(rootReducer, preloadedState, composeWithDevTools());
 
-chrome.storage.sync.set({ tablo_v2_sync: 0 }); // sync
-let sync = 0; // sync
-
 const unsubscribe = store.subscribe(() => {
   const { feed, app, tab } = store.getState();
 
@@ -76,26 +73,7 @@ const unsubscribe = store.subscribe(() => {
     () => {}
   );
   localStorage.setItem('tablo_v2_app', JSON.stringify(app));
-
-  // sync
-  chrome.storage.sync.set({
-    tablo_v2_sync: sync + 1,
-  });
-  sync += 1;
 });
-
-// sync
-setInterval(() => {
-  if (chrome.storage) {
-    chrome.storage.sync.get('tablo_v2_sync', items => {
-      if (sync !== items.tablo_v2_sync) {
-        setTimeout(() => {
-          window.location.reload(true);
-        }, 1000);
-      }
-    });
-  }
-}, 3000);
 
 ReactDom.render(
   <Provider store={store}>
