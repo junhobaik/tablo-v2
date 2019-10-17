@@ -16,14 +16,12 @@ import { addTabItem, addTabCategory, editTabItem, editTabCategory, moveTabItem }
 const Tabs = () => {
   const dispatch = useDispatch();
   const { tabs, categories } = useSelector(state => state.tab);
-  const { dragInfo } = useSelector(state => state.app);
+  const { dragInfo, linkMethod } = useSelector(state => state.app);
   const [categoryTitleValue, setCategoryTitleValue] = useState('');
   const [tabTitleValue, setTabTitleValue] = useState('');
   const [descriptionValue, setDescriptionValue] = useState({});
   const [dragEl, setDragEl] = useState();
   const [itemTitleWidths, setItemTitleWidths] = useState({});
-
-  const aTarget = '_blank'; //
 
   useEffect(() => {
     const items = Array.from(document.querySelectorAll('.tab-item'));
@@ -240,7 +238,7 @@ const Tabs = () => {
                 <div className="item-content">
                   <div className="item-header">
                     <div className="title">
-                      <a className="title-a" href={link} target={aTarget}>
+                      <a className="title-a" href={link} target={linkMethod.tab === 'blank' ? '_blank' : '_self'}>
                         <h3
                           onMouseEnter={e => {
                             const { width } = e.currentTarget.getBoundingClientRect();
