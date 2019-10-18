@@ -22,6 +22,7 @@ const firstLoadState = () => {
       linkMethod: {
         tab: 'blank',
         feed: 'blank',
+        tabList: 'blank',
       },
       menuOpenStatus: 'hide',
       isMenuAlwaysOpen: false,
