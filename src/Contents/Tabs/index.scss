@@ -22,7 +22,7 @@
 
     .category {
       display: flex;
-      min-height: 9rem;
+      min-height: 6rem;
       margin: 0 1rem;
       flex-direction: column;
       border-radius: 5px;
@@ -97,10 +97,11 @@
                         }
                       }
                     }
-//
+                    //
                   }
                   .item-description {
                     textarea {
+                      background-color: transparent;
                       width: 12rem;
                       border: 0;
                       word-break: break-all;

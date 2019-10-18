@@ -19,8 +19,8 @@
       max-width: 14rem;
       max-height: 7rem;
       border-radius: 3px;
-      box-shadow: 0 0 1px 1px rgba(20, 101, 192, 0.7);
-
+      background-color: rgb(247, 247, 248);
+      border: 1px solid rgb(230, 230, 230);
       .drag-handle {
         display: flex;
         flex-direction: column;
@@ -134,9 +134,9 @@
             min-width: 2.3rem;
             background-image: linear-gradient(
               to right,
-              rgba(255, 255, 255, 0),
-              rgba(255, 255, 255, 50) 50%,
-              rgba(255, 255, 255, 1)
+              rgba(247, 247, 248, 0),
+              rgba(247, 247, 248, 1) 50%,
+              rgba(247, 247, 248, 1)
             );
             text-align: right;
 
