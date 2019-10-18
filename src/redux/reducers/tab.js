@@ -12,6 +12,7 @@ import {
   EDIT_TAB_CATEGORY,
   MOVE_TAB_ITEM,
   RESET_TAB,
+  MOVE_TAB_CATEGORY,
 } from '../actions/tab';
 
 const tab = (state = [], action) => {
@@ -84,10 +85,13 @@ const tab = (state = [], action) => {
           newState.tabs[i].category = action.newCategory;
         }
       }
-      const index = newState.categories.indexOf(action.oldCategory);
-      newState.categories.splice(index, 1);
-      if (newState.categories.indexOf(action.newCategory) > -1) return newState;
-      newState.categories.push(action.newCategory);
+      const oldIndex = newState.categories.indexOf(action.oldCategory);
+      const newIndex = newState.categories.indexOf(action.newCategory);
+      if (newIndex > -1) {
+        newState.categories.splice(oldIndex, 1);
+      } else {
+        newState.categories[oldIndex] = action.newCategory;
+      }
       return newState;
     }
 
@@ -125,6 +129,14 @@ const tab = (state = [], action) => {
         elseTabs.push(originTab);
       }
       newState.tabs = [...categoryTabs, ...elseTabs];
+      return newState;
+    }
+
+    case MOVE_TAB_CATEGORY: {
+      const newState = _.cloneDeep(state);
+      const index = newState.categories.indexOf(action.category);
+      newState.categories.splice(index, 1);
+      newState.categories.splice(action.index, 0, action.category);
       return newState;
     }
 

@@ -11,7 +11,14 @@ import uuidv4 from 'uuid/v4';
 
 import './index.scss';
 import { setDragInfo, setSettingInfo, clearDragInfo } from '../../redux/actions/app';
-import { addTabItem, addTabCategory, editTabItem, editTabCategory, moveTabItem } from '../../redux/actions/tab';
+import {
+  addTabItem,
+  addTabCategory,
+  editTabItem,
+  editTabCategory,
+  moveTabItem,
+  moveTabCategory,
+} from '../../redux/actions/tab';
 
 const Tabs = () => {
   const dispatch = useDispatch();
@@ -111,27 +118,39 @@ const Tabs = () => {
     target.parentNode.querySelector('.title-a').style.display = 'inline';
   };
 
-  const categoryDragSpace = (
-    <div
-      className="category-drop-space"
-      onDragEnter={e => {
-        if (dragInfo.target === 'tab-category') e.target.style.height = '5rem';
-      }}
-      onDragOver={e => {
-        e.preventDefault();
-      }}
-      onDragLeave={e => {
-        if (dragInfo.target === 'tab-category') e.target.style.height = '0.5rem';
-      }}
-      onDrop={e => {
-        e.target.style.height = '0.5rem';
-        const space = Array.from(e.target.parentNode.querySelectorAll('.category-drop-space'));
-        const targetIndex = space.indexOf(e.target);
-        console.log(targetIndex);
-        // sort category
-      }}
-    />
-  );
+  const categoryDragSpace = () => {
+    const isMovable = e => {
+      const targetIndex = Array.from(e.target.parentNode.querySelectorAll('.category-drop-space')).indexOf(e.target);
+      const categories = Array.from(e.target.parentNode.querySelectorAll('li.category .title-text'));
+      return (
+        dragInfo.target === 'tab-category' &&
+        (!categories[targetIndex] || categories[targetIndex].innerText !== dragInfo.category)
+      );
+    };
+    return (
+      <div
+        className="category-drop-space"
+        onDragEnter={e => {
+          if (isMovable(e)) e.target.style.height = '5rem';
+        }}
+        onDragOver={e => {
+          e.preventDefault();
+        }}
+        onDragLeave={e => {
+          if (dragInfo.target === 'tab-category') e.target.style.height = '0.5rem';
+        }}
+        onDrop={e => {
+          const targetIndex = Array.from(e.target.parentNode.querySelectorAll('.category-drop-space')).indexOf(
+            e.target
+          );
+          if (isMovable(e)) {
+            e.target.style.height = '0.5rem';
+            dispatch(moveTabCategory(dragInfo.category, targetIndex));
+          }
+        }}
+      />
+    );
+  };
 
   const categoryList = categories.map(c => {
     const tabList = tabs
@@ -153,7 +172,7 @@ const Tabs = () => {
             key={`tab-item-${id}`}
             onDragEnter={e => {
               const target = e.currentTarget;
-              if (isMovable) {
+              if (isMovable && dragInfo.target === 'tab-item') {
                 target.style.flexGrow = '1';
                 target.firstChild.style.pointerEvents = 'none';
                 setDragEnterStyle(target, true);
@@ -368,14 +387,14 @@ const Tabs = () => {
               className="tab-list"
               onDragEnter={e => {
                 if (e.target.className === 'tab-list') setDragEnterStyle(e.currentTarget);
-                dispatch(setDragInfo({ ...dragInfo, category: c }));
+                if (dragInfo.target !== 'tab-category') dispatch(setDragInfo({ ...dragInfo, category: c }));
               }}
               onDragOver={e => {
                 e.preventDefault();
               }}
               onDragLeave={e => {
                 if (e.target.className === 'tab-list') setDragEnterStyle(e.currentTarget, false);
-                dispatch(setDragInfo({ ...dragInfo, category: null }));
+                if (dragInfo.target !== 'tab-category') dispatch(setDragInfo({ ...dragInfo, category: null }));
               }}
               onDrop={e => {
                 setDragEnterStyle(e.currentTarget, false);
@@ -398,7 +417,7 @@ const Tabs = () => {
             </ul>
           </div>
         </li>
-        {categoryDragSpace}
+        {categoryDragSpace()}
       </React.Fragment>
     );
   });
@@ -409,7 +428,14 @@ const Tabs = () => {
         role="button"
         tabIndex="0"
         onClick={() => {
-          dispatch(addTabCategory(`Category ${categories.length + 1}`));
+          let caetegoryLength = categories.length + 1;
+          let categoryName = `Category ${caetegoryLength}`;
+
+          while (categories.indexOf(categoryName) !== -1) {
+            caetegoryLength += 1;
+            categoryName = `Category ${caetegoryLength}`;
+          }
+          dispatch(addTabCategory(categoryName));
         }}
       >
         <Icon name="plus" />
@@ -420,7 +446,7 @@ const Tabs = () => {
   return (
     <div id="Tabs">
       <ul className="category-list">
-        {categoryDragSpace}
+        {categoryDragSpace()}
         {categoryList}
       </ul>
     </div>

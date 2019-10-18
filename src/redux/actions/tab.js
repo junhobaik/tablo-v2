@@ -8,6 +8,7 @@ export const EDIT_TAB_ITEM = 'EDIT_TAB_ITEM';
 export const EDIT_TAB_CATEGORY = 'EDIT_TAB_CATEGORY';
 export const MOVE_TAB_ITEM = 'MOVE_TAB_ITEM';
 export const RESET_TAB = 'RESET_TAB';
+export const MOVE_TAB_CATEGORY = 'MOVE_TAB_CATEGORY';
 
 export const resetTab = state => {
   return { type: RESET_TAB, state };
@@ -39,6 +40,10 @@ export const deleteTabCategory = category => {
 
 export const editTabCategory = (oldCategory, newCategory) => {
   return { type: EDIT_TAB_CATEGORY, oldCategory, newCategory };
+};
+
+export const moveTabCategory = (category, index) => {
+  return { type: MOVE_TAB_CATEGORY, category, index };
 };
 
 export const editTabItem = (id, title, description) => {
