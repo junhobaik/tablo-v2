@@ -20,7 +20,7 @@ const Tabs = () => {
   const [categoryTitleValue, setCategoryTitleValue] = useState('');
   const [tabTitleValue, setTabTitleValue] = useState('');
   const [descriptionValue, setDescriptionValue] = useState({});
-  const [dragEl, setDragEl] = useState();
+  const [notMovableIds, setNotMovableIds] = useState([]);
   const [itemTitleWidths, setItemTitleWidths] = useState({});
 
   useEffect(() => {
@@ -136,8 +136,9 @@ const Tabs = () => {
   const categoryList = categories.map(c => {
     const tabList = tabs
       .filter(v => v.category === c)
-      .map(tab => {
+      .map((tab, i, tabs) => {
         const { title, link, description, id } = tab;
+        const isMovable = notMovableIds.indexOf(id) === -1;
 
         const getTarget = (e, isReturnIndex = false) => {
           const els = Array.from(e.currentTarget.parentNode.querySelectorAll('.tab-item-wrap'));
@@ -152,7 +153,7 @@ const Tabs = () => {
             key={`tab-item-${id}`}
             onDragEnter={e => {
               const target = e.currentTarget;
-              if (dragEl !== target.firstChild) {
+              if (isMovable) {
                 target.style.flexGrow = '1';
                 target.firstChild.style.pointerEvents = 'none';
                 setDragEnterStyle(target, true);
@@ -167,13 +168,12 @@ const Tabs = () => {
               }
             }}
             onDrop={e => {
-              console.log('drop tab-item, target: ', dragInfo.target);
               e.stopPropagation();
               const targetIndex = getTarget(e, true);
               e.currentTarget.style.flexGrow = '0';
               e.currentTarget.firstChild.style.pointerEvents = 'all';
 
-              if (dragInfo.target === 'tab-item') {
+              if (dragInfo.target === 'tab-item' && isMovable) {
                 dispatch(moveTabItem(dragInfo.id, c, targetIndex));
               }
               if (dragInfo.target === 'cart-item') {
@@ -199,13 +199,11 @@ const Tabs = () => {
                 e.preventDefault();
               }}
               onDragStart={e => {
-                console.log('dragStart tab-item');
                 e.stopPropagation();
-                setDragEl(e.currentTarget);
+                setNotMovableIds([id, tabs[i + 1] ? tabs[i + 1].id : '']);
                 dispatch(setDragInfo({ id, title, link, description, target: 'tab-item' }));
               }}
               onDragEnd={e => {
-                console.log('dragEnd tab-item');
                 e.stopPropagation();
                 dispatch(clearDragInfo());
               }}
@@ -225,7 +223,6 @@ const Tabs = () => {
                         .join('/')}/favicon.ico`}
                       alt="a"
                       onError={e => {
-                        console.log(`${link} error`);
                         e.currentTarget.parentNode.parentNode.firstChild.style.display = 'flex';
                         e.currentTarget.style.display = 'none';
                       }}
@@ -381,7 +378,6 @@ const Tabs = () => {
                 dispatch(setDragInfo({ ...dragInfo, category: null }));
               }}
               onDrop={e => {
-                console.log('drop tab-list');
                 setDragEnterStyle(e.currentTarget, false);
                 const { link, title, description, category, target } = dragInfo;
                 if (target === 'cart-item') {
