@@ -373,15 +373,14 @@ const Tabs = () => {
                 for (const a of Array.from(e.currentTarget.parentNode.parentNode.querySelectorAll('.title-a'))) {
                   links.push(a.href);
                 }
-                chrome.windows.create({ url: links, type: 'normal' });
 
-                // if (linkMethod.tabList === 'self') {
-                //   for (const link of links) {
-                //     chrome.tabs.create({ url: link });
-                //   }
-                // } else {
-                //   chrome.windows.create({ url: links, type: 'normal' });
-                // }
+                if (linkMethod.tabList === 'self') {
+                  for (const link of links) {
+                    chrome.tabs.create({ url: link });
+                  }
+                } else {
+                  chrome.windows.create({ url: links, type: 'normal' });
+                }
               }}
             >
               <Icon name="window restore outline" />

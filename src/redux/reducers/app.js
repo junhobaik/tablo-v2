@@ -27,6 +27,7 @@ const app = (state = [], action) => {
         linkMethod: {
           tab: action.tabLinkMethod || state.linkMethod.tab,
           feed: action.feedLinkMethod || state.linkMethod.feed,
+          tabList: action.tabListMethod || state.linkMethod.tabList,
         },
       };
 

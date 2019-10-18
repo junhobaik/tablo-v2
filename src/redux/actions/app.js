@@ -14,8 +14,8 @@ export const setWindow = windowStatus => {
   return { type: SET_WINDOW, windowStatus };
 };
 
-export const setLinkMethod = (tabLinkMethod, feedLinkMethod) => {
-  return { type: SET_LINK_METHOD, tabLinkMethod, feedLinkMethod };
+export const setLinkMethod = (tabLinkMethod, feedLinkMethod, tabListMethod) => {
+  return { type: SET_LINK_METHOD, tabLinkMethod, feedLinkMethod, tabListMethod };
 };
 
 export const toggleMenuAlwaysOpen = () => {

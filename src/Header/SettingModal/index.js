@@ -12,14 +12,20 @@ const SettingModal = ({ close }) => {
 
   const tabLinkMethod = linkMethod.tab;
   const feedLinkMethod = linkMethod.feed;
+  const tabListMethod = linkMethod.tabList;
 
   const handleLinkMethod = (e, isBlank) => {
-    const isSetTabLinkMethod = e.target.parentNode.parentNode.parentNode.classList.contains('tab-link-method-form');
+    const { classList } = e.target.parentNode.parentNode.parentNode;
+
     const method = isBlank ? 'blank' : 'self';
-    if (isSetTabLinkMethod) {
-      dispatch(setLinkMethod(method, null));
-    } else {
-      dispatch(setLinkMethod(null, method));
+    if (classList.contains('tab-link-method-form')) {
+      dispatch(setLinkMethod(method, null, null));
+    }
+    if (classList.contains('feed-link-method-form')) {
+      dispatch(setLinkMethod(null, method, null));
+    }
+    if (classList.contains('tab-list-method-form')) {
+      dispatch(setLinkMethod(null, null, method));
     }
   };
 
@@ -69,6 +75,7 @@ const SettingModal = ({ close }) => {
                   </Form.Field>
                 </Form>
               </div>
+
               <div className="feed-link-mehtod">
                 <h4>Feed Link</h4>
                 <Form className="feed-link-method-form">
@@ -89,6 +96,32 @@ const SettingModal = ({ close }) => {
                       name="radioGroup"
                       value="self"
                       checked={feedLinkMethod === 'self'}
+                      onChange={e => handleLinkMethod(e, false)}
+                    />
+                  </Form.Field>
+                </Form>
+              </div>
+
+              <div className="tab-list-mehtod">
+                <h4>Open tabs in category</h4>
+                <Form className="tab-list-method-form">
+                  <Form.Field>
+                    <Radio
+                      label="new window"
+                      name="radioGroup"
+                      value="new window"
+                      checked={tabListMethod === 'blank'}
+                      onChange={e => {
+                        handleLinkMethod(e, true);
+                      }}
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <Radio
+                      label="current window"
+                      name="radioGroup"
+                      value="current window"
+                      checked={tabListMethod === 'self'}
                       onChange={e => handleLinkMethod(e, false)}
                     />
                   </Form.Field>
