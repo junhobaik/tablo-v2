@@ -1,8 +1,3 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/mouse-events-have-key-events */
-/* eslint-disable no-shadow */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -121,10 +116,10 @@ const Tabs = () => {
   const categoryDragSpace = () => {
     const isMovable = e => {
       const targetIndex = Array.from(e.target.parentNode.querySelectorAll('.category-drop-space')).indexOf(e.target);
-      const categories = Array.from(e.target.parentNode.querySelectorAll('li.category .title-text'));
+      const categoryTitles = Array.from(e.target.parentNode.querySelectorAll('li.category .title-text'));
       return (
         dragInfo.target === 'tab-category' &&
-        (!categories[targetIndex] || categories[targetIndex].innerText !== dragInfo.category)
+        (!categoryTitles[targetIndex] || categoryTitles[targetIndex].innerText !== dragInfo.category)
       );
     };
     return (
@@ -155,7 +150,7 @@ const Tabs = () => {
   const categoryList = categories.map(c => {
     const tabList = tabs
       .filter(v => v.category === c)
-      .map((tab, i, tabs) => {
+      .map((tab, i, tabsArray) => {
         const { title, link, description, id } = tab;
         const isMovable = notMovableIds.indexOf(id) === -1;
 
@@ -219,7 +214,7 @@ const Tabs = () => {
               }}
               onDragStart={e => {
                 e.stopPropagation();
-                setNotMovableIds([id, tabs[i + 1] ? tabs[i + 1].id : '']);
+                setNotMovableIds([id, tabsArray[i + 1] ? tabsArray[i + 1].id : '']);
                 dispatch(setDragInfo({ id, title, link, description, target: 'tab-item' }));
               }}
               onDragEnd={e => {
@@ -334,11 +329,9 @@ const Tabs = () => {
           className="category"
           draggable
           onDragStart={() => {
-            console.log('dragStart category');
             dispatch(setDragInfo({ category: c, target: 'tab-category' }));
           }}
           onDragEnd={() => {
-            console.log('dragEnd category');
             dispatch(clearDragInfo());
           }}
         >
