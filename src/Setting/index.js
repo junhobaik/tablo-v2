@@ -44,6 +44,7 @@ const Setting = () => {
         const targetCategory = categories.filter(c => c.innerText === settingInfo.category)[0];
         targetCategory.style.display = 'none';
         targetCategory.parentNode.querySelector('.title-input').style.display = 'flex';
+        targetCategory.parentNode.querySelector('.title-input>input').focus();
         break;
       }
 
@@ -57,7 +58,8 @@ const Setting = () => {
           if (settingInfo.id === tt.parentNode.parentNode.parentNode.parentNode.attributes._id.value) targetTitle = tt;
         }
         targetTitle.firstChild.style.display = 'none';
-        targetTitle.lastChild.style.display = 'inline';
+        targetTitle.lastChild.style.display = 'flex';
+        targetTitle.lastChild.querySelector('input').focus();
         break;
       }
       default:
