@@ -43,7 +43,7 @@ const Setting = () => {
         const categories = Array.from(document.querySelectorAll('#Tabs .category-header>.title>.title-text'));
         const targetCategory = categories.filter(c => c.innerText === settingInfo.category)[0];
         targetCategory.style.display = 'none';
-        targetCategory.parentNode.querySelector('.title-input').style.display = 'block';
+        targetCategory.parentNode.querySelector('.title-input').style.display = 'flex';
         break;
       }
 

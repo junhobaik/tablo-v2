@@ -352,12 +352,14 @@ const Tabs = () => {
                   setCategoryTitleValue(titleValue);
                 }}
                 onBlur={e => {
-                  dispatch(editTabCategory(c, e.currentTarget.value));
+                  const originTitle = e.currentTarget.parentNode.parentNode.querySelector('.title-text').innerText;
+                  if (originTitle !== e.currentTarget.value) dispatch(editTabCategory(c, e.currentTarget.value));
                   hideCategoryInput(e);
                 }}
                 onKeyDown={e => {
                   if (e.keyCode === 13) {
-                    dispatch(editTabCategory(c, e.currentTarget.value));
+                    const originTitle = e.currentTarget.parentNode.parentNode.querySelector('.title-text').innerText;
+                    if (originTitle !== e.currentTarget.value) dispatch(editTabCategory(c, e.currentTarget.value));
                     hideCategoryInput(e);
                   }
                 }}
