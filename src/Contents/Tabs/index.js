@@ -19,7 +19,7 @@ import {
 const Tabs = () => {
   const dispatch = useDispatch();
   const { tabs, categories } = useSelector(state => state.tab);
-  const { dragInfo, linkMethod } = useSelector(state => state.app);
+  const { dragInfo, linkMethod, isTabItemMinimize } = useSelector(state => state.app);
   const [categoryTitleValue, setCategoryTitleValue] = useState('');
   const [tabTitleValue, setTabTitleValue] = useState('');
   const [descriptionValue, setDescriptionValue] = useState({});
@@ -243,9 +243,11 @@ const Tabs = () => {
                       }}
                     />
                   </div>
-                  <div className="handle-icon">
-                    <Icon name="bars" />
-                  </div>
+                  {isTabItemMinimize ? null : (
+                    <div className="handle-icon">
+                      <Icon name="bars" />
+                    </div>
+                  )}
                 </div>
                 <div className="item-content">
                   <div className="item-header">
@@ -308,18 +310,20 @@ const Tabs = () => {
                       <Icon name="ellipsis horizontal" />
                     </div>
                   </div>
-                  <div className="item-description">
-                    <textarea
-                      row="2"
-                      spellCheck="false"
-                      value={descriptionValue[id] === undefined ? description : descriptionValue[id]}
-                      onChange={e => {
-                        const { value } = e.currentTarget;
-                        setDescriptionValue({ ...descriptionValue, [id]: value });
-                        dispatch(editTabItem(id, null, value));
-                      }}
-                    />
-                  </div>
+                  {isTabItemMinimize ? null : (
+                    <div className="item-description">
+                      <textarea
+                        row="2"
+                        spellCheck="false"
+                        value={descriptionValue[id] === undefined ? description : descriptionValue[id]}
+                        onChange={e => {
+                          const { value } = e.currentTarget;
+                          setDescriptionValue({ ...descriptionValue, [id]: value });
+                          dispatch(editTabItem(id, null, value));
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             </li>
