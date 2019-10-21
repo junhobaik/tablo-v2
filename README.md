@@ -8,11 +8,12 @@
 
 - Framework: 
   - **React**
-  - ~~GraphQL~~ & ~~Apollo~~
 - Bundler: **Parcel**
 - Style:
   - **SASS (SCSS)**
   - **semantic-ui-react**
-- Linter & Formatter: ~~ESLint~~ & **Prettier**
+- Linter & Formatter: **ESLint** & **Prettier**
 - etc:
+  - **redux (react-redux)**
+  - **chrome APIs**
   - ~~Google Analytics~~
