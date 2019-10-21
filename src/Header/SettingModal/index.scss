@@ -63,7 +63,7 @@
       .link-method {
         display: flex;
         justify-content: space-around;
-        &>div:nth-child(2) {
+        & > div:nth-child(2) {
           margin: 0 1.5rem;
         }
       }
