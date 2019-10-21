@@ -289,6 +289,9 @@ const Tabs = () => {
                             dispatch(editTabItem(id, e.currentTarget.value, null));
                             hideTabTitleInput(e);
                           }
+                          if (e.keyCode === 27) {
+                            hideTabTitleInput(e);
+                          }
                         }}
                       />
                     </div>
