@@ -382,12 +382,14 @@ const Tabs = () => {
                   links.push(a.href);
                 }
 
-                if (linkMethod.tabList === 'self') {
-                  for (const link of links) {
-                    chrome.tabs.create({ url: link });
+                if (links.length) {
+                  if (linkMethod.tabList === 'self') {
+                    for (const link of links) {
+                      chrome.tabs.create({ url: link });
+                    }
+                  } else {
+                    chrome.windows.create({ url: links, type: 'normal' });
                   }
-                } else {
-                  chrome.windows.create({ url: links, type: 'normal' });
                 }
               }}
             >
