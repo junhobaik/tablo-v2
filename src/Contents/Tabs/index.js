@@ -18,6 +18,7 @@ import {
 
 const Tabs = () => {
   const dispatch = useDispatch();
+  const { settingInfo } = useSelector(state => state.app);
   const { tabs, categories } = useSelector(state => state.tab);
   const { dragInfo, linkMethod, isTabItemMinimize } = useSelector(state => state.app);
   const [categoryTitleValue, setCategoryTitleValue] = useState('');
@@ -83,13 +84,15 @@ const Tabs = () => {
   };
 
   const settingMouseLeave = () => {
-    setTimeout(() => {
-      dispatch(
-        setSettingInfo({
-          isVisible: false,
-        })
-      );
-    }, 500);
+    if (settingInfo.isVisible) {
+      setTimeout(() => {
+        dispatch(
+          setSettingInfo({
+            isVisible: false,
+          })
+        );
+      }, 1000);
+    }
   };
 
   const handleCategoryValue = e => {
@@ -205,10 +208,10 @@ const Tabs = () => {
               _id={id}
               draggable
               onMouseEnter={e => {
-                e.currentTarget.querySelector('.handle-icon').style.opacity = 0.2;
+                if (!isTabItemMinimize) e.currentTarget.querySelector('.handle-icon').style.opacity = 0.2;
               }}
               onMouseLeave={e => {
-                e.currentTarget.querySelector('.handle-icon').style.opacity = 0;
+                if (!isTabItemMinimize) e.currentTarget.querySelector('.handle-icon').style.opacity = 0;
               }}
               onDragOver={e => {
                 e.preventDefault();

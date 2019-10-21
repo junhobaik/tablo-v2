@@ -91,7 +91,7 @@ const Setting = () => {
     <div
       className="setting-tt"
       style={{
-        display: !(isMouseIn || settingInfo.isVisible) ? 'none' : 'flex',
+        display: isMouseIn || settingInfo.isVisible ? 'flex' : 'none',
         top: `calc(${settingInfo.y}px + 1.1rem)`,
         left: `${settingInfo.x}px`,
       }}
@@ -99,9 +99,11 @@ const Setting = () => {
         setIsMouseIn(true);
       }}
       onMouseLeave={() => {
-        setTimeout(() => {
-          setIsMouseIn(false);
-        }, 250);
+        if (isMouseIn) {
+          setTimeout(() => {
+            setIsMouseIn(false);
+          }, 500);
+        }
       }}
     >
       <div

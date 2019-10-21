@@ -6,10 +6,10 @@
   position: fixed;
   background-color: rgb(245, 246, 250);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+  width: 4rem;
+  justify-content: space-around;
+  padding-left: 0.5rem;
 
-  & > div {
-    padding: 0 0.25rem;
-  }
   .title-edit,
   .remove {
     cursor: pointer;
