@@ -362,6 +362,9 @@ const Tabs = () => {
                     if (originTitle !== e.currentTarget.value) dispatch(editTabCategory(c, e.currentTarget.value));
                     hideCategoryInput(e);
                   }
+                  if (e.keyCode === 27) {
+                    hideCategoryInput(e);
+                  }
                 }}
               />
             </div>
