@@ -4,10 +4,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import './index.scss';
-import { setLinkMethod, toggleMenuAlwaysOpen, toggleFeedItemMinimize } from '../../redux/actions/app';
+import {
+  setLinkMethod,
+  toggleMenuAlwaysOpen,
+  toggleFeedItemMinimize,
+  toggleTabItemMinimize,
+} from '../../redux/actions/app';
 
 const SettingModal = ({ close }) => {
-  const { linkMethod, isMenuAlwaysOpen, isFeedItemMinimize } = useSelector(state => state.app, {});
+  const { linkMethod, isMenuAlwaysOpen, isFeedItemMinimize, isTabItemMinimize } = useSelector(state => state.app, {});
   const dispatch = useDispatch();
 
   const tabLinkMethod = linkMethod.tab;
@@ -35,6 +40,10 @@ const SettingModal = ({ close }) => {
 
   const handleMinimize = () => {
     dispatch(toggleFeedItemMinimize());
+  };
+
+  const handleTabItemMinimize = () => {
+    dispatch(toggleTabItemMinimize());
   };
 
   return (
@@ -139,6 +148,15 @@ const SettingModal = ({ close }) => {
               className="feed-item-minimize-toggle"
               onChange={handleMinimize}
               checked={isFeedItemMinimize}
+              toggle
+            />
+          </div>
+          <div className="tab-item-minimize-setting">
+            <h3>Minimize Tab Items</h3>
+            <Checkbox
+              className="tab-item-minimize-toggle"
+              onChange={handleTabItemMinimize}
+              checked={isTabItemMinimize}
               toggle
             />
           </div>

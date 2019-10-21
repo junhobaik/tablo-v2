@@ -9,6 +9,7 @@ export const DELETE_HIDE_CATEGORY = 'DELETE_HIDE_CATEGORY';
 export const TOGGLE_FEED_ITEM_MINIMIZE = 'TOGGLE_FEED_ITEM_MINIMIZE';
 export const SET_DRAG_INFO = 'SET_DRAG_INFO';
 export const CLEAR_DRAG_INFO = 'CLEAR_DRAG_INFO';
+export const TOGGLE_TAB_ITEM_MINIMIZE = 'TOGGLE_TAB_ITEM_MINIMIZE';
 
 export const setWindow = windowStatus => {
   return { type: SET_WINDOW, windowStatus };
@@ -48,4 +49,8 @@ export const deleteHideCategory = category => {
 
 export const toggleFeedItemMinimize = () => {
   return { type: TOGGLE_FEED_ITEM_MINIMIZE };
+};
+
+export const toggleTabItemMinimize = () => {
+  return { type: TOGGLE_TAB_ITEM_MINIMIZE };
 };

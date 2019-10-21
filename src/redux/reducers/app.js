@@ -11,6 +11,7 @@ import {
   TOGGLE_FEED_ITEM_MINIMIZE,
   SET_DRAG_INFO,
   CLEAR_DRAG_INFO,
+  TOGGLE_TAB_ITEM_MINIMIZE,
 } from '../actions/app';
 
 const app = (state = [], action) => {
@@ -69,6 +70,8 @@ const app = (state = [], action) => {
     case TOGGLE_FEED_ITEM_MINIMIZE:
       return { ...state, isFeedItemMinimize: !state.isFeedItemMinimize };
 
+    case TOGGLE_TAB_ITEM_MINIMIZE:
+      return { ...state, isTabItemMinimize: !state.isTabItemMinimize };
     default:
       return state;
   }
