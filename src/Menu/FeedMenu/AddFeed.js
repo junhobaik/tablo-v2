@@ -92,38 +92,40 @@ const AddFeed = ({ close }) => {
       case 'positive':
         return (
           <Message positive>
-            <Message.Header>주소가 유효합니다!</Message.Header>
-            <p>{`"${verifiedUrl}" 주소가 확인되었습니다. 추가하시려면 Add 버튼을 눌러주세요`}</p>
+            <Message.Header>The address is valid!</Message.Header>
+            <p>{`"${verifiedUrl}" Address confirmed, Press Add button to add.`}</p>
           </Message>
         );
       case 'warning':
         return (
           <Message warning icon>
             <Icon name="circle notched" loading />
-            <Message.Header>주소 유효성 검사 중...</Message.Header>
+            <Message.Header>Validating address...</Message.Header>
           </Message>
         );
 
       case 'negative':
         return (
           <Message negative>
-            <Message.Header>죄송합니다, 잘못된 주소 또는 알 수 없는 주소입니다.</Message.Header>
-            <p>다시 한번 주소를 확인해보시고, 또는 rss 구독이 지원되는 사이트인지 확인해주세요.</p>
+            <Message.Header>Sorry, invalid or unknown address</Message.Header>
+            <p>Please check your address again, or check if rss subscription is supported.</p>
           </Message>
         );
 
       case 'info':
         return (
           <Message info>
-            <Message.Header>이미 추가된 사이트입니다.</Message.Header>
+            <Message.Header>This site has already been added</Message.Header>
           </Message>
         );
 
       default:
         return (
           <Message>
-            <Message.Header>추가할 사이트의 피드 주소를 입력해주세요.</Message.Header>
-            <p>주소에는 http:// 또는 https:// 가 반드시 들어가야합니다.</p>
+            <Message.Header>Please enter the feed address of the site you want to add</Message.Header>
+            <p>
+              The address must contain http:// or https://, Validation will begin shortly after the address is entered
+            </p>
           </Message>
         );
     }
