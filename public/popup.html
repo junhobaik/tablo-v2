@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div id="popup">
+      <div class="wrap">
+        <header>
+          <h1>Tablo v2</h1>
+        </header>
+        <div class="content">
+          <div class="cart">
+            <div class="item">
+              <div class="item-info">
+                <div class="favicon">
+                  <img src="" alt="favicon" />
+                </div>
+                <div class="no-favicon"><span></span></div>
+                <input class="item-title" type="text" />
+              </div>
+              <div class="add-button" role="button">
+                <span>Add to Cart</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="feed">
+            <div class="not-found">
+              <p>Searching Feed URL...</p>
+            </div>
+            <div class="found">
+              <p>Feed found for the current site</p>
+              <input class="feed-title" type="text"></input>
+            </div>
+            <div class="add-feed-button disable-button" role="button">
+              <span>Add Feed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>
