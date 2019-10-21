@@ -60,6 +60,17 @@ const App = () => {
         dispatch(resetTab(defaults.tab));
       }
     });
+
+    chrome.storage.sync.onChanged.addListener(storage => {
+      if (storage.tablo_v2_tab) {
+        const { cart } = storage.tablo_v2_tab.newValue;
+        if (cart.length > document.querySelector('.cart-item-list').childNodes.length) window.location.reload();
+      }
+      if (storage.tablo_v2_feed) {
+        const feeds = storage.tablo_v2_feed.newValue;
+        if (feeds.length > document.querySelectorAll('#FeedMenu .feed').length) window.location.reload();
+      }
+    });
   }, []);
 
   return (
