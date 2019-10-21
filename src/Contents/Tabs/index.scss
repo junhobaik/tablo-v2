@@ -110,11 +110,13 @@
                         align-items: center;
                         font-size: 0.9rem;
                         height: 1.25rem;
-                        width: 10rem;
                         padding: 0;
+                        
                         input {
+                          width: 12rem;
                           background-color: transparent;
                           padding: 0;
+                          padding-right: 1.5rem;
                           border: 0;
                         }
                       }
