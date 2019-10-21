@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -253,6 +254,27 @@ const FeedMenu = () => {
     return (
       <div className="feed-list" key={c}>
         <div className="feed-list-header">
+          <div className="feed-visible">
+            {isHideCategory ? (
+              <div
+                className="invisible-feed-list"
+                role="button"
+                tabIndex="0"
+                onClick={() => {
+                  dispatch(deleteHideCategory(c));
+                }}
+              />
+            ) : (
+              <div
+                className="visible-feed-list"
+                role="button"
+                tabIndex="0"
+                onClick={() => {
+                  dispatch(addHideCategory(c));
+                }}
+              />
+            )}
+          </div>
           <div className="feed-list-title">
             <span>{c}</span>
             <Input
@@ -272,22 +294,6 @@ const FeedMenu = () => {
             />
           </div>
           <div className="feed-list-setting">
-            {isHideCategory ? (
-              <Icon
-                name="eye slash"
-                onClick={() => {
-                  dispatch(deleteHideCategory(c));
-                }}
-              />
-            ) : (
-              <Icon
-                name="eye"
-                onClick={() => {
-                  dispatch(addHideCategory(c));
-                }}
-              />
-            )}
-
             {c === 'Inbox' ? null : (
               <Icon
                 name="ellipsis horizontal"

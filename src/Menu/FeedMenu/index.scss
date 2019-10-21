@@ -51,7 +51,26 @@
           display: flex;
           color: white;
           padding: 0.5rem;
+          align-items: center;
 
+          .feed-visible {
+            margin-right: 0.1rem;
+            margin-top: 0.1rem;
+
+            .visible-feed-list {
+              background-color: rgba(20, 101, 192, 0.7);
+            }
+
+            .visible-feed-list,
+            .invisible-feed-list {
+              border: 2px solid rgba(20, 101, 192, 0.7);
+              border-radius: 100%;
+              width: 0.9rem;
+              height: 0.9rem;
+              cursor: pointer;
+              margin: 0 0.25rem;
+            }
+          }
           .feed-list-title {
             flex-grow: 1;
             font-weight: bold;
