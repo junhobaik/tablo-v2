@@ -125,6 +125,7 @@
                   }
                   .item-description {
                     textarea {
+                      color: $font-color-2;
                       background-color: transparent;
                       width: 12rem;
                       border: 0;
@@ -163,7 +164,7 @@
         height: 3rem;
         align-items: center;
         justify-content: center;
-        background-color: $header-background-color;
+        background-color: $primary-color-1;
         border-radius: 100%;
         cursor: pointer;
         opacity: 0.7;

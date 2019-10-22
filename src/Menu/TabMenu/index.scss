@@ -21,7 +21,7 @@
       align-items: center;
       text-align: center;
       padding: 0.25rem;
-      box-shadow: 0 0 2px rgba(20, 101, 192, 1);
+      box-shadow: 0 0 2px $primary-color-3;
       border-top-left-radius: 20px;
       border-bottom-left-radius: 20px;
 
@@ -31,13 +31,13 @@
       }
 
       .icon {
-        color: rgba(20, 101, 192, 0.5);
+        color: $primary-color-3;
       }
     }
   }
 
   .tabs {
-    border-right: 1px solid rgba(20, 101, 192, 0.5);
+    border-right: 1px solid $primary-color-3;
 
     & > .title {
       border-top-left-radius: 0;
@@ -61,23 +61,32 @@
           cursor: grabbing;
         }
 
-        h3 {
-          margin-top: 0.25rem;
-          max-width: 12rem;
-          font-size: 0.9rem;
-          padding-right: 0 !important;
-          text-overflow: ellipsis;
-          overflow: hidden;
-          width: 100%;
-          display: inline-block;
-          white-space: nowrap;
-          padding-right: 1.5rem;
-          color: #4183c4;
-        }
         .item-inner {
+          .drag-handle {
+            justify-content: center;
+
+            & > div {
+              margin: 0;
+            }
+          }
+
           .item-header {
+            height: 2rem;
             .title {
               padding: 0;
+              h3 {
+                display: inline-block;
+                color: $font-color-1;
+                margin-top: 0.25rem;
+                max-width: 12rem;
+                font-size: 0.9rem;
+                padding-right: 0 !important;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                width: 100%;
+                white-space: nowrap;
+                padding-right: 1.5rem;
+              }
             }
           }
         }
@@ -105,6 +114,21 @@
 
       .cart-item {
         margin: 0.25rem 0.5rem;
+        .item-header {
+          .icon-wrap {
+            cursor: pointer;
+          }
+        }
+        .item-description {
+          span {
+            display: inline-block;
+            line-height: 1rem;
+            max-height: 2rem;
+            overflow: hidden;
+            word-break: break-all;
+            color: $font-color-2;
+          }
+        }
       }
     }
   }
