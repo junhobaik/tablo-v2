@@ -41,11 +41,9 @@ const Contents = () => {
           <Tabs />
         </div>
       ) : null}
-      {windowStatus !== 'tab' ? (
-        <div className="right" style={style}>
-          <Feeds />
-        </div>
-      ) : null}
+      <div className="right" style={windowStatus !== 'tab' ? style : { ...style, display: 'none' }}>
+        <Feeds />
+      </div>
     </div>
   );
 };
