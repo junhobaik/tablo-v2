@@ -171,7 +171,7 @@ const Tabs = () => {
             key={`tab-item-${id}`}
             onDragEnter={e => {
               const target = e.currentTarget;
-              if (isMovable && dragInfo.target === 'tab-item') {
+              if (isMovable && (dragInfo.target === 'tab-item' || dragInfo.target === 'current-tab-item')) {
                 target.style.flexGrow = '1';
                 target.firstChild.style.pointerEvents = 'none';
                 setDragEnterStyle(target, true);
