@@ -65,11 +65,11 @@ const FeedMenu = () => {
     setTitleValue('');
     const titleInputs = e.currentTarget.parentNode.parentNode;
     const feed = titleInputs.parentNode.parentNode;
-    feed.style.width = '12rem';
-    feed.style.maxWidth = '12rem';
+    feed.style.width = '14rem';
+    feed.style.maxWidth = '14rem';
     titleInputs.style.display = 'none';
-    feed.querySelector('.title-a').style.display = 'inline-block';
-    feed.querySelector('.feed-setting').style.display = 'inline-block';
+    feed.querySelector('.title-a').style.display = 'inline';
+    feed.querySelector('.feed-setting').style.display = 'flex';
   };
 
   const submitTitleEdit = e => {
