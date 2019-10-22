@@ -137,7 +137,7 @@ class Feeds extends Component {
 
 const mapStateToProps = state => {
   return {
-    linkMethod: state.app.linkMethod.tab,
+    linkMethod: state.app.linkMethod.feed,
     hideCategories: state.app.hideCategories,
     feeds: state.feed,
     windowStatus: state.app.windowStatus,
