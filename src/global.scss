@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 #App {
   div[role='button'],
   button {
@@ -21,6 +23,7 @@
       border-radius: 3px;
       background-color: rgb(247, 247, 248);
       border: 1px solid rgb(230, 230, 230);
+
       .drag-handle {
         display: flex;
         flex-direction: column;
@@ -34,7 +37,7 @@
 
         & > div {
           pointer-events: none;
-          margin-top: 0.25rem;
+          margin-top: 0.3rem;
         }
 
         .no-favicon {
@@ -46,12 +49,12 @@
 
           & > div {
             display: flex;
-            min-width: 1rem;
-            max-width: 1rem;
+            min-width: 1.025rem;
+            max-width: 1.025rem;
             min-height: 1rem;
             max-height: 1rem;
             border-radius: 100%;
-            background-color: rgba(20, 101, 192, 0.3);
+            background-color: $primary-color-4;
             align-items: center;
             justify-content: center;
 
@@ -69,7 +72,7 @@
           justify-content: center;
 
           & > img {
-            width: 0.9rem;
+            width: 0.945rem;
             height: 0.9rem;
           }
         }
@@ -110,14 +113,21 @@
               box-sizing: border-box;
               width: 12rem;
               max-width: 12rem;
+              color: $font-color-1;
+              transition: 0.2s;
+
+              &:hover {
+                color: $font-color-0;
+              }
 
               h3 {
                 display: inline-block;
                 position: relative;
                 left: 0%;
+                margin-top: 0.3rem;
                 font-size: 0.9rem;
                 white-space: nowrap;
-                padding-right: 1.5rem;
+                padding-right: 2rem;
               }
             }
           }
@@ -152,17 +162,8 @@
 
         .item-description {
           font-size: 0.8rem;
-          opacity: 0.4;
           height: 2.2rem;
           max-width: 12rem;
-
-          span {
-            display: inline-block;
-            line-height: 1rem;
-            max-height: 2rem;
-            overflow: hidden;
-            word-break: break-all;
-          }
         }
       }
     }

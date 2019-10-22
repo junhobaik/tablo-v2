@@ -5,13 +5,16 @@ import { Icon } from 'semantic-ui-react';
 
 import './index.scss';
 import { deleteFeed, deleteCategory } from '../redux/actions/feed';
-import { setSettingInfo } from '../redux/actions/app';
 import { deleteTabCategory, deleteTabItem } from '../redux/actions/tab';
 
 const Setting = () => {
   const [isMouseIn, setIsMouseIn] = useState(false);
   const { settingInfo } = useSelector(state => state.app);
   const dispatch = useDispatch();
+
+  const hideSetting = () => {
+    document.querySelector('.setting-tt').style.display = 'none';
+  };
 
   const clickTitleEdit = () => {
     switch (settingInfo.target) {
@@ -65,6 +68,8 @@ const Setting = () => {
       default:
         break;
     }
+
+    hideSetting();
   };
 
   const clickRemove = () => {
@@ -84,7 +89,8 @@ const Setting = () => {
       default:
         break;
     }
-    dispatch(setSettingInfo({ isVisible: false }));
+
+    hideSetting();
   };
 
   return (

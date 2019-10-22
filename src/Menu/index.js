@@ -105,13 +105,7 @@ const Menu = () => {
             }
           }}
         >
-          {selectMenu === 'tab' ? (
-            <span>
-              <strong>TAB</strong>
-            </span>
-          ) : (
-            <span>TAB</span>
-          )}
+          {selectMenu === 'tab' ? <h3 className="selected-menu">TAB</h3> : <h3>TAB</h3>}
         </div>
 
         {toggleButtons}
@@ -127,13 +121,7 @@ const Menu = () => {
             }
           }}
         >
-          {selectMenu === 'feed' ? (
-            <span>
-              <strong>FEED</strong>
-            </span>
-          ) : (
-            <span>FEED</span>
-          )}
+          {selectMenu === 'feed' ? <h3 className="selected-menu">FEED</h3> : <h3>FEED</h3>}
         </div>
       </div>
 

@@ -26,7 +26,7 @@
       height: 100%;
       width: 8rem;
       background-color: #fff;
-      border-top: 2px solid $header-background-color;
+      border-top: 2px solid $primary-color-1;
 
       &:hover {
         background-color: #dadce0;
@@ -38,20 +38,37 @@
       width: 4rem !important;
     }
 
+    .tab-menu-button,
+    .feed-menu-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      h3 {
+        font-weight: normal;
+        font-size: 1rem;
+        margin-bottom: 2px;
+      }
+    }
+
+    .selected-menu {
+      font-weight: bold !important;
+    }
+
     .tab-menu-button {
-      border-left: 2px solid $header-background-color;
+      border-left: 2px solid $primary-color-1;
       border-top-left-radius: 3px;
     }
 
     .feed-menu-button {
-      border-right: 2px solid $header-background-color;
+      border-right: 2px solid $primary-color-1;
       border-top-right-radius: 3px;
     }
   }
   .menu-content {
     flex-grow: 1;
     box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
-    border: 2px solid $header-background-color;
+    border: 2px solid $primary-color-1;
     border-bottom: 0;
     // padding: 0.5rem 1rem;
     border-top-left-radius: 5px;
