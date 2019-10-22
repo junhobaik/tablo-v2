@@ -117,7 +117,7 @@ class Feeds extends Component {
               <span className="date">{moment(pubDate).fromNow()}</span>
             </div>
             <div className="item-content">
-              <span>{contentSnippet.substr(0, 140)}</span>
+              <span>{contentSnippet}</span>
             </div>
           </div>
         </li>

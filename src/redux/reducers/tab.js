@@ -23,10 +23,7 @@ const tab = (state = [], action) => {
     case ADD_CART_ITEM:
       return {
         ...state,
-        cart: [
-          ...state.cart,
-          { link: action.link, title: action.title, description: action.description.substr(0, 50) },
-        ],
+        cart: [...state.cart, { link: action.link, title: action.title, description: action.description }],
       };
 
     case DELETE_CART_ITEM: {
