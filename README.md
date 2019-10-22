@@ -1,5 +1,9 @@
 # Tablo v2 (가제/미완)
 
+[Chrome Web Store - Tablo v2](https://chrome.google.com/webstore/detail/tablo-v2-beta/aflhcldanmopecmjjinnenkcddghjnkn)
+
+---
+
 기존 [Tablo](https://github.com/junhobaik/tablo) 웹앱을 개선하고 Feed(rss) 구독 기능을 추가한 새로운 웹앱.
 
 간단히 즐겨찾기 기능과 rss 구독 기능을 위한 웹앱이라고 소개할 수 있다.  
