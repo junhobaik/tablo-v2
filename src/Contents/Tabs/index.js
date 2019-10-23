@@ -158,6 +158,13 @@ const Tabs = () => {
         const { title, link, description, id } = tab;
         const isMovable = notMovableIds.indexOf(id) === -1;
 
+        const getLinkFirstStr = originLink => {
+          const filteredLink = originLink.split('/')[2].split('www.');
+          if (filteredLink[0] === '') return filteredLink[1][0];
+          return filteredLink[0][0];
+        };
+        const linkFirstStr = getLinkFirstStr(link);
+
         const getTarget = (e, isReturnIndex = false) => {
           const els = Array.from(e.currentTarget.parentNode.querySelectorAll('.tab-item-wrap'));
           const targetIndex = els.indexOf(e.currentTarget);
@@ -230,7 +237,7 @@ const Tabs = () => {
                 <div className="drag-handle">
                   <div className="no-favicon">
                     <div>
-                      <span>{title.substr(0, 1)}</span>
+                      <span>{linkFirstStr}</span>
                     </div>
                   </div>
                   <div className="favicon">

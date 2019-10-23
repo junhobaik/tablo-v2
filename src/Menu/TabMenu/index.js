@@ -61,8 +61,16 @@ const TabMenu = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTabList, setCurrentTabList]);
 
+  const getLinkFirstStr = originLink => {
+    const filteredLink = originLink.split('/')[2].split('www.');
+    if (filteredLink[0] === '') return filteredLink[1][0];
+    return filteredLink[0][0];
+  };
+
   const currentTabs = currentTabList.map((tab, i) => {
     const { url, title } = tab;
+    const linkFirstStr = getLinkFirstStr(url);
+
     return (
       <li
         key={`current-tab-${i}`}
@@ -79,7 +87,7 @@ const TabMenu = () => {
           <div className="drag-handle">
             <div className="no-favicon">
               <div>
-                <span>{title.substr(0, 1)}</span>
+                <span>{linkFirstStr}</span>
               </div>
             </div>
             <div className="favicon">
@@ -112,6 +120,9 @@ const TabMenu = () => {
 
   const cartItems = cart.map((item, i) => {
     const { link, title, description } = item;
+
+    const linkFirstStr = getLinkFirstStr(link);
+
     return (
       <li
         className="cart-item item-style"
@@ -136,7 +147,7 @@ const TabMenu = () => {
           <div className="drag-handle">
             <div className="no-favicon">
               <div>
-                <span>{title.substr(0, 1)}</span>
+                <span>{linkFirstStr}</span>
               </div>
             </div>
             <div className="favicon">
