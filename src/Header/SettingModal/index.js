@@ -178,7 +178,7 @@ const SettingModal = ({ close }) => {
             <h3>Refresh period of Feed Posts</h3>
             <Select
               onChange={(e, data) => handleFeedItemRefresh(e, data)}
-              defaultValue={feedItemRefreshPeriod}
+              defaultValue={feedItemRefreshPeriod || 6}
               options={refreshOptions}
             />
           </div>
