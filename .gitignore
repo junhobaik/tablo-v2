@@ -1,7 +1,7 @@
 # Custom
 dist/
 build/
-TODO.md
+NOTE.md
 *.zip
 .DS_Store
 
