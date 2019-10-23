@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
@@ -58,24 +59,56 @@ class Feeds extends Component {
       const result = await parser.parseURL(CORS_PROXY + requestUrl, (err, feed) => {
         for (const item of feed.items) {
           const { title, link, pubDate, contentSnippet } = item;
-          this.setState(prevState => ({
-            items: [...prevState.items, { title, link, pubDate, contentSnippet, feedTitle, feedLink }].sort((a, b) => {
-              const aDate = parseInt(moment(a.pubDate).format('YYYYMMDD'), 10);
-              const bDate = parseInt(moment(b.pubDate).format('YYYYMMDD'), 10);
-              return aDate > bDate ? -1 : 1;
-            }),
-          }));
+          const description = contentSnippet.substr(0, 200);
+          const localFeeds = JSON.parse(localStorage.getItem('tablo_v2_local_feed')) || [];
+
+          localFeeds.push({ title, link, pubDate, contentSnippet: description, feedTitle, feedLink });
+
+          const sortedLocalFeeds = localFeeds.sort((a, b) => {
+            const aDate = parseInt(moment(a.pubDate).format('YYYYMMDD'), 10);
+            const bDate = parseInt(moment(b.pubDate).format('YYYYMMDD'), 10);
+            return aDate > bDate ? -1 : 1;
+          });
+
+          localStorage.setItem('tablo_v2_local_feed', JSON.stringify(sortedLocalFeeds));
+
+          this.setState({
+            items: sortedLocalFeeds,
+          });
         }
       });
+
       return result;
     };
 
     const setAllFeedItems = pipe(
       ...feeds.map(feed => {
-        return () => addFeedItems(feed.url, feed.title, feed.link);
+        return () => {
+          addFeedItems(feed.url, feed.title, feed.link);
+        };
       })
     );
-    setAllFeedItems();
+
+    if (this.getUpdateNeeds()) {
+      setAllFeedItems();
+    } else {
+      this.setState({
+        items: JSON.parse(localStorage.getItem('tablo_v2_local_feed')) || [],
+      });
+    }
+  }
+
+  getUpdateNeeds(reloadTime = 3600000 * 3) {
+    // reloadTime: ms, 3600000 === 1hour
+    const localFeedSync = localStorage.getItem('tablo_v2_local_feed_sync');
+    const localFeeds = localStorage.getItem('tablo_v2_local_feed');
+
+    if (!localFeedSync || !localFeeds || parseInt(localFeedSync, 10) + reloadTime < Date.now()) {
+      localStorage.setItem('tablo_v2_local_feed_sync', Date.now().toString());
+      localStorage.removeItem('tablo_v2_local_feed');
+      return true;
+    }
+    return false;
   }
 
   render() {
