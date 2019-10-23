@@ -137,7 +137,7 @@ const FeedMenu = () => {
   categories.add('new');
 
   const feedList = feeds.map(feed => {
-    const { id, url, title, category, isHide } = feed;
+    const { id, url, link, title, category, isHide } = feed;
     const options = Array.from(categories).map(c => {
       if (c === 'new') return { key: c, text: '+ New Category', value: c };
       return { key: c, text: c, value: c };
@@ -157,7 +157,7 @@ const FeedMenu = () => {
           <div className={`visible-icon ${!isHide ? 'visible' : null}`} />
         </div>
         <div key={`${url}-title`} className="feed-title title">
-          <a className="title-a" href={url}>
+          <a className="title-a" href={link}>
             {title}
           </a>
           <div className="title-inputs">
