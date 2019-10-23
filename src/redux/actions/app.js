@@ -10,6 +10,7 @@ export const TOGGLE_FEED_ITEM_MINIMIZE = 'TOGGLE_FEED_ITEM_MINIMIZE';
 export const SET_DRAG_INFO = 'SET_DRAG_INFO';
 export const CLEAR_DRAG_INFO = 'CLEAR_DRAG_INFO';
 export const TOGGLE_TAB_ITEM_MINIMIZE = 'TOGGLE_TAB_ITEM_MINIMIZE';
+export const SET_FEED_ITEM_REFRESH_PERIOD = 'SET_FEED_ITEM_REFRESH_PERIOD';
 
 export const setWindow = windowStatus => {
   return { type: SET_WINDOW, windowStatus };
@@ -53,4 +54,8 @@ export const toggleFeedItemMinimize = () => {
 
 export const toggleTabItemMinimize = () => {
   return { type: TOGGLE_TAB_ITEM_MINIMIZE };
+};
+
+export const setFeedItemRefreshPeriod = time => {
+  return { type: SET_FEED_ITEM_REFRESH_PERIOD, time };
 };

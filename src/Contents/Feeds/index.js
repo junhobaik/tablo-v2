@@ -98,8 +98,8 @@ class Feeds extends Component {
     }
   }
 
-  getUpdateNeeds(reloadTime = 3600000 * 3) {
-    // reloadTime: ms, 3600000 === 1hour
+  getUpdateNeeds() {
+    const reloadTime = this.props.feedItemRefreshPeriod * 3600000; // reloadTime: ms, 3600000 === 1hour
     const localFeedSync = localStorage.getItem('tablo_v2_local_feed_sync');
     const localFeeds = localStorage.getItem('tablo_v2_local_feed');
 
@@ -175,6 +175,7 @@ const mapStateToProps = state => {
     feeds: state.feed,
     windowStatus: state.app.windowStatus,
     isFeedItemMinimize: state.app.isFeedItemMinimize,
+    feedItemRefreshPeriod: state.app.feedItemRefreshPeriod,
   };
 };
 

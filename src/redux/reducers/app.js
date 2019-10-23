@@ -12,6 +12,7 @@ import {
   SET_DRAG_INFO,
   CLEAR_DRAG_INFO,
   TOGGLE_TAB_ITEM_MINIMIZE,
+  SET_FEED_ITEM_REFRESH_PERIOD,
 } from '../actions/app';
 
 const app = (state = [], action) => {
@@ -72,6 +73,10 @@ const app = (state = [], action) => {
 
     case TOGGLE_TAB_ITEM_MINIMIZE:
       return { ...state, isTabItemMinimize: !state.isTabItemMinimize };
+
+    case SET_FEED_ITEM_REFRESH_PERIOD:
+      return { ...state, feedItemRefreshPeriod: action.time };
+
     default:
       return state;
   }

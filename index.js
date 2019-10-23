@@ -28,6 +28,7 @@ const firstLoadState = () => {
       isMenuAlwaysOpen: false,
       hideCategories: [],
       isFeedItemMinimize: false,
+      feedItemRefreshPeriod: 6,
       settingInfo: {
         target: '',
         isVisible: false,

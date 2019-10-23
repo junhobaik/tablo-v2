@@ -71,9 +71,18 @@
 
     .menu-open-setting,
     .feed-item-minimize-setting,
-    .tab-item-minimize-setting {
+    .tab-item-minimize-setting,
+    .feed-item-refresh-setting {
       display: flex;
+      align-items: center;
       justify-content: space-between;
+    }
+
+    .feed-item-refresh-setting {
+      & > div {
+        min-width: auto;
+        max-width: 7rem;
+      }
     }
   }
 }

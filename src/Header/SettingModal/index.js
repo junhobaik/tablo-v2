@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Form, Radio, Checkbox } from 'semantic-ui-react';
+import { Icon, Form, Radio, Checkbox, Select } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -9,10 +9,14 @@ import {
   toggleMenuAlwaysOpen,
   toggleFeedItemMinimize,
   toggleTabItemMinimize,
+  setFeedItemRefreshPeriod,
 } from '../../redux/actions/app';
 
 const SettingModal = ({ close }) => {
-  const { linkMethod, isMenuAlwaysOpen, isFeedItemMinimize, isTabItemMinimize } = useSelector(state => state.app, {});
+  const { linkMethod, isMenuAlwaysOpen, isFeedItemMinimize, isTabItemMinimize, feedItemRefreshPeriod } = useSelector(
+    state => state.app,
+    {}
+  );
   const dispatch = useDispatch();
 
   const tabLinkMethod = linkMethod.tab;
@@ -45,6 +49,16 @@ const SettingModal = ({ close }) => {
   const handleTabItemMinimize = () => {
     dispatch(toggleTabItemMinimize());
   };
+
+  const handleFeedItemRefresh = (e, data) => {
+    dispatch(setFeedItemRefreshPeriod(data.value));
+  };
+
+  const refreshOptions = [
+    { key: '3-hour', value: 3, text: '3 Hour' },
+    { key: '6-hour', value: 6, text: '6 Hour' },
+    { key: '9-hour', value: 9, text: '9 Hour' },
+  ];
 
   return (
     <React.Fragment>
@@ -158,6 +172,14 @@ const SettingModal = ({ close }) => {
               onChange={handleTabItemMinimize}
               checked={isTabItemMinimize}
               toggle
+            />
+          </div>
+          <div className="feed-item-refresh-setting">
+            <h3>Refresh period of Feed Posts</h3>
+            <Select
+              onChange={(e, data) => handleFeedItemRefresh(e, data)}
+              defaultValue={feedItemRefreshPeriod}
+              options={refreshOptions}
             />
           </div>
         </div>
