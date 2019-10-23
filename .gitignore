@@ -2,7 +2,8 @@
 dist/
 build/
 TODO.md
-build.zip
+*.zip
+.DS_Store
 
 # Logs
 logs
