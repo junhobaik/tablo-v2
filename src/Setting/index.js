@@ -1,16 +1,24 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 
 import './index.scss';
 import { deleteFeed, deleteCategory } from '../redux/actions/feed';
 import { deleteTabCategory, deleteTabItem } from '../redux/actions/tab';
+import { setSettingInfo } from '../redux/actions/app';
 
 const Setting = () => {
   const [isMouseIn, setIsMouseIn] = useState(false);
   const { settingInfo } = useSelector(state => state.app);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (settingInfo.isVisible) {
+      dispatch(setSettingInfo({ isVisible: false }));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const hideSetting = () => {
     document.querySelector('.setting-tt').style.display = 'none';
