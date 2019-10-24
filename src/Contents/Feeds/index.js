@@ -15,6 +15,8 @@ class Feeds extends Component {
     super(props);
     this.state = {
       items: [],
+      loadingFeeds: [],
+      erroredFeeds: [],
     };
   }
 
@@ -57,10 +59,17 @@ class Feeds extends Component {
       const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
       const parser = new RSSParser();
 
+      this.setState(prevState => ({
+        loadingFeeds: [...prevState.loadingFeeds, feedTitle],
+      }));
+
       const result = await parser.parseURL(CORS_PROXY + requestUrl, (err, feed) => {
         if (err) {
           // eslint-disable-next-line no-console
           console.log('request feed, ERROR: ', err);
+          this.setState(prevState => ({
+            erroredFeeds: [...prevState.erroredFeeds, feedTitle],
+          }));
         } else {
           // eslint-disable-next-line no-console
           console.log('reqeust feed, title: ', feed.title);
@@ -83,6 +92,14 @@ class Feeds extends Component {
               items: sortedLocalFeeds,
             });
           }
+
+          this.setState(prevState => {
+            const prevLoadingFeeds = [...prevState.loadingFeeds];
+            prevLoadingFeeds.splice(prevLoadingFeeds.indexOf(feedTitle), 1);
+            return {
+              loadingFeeds: prevLoadingFeeds,
+            };
+          });
         }
 
         count += 1;
@@ -116,6 +133,9 @@ class Feeds extends Component {
   }
 
   getUpdateNeeds() {
+    return true; // TEST: always request feed
+
+    // eslint-disable-next-line no-unreachable
     const reloadTime = (this.props.feedItemRefreshPeriod || 6) * 3600000; // reloadTime: ms, 3600000 === 1hour
     const localFeedSync = localStorage.getItem('tablo_v2_local_feed_sync');
     const localFeeds = localStorage.getItem('tablo_v2_local_feed');
@@ -143,7 +163,7 @@ class Feeds extends Component {
   }
 
   render() {
-    const { items } = this.state;
+    const { items, loadingFeeds, erroredFeeds } = this.state;
     const { feeds, hideCategories, windowStatus, isFeedItemMinimize, linkMethod, feedItemLoadDay } = this.props;
     const isWindowStatusFeed = windowStatus === 'feed';
     const aTarget = linkMethod === 'blank' ? '_blank' : '_self';
@@ -188,11 +208,23 @@ class Feeds extends Component {
       );
     });
 
+    const loadingFeedList = loadingFeeds.map(v => {
+      return (
+        <li key={`loading-${v}`}>
+          <Icon name="spinner" className="blink" />
+          <span>{v}</span>
+        </li>
+      );
+    });
+
     return (
       <div
         id="Feeds"
         className={`${isWindowStatusFeed ? 'full-size ' : ''} ${isFeedItemMinimize ? 'minimize' : 'standard'}`}
       >
+        <div className="loading-status">
+          <ul>{loadingFeedList || null}</ul>
+        </div>
         <ul className="item-list">{itemList}</ul>
       </div>
     );

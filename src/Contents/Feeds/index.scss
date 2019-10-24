@@ -1,11 +1,41 @@
 @import '../../variables.scss';
 
 #Feeds {
-  padding: 1rem;
+  .loading-status {
+    position: sticky;
+    top: 0;
+    background-color: $primary-color-4;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      display: flex;
+
+      li {
+        display: flex;
+        align-items: center;
+        background-color: $primary-color-4;
+        border-radius: 3px;
+        padding: 0.1rem 0.25rem;
+        margin: 0.25rem;
+        color: white;
+
+        span {
+          opacity: 0.8;
+        }
+
+        .icon {
+          height: 100%;
+          font-size: 0.5rem;
+          color: white;
+        }
+      }
+    }
+  }
 
   .item-list {
     margin: 0;
-    padding: 0;
+    padding: 1rem;
 
     .item {
       list-style: none;
