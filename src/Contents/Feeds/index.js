@@ -21,7 +21,24 @@ class Feeds extends Component {
   }
 
   componentDidMount() {
-    this.setItems(this.props.feeds);
+    const setItems = () => this.setItems(this.props.feeds);
+    setItems();
+
+    // eslint-disable-next-line no-undef
+    chrome.storage.sync.onChanged.addListener(storage => {
+      if (storage.tablo_v2_feed) {
+        const { newValue, oldValue } = storage.tablo_v2_feed;
+        if (newValue !== oldValue) {
+          this.setState({
+            items: [],
+            loadingFeeds: [],
+            erroredFeeds: [],
+          });
+          this.setUpdateNeeds(true);
+          setItems();
+        }
+      }
+    });
   }
 
   shouldComponentUpdate(nextProps, nextStage) {
