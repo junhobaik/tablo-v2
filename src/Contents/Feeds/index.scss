@@ -1,26 +1,27 @@
 @import '../../variables.scss';
 
 #Feeds {
-  .loading-status {
+  .feed-status {
     position: sticky;
     top: 0;
-    background-color: $primary-color-4;
 
     ul {
+      display: flex;
+      padding: 0.5rem;
       list-style: none;
       margin: 0;
-      display: flex;
+      flex-wrap: wrap;
 
       li {
         display: flex;
         align-items: center;
-        background-color: $primary-color-4;
         border-radius: 3px;
         padding: 0.1rem 0.25rem;
         margin: 0.25rem;
         color: white;
 
         span {
+          user-select: none;
           opacity: 0.8;
         }
 
@@ -28,6 +29,32 @@
           height: 100%;
           font-size: 0.5rem;
           color: white;
+        }
+      }
+    }
+
+    ul.loading-status {
+      background-color: $primary-color-4;
+      li {
+        background-color: $primary-color-4;
+      }
+    }
+
+    div.errored-status {
+      padding: 0 0.25rem;
+      background-color: rgba(255, 0, 0, 0.5);
+      span {
+        margin-left: 0.25rem;
+      }
+      ul {
+        padding: 0;
+
+        li {
+          background-color: rgba(255, 0, 0, 0.5);
+
+          .icon {
+            opacity: 0.8;
+          }
         }
       }
     }

@@ -67,9 +67,15 @@ class Feeds extends Component {
         if (err) {
           // eslint-disable-next-line no-console
           console.log('request feed, ERROR: ', err);
-          this.setState(prevState => ({
-            erroredFeeds: [...prevState.erroredFeeds, feedTitle],
-          }));
+
+          this.setState(prevState => {
+            const prevLoadingFeeds = [...prevState.loadingFeeds];
+            prevLoadingFeeds.splice(prevLoadingFeeds.indexOf(feedTitle), 1);
+            return {
+              loadingFeeds: prevLoadingFeeds,
+              erroredFeeds: [...prevState.erroredFeeds, feedTitle],
+            };
+          });
         } else {
           // eslint-disable-next-line no-console
           console.log('reqeust feed, title: ', feed.title);
@@ -133,9 +139,6 @@ class Feeds extends Component {
   }
 
   getUpdateNeeds() {
-    // return true; // TEST: always request feed
-
-    // eslint-disable-next-line no-unreachable
     const reloadTime = (this.props.feedItemRefreshPeriod || 6) * 3600000; // reloadTime: ms, 3600000 === 1hour
     const localFeedSync = localStorage.getItem('tablo_v2_local_feed_sync');
     const localFeeds = localStorage.getItem('tablo_v2_local_feed');
@@ -217,13 +220,28 @@ class Feeds extends Component {
       );
     });
 
+    const erroredFeedList = erroredFeeds.map(v => {
+      return (
+        <li key={`errored-${v}`}>
+          <Icon name="ban" />
+          <span>{v}</span>
+        </li>
+      );
+    });
+
     return (
       <div
         id="Feeds"
         className={`${isWindowStatusFeed ? 'full-size ' : ''} ${isFeedItemMinimize ? 'minimize' : 'standard'}`}
       >
-        <div className="loading-status">
-          <ul>{loadingFeedList || null}</ul>
+        <div className="feed-status">
+          {!loadingFeedList.length ? null : <ul className="loading-status">{loadingFeedList}</ul>}
+          {!erroredFeedList.length ? null : (
+            <div className="errored-status">
+              <span>Feed error. If the error persists, please delete feed.</span>
+              <ul>{erroredFeedList}</ul>
+            </div>
+          )}
         </div>
         <ul className="item-list">{itemList}</ul>
       </div>
