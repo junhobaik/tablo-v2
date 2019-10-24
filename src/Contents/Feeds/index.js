@@ -51,30 +51,45 @@ class Feeds extends Component {
 
   setItems(feeds) {
     const pipe = (...funcs) => argument => funcs.reduce((acc, func) => func(acc), argument);
+    let count = 0;
 
     const addFeedItems = async (requestUrl, feedTitle, feedLink) => {
       const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
       const parser = new RSSParser();
 
       const result = await parser.parseURL(CORS_PROXY + requestUrl, (err, feed) => {
-        for (const item of feed.items) {
-          const { title, link, pubDate, contentSnippet } = item;
-          const description = contentSnippet.substr(0, 200);
-          const localFeeds = JSON.parse(localStorage.getItem('tablo_v2_local_feed')) || [];
+        if (err) {
+          // eslint-disable-next-line no-console
+          console.log('request feed, ERROR: ', err);
+        } else {
+          // eslint-disable-next-line no-console
+          console.log('reqeust feed, title: ', feed.title);
+          for (const item of feed.items) {
+            const { title, link, pubDate, contentSnippet } = item;
+            const description = contentSnippet.substr(0, 200);
+            const localFeeds = JSON.parse(localStorage.getItem('tablo_v2_local_feed')) || [];
 
-          localFeeds.push({ title, link, pubDate, contentSnippet: description, feedTitle, feedLink });
+            localFeeds.push({ title, link, pubDate, contentSnippet: description, feedTitle, feedLink });
 
-          const sortedLocalFeeds = localFeeds.sort((a, b) => {
-            const aDate = parseInt(moment(a.pubDate).format('YYYYMMDD'), 10);
-            const bDate = parseInt(moment(b.pubDate).format('YYYYMMDD'), 10);
-            return aDate > bDate ? -1 : 1;
-          });
+            const sortedLocalFeeds = localFeeds.sort((a, b) => {
+              const aDate = parseInt(moment(a.pubDate).format('YYYYMMDD'), 10);
+              const bDate = parseInt(moment(b.pubDate).format('YYYYMMDD'), 10);
+              return aDate > bDate ? -1 : 1;
+            });
 
-          localStorage.setItem('tablo_v2_local_feed', JSON.stringify(sortedLocalFeeds));
+            localStorage.setItem('tablo_v2_local_feed', JSON.stringify(sortedLocalFeeds));
 
-          this.setState({
-            items: sortedLocalFeeds,
-          });
+            this.setState({
+              items: sortedLocalFeeds,
+            });
+          }
+        }
+
+        count += 1;
+        if (count < feeds.length) {
+          this.setUpdateNeeds(true);
+        } else {
+          this.setUpdateNeeds(false);
         }
       });
 
@@ -89,7 +104,9 @@ class Feeds extends Component {
       })
     );
 
-    if (this.getUpdateNeeds()) {
+    const isUpdateNeeds = this.getUpdateNeeds();
+    if (isUpdateNeeds) {
+      localStorage.removeItem('tablo_v2_local_feed');
       setAllFeedItems();
     } else {
       this.setState({
@@ -104,11 +121,17 @@ class Feeds extends Component {
     const localFeeds = localStorage.getItem('tablo_v2_local_feed');
 
     if (!localFeedSync || !localFeeds || parseInt(localFeedSync, 10) + reloadTime < Date.now()) {
-      localStorage.setItem('tablo_v2_local_feed_sync', Date.now().toString());
-      localStorage.removeItem('tablo_v2_local_feed');
       return true;
     }
     return false;
+  }
+
+  setUpdateNeeds(isNeed = false) {
+    if (isNeed) {
+      localStorage.setItem('tablo_v2_local_feed_sync', '0');
+    } else {
+      localStorage.setItem('tablo_v2_local_feed_sync', Date.now().toString());
+    }
   }
 
   getIsHideItem(itemData, day) {
