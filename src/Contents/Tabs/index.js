@@ -18,7 +18,7 @@ import {
 
 const Tabs = () => {
   const dispatch = useDispatch();
-  const { settingInfo } = useSelector(state => state.app);
+  const { settingInfo, windowStatus } = useSelector(state => state.app);
   const { tabs, categories } = useSelector(state => state.tab);
   const { dragInfo, linkMethod, isTabItemMinimize } = useSelector(state => state.app);
   const [categoryTitleValue, setCategoryTitleValue] = useState('');
@@ -26,6 +26,7 @@ const Tabs = () => {
   const [descriptionValue, setDescriptionValue] = useState({});
   const [notMovableIds, setNotMovableIds] = useState([]);
   const [itemTitleWidths, setItemTitleWidths] = useState({});
+  const isWindowStatusTab = windowStatus === 'tab';
 
   useEffect(() => {
     const items = Array.from(document.querySelectorAll('.tab-item'));
@@ -483,7 +484,7 @@ const Tabs = () => {
   );
 
   return (
-    <div id="Tabs">
+    <div id="Tabs" className={`${isWindowStatusTab ? 'full-size ' : ''}`}>
       <ul className="category-list">
         {categoryDragSpace()}
         {categoryList}
