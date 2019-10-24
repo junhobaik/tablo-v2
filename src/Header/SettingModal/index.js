@@ -184,6 +184,11 @@ const SettingModal = ({ close }) => {
               options={refreshOptions}
             />
           </div>
+          <div className="feed-item-load-day-setting">
+            <h3>Hide feed posts older than</h3>
+            <input type="number" min="0" max="365" required />
+            <h3>days</h3>
+          </div>
         </div>
       </div>
     </React.Fragment>

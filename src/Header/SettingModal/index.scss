@@ -56,6 +56,15 @@
       }
     }
 
+    .menu-open-setting,
+    .feed-item-minimize-setting,
+    .tab-item-minimize-setting,
+    .feed-item-refresh-setting {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
     .link-setting {
       h3 {
         margin-bottom: 1rem;
@@ -70,24 +79,22 @@
     }
 
     .minimize-settings {
-      &>div:nth-child(2){
+      & > div:nth-child(2) {
         margin-top: 0.5rem;
       }
-    }
-
-    .menu-open-setting,
-    .feed-item-minimize-setting,
-    .tab-item-minimize-setting,
-    .feed-item-refresh-setting {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
     }
 
     .feed-item-refresh-setting {
       & > div {
         min-width: auto;
         max-width: 7rem;
+      }
+    }
+
+    .feed-item-load-day-setting {
+      display: flex;
+      input {
+        margin: 0 0.25rem;
       }
     }
   }
