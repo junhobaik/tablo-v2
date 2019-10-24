@@ -111,9 +111,17 @@ class Feeds extends Component {
     return false;
   }
 
+  getIsHideItem(itemData, day) {
+    if (!day) return false;
+    const now = parseInt(moment().format('x'), 10);
+    const pub = parseInt(moment(itemData).format('x'), 10);
+    if (now - 3600000 * 24 * day > pub) return true;
+    return false;
+  }
+
   render() {
     const { items } = this.state;
-    const { feeds, hideCategories, windowStatus, isFeedItemMinimize, linkMethod } = this.props;
+    const { feeds, hideCategories, windowStatus, isFeedItemMinimize, linkMethod, feedItemLoadDay } = this.props;
     const isWindowStatusFeed = windowStatus === 'feed';
     const aTarget = linkMethod === 'blank' ? '_blank' : '_self';
 
@@ -125,7 +133,7 @@ class Feeds extends Component {
     const itemList = items.map(item => {
       const { title, link, pubDate, contentSnippet, feedTitle, feedLink } = item;
 
-      if (hideFeedTitle.indexOf(feedTitle) > -1) return null;
+      if (hideFeedTitle.indexOf(feedTitle) > -1 || this.getIsHideItem(pubDate, feedItemLoadDay)) return null;
 
       return (
         <li className="item" key={link}>
@@ -176,6 +184,7 @@ const mapStateToProps = state => {
     windowStatus: state.app.windowStatus,
     isFeedItemMinimize: state.app.isFeedItemMinimize,
     feedItemRefreshPeriod: state.app.feedItemRefreshPeriod,
+    feedItemLoadDay: state.app.feedItemLoadDay,
   };
 };
 
