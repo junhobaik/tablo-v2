@@ -69,6 +69,12 @@
       }
     }
 
+    .minimize-settings {
+      &>div:nth-child(2){
+        margin-top: 0.5rem;
+      }
+    }
+
     .menu-open-setting,
     .feed-item-minimize-setting,
     .tab-item-minimize-setting,

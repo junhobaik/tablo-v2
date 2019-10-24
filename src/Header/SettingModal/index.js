@@ -156,23 +156,25 @@ const SettingModal = ({ close }) => {
             <h3>Always open bottom menu</h3>
             <Checkbox className="menu-open-toggle" onChange={handleMenuOpen} checked={isMenuAlwaysOpen} toggle />
           </div>
-          <div className="feed-item-minimize-setting">
-            <h3>Minimize Feed Items</h3>
-            <Checkbox
-              className="feed-item-minimize-toggle"
-              onChange={handleMinimize}
-              checked={isFeedItemMinimize}
-              toggle
-            />
-          </div>
-          <div className="tab-item-minimize-setting">
-            <h3>Minimize Tab Items</h3>
-            <Checkbox
-              className="tab-item-minimize-toggle"
-              onChange={handleTabItemMinimize}
-              checked={isTabItemMinimize}
-              toggle
-            />
+          <div className="minimize-settings">
+            <div className="feed-item-minimize-setting">
+              <h3>Minimize Feed Items</h3>
+              <Checkbox
+                className="feed-item-minimize-toggle"
+                onChange={handleMinimize}
+                checked={isFeedItemMinimize}
+                toggle
+              />
+            </div>
+            <div className="tab-item-minimize-setting">
+              <h3>Minimize Tab Items</h3>
+              <Checkbox
+                className="tab-item-minimize-toggle"
+                onChange={handleTabItemMinimize}
+                checked={isTabItemMinimize}
+                toggle
+              />
+            </div>
           </div>
           <div className="feed-item-refresh-setting">
             <h3>Refresh period of Feed Posts</h3>
