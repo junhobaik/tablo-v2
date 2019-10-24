@@ -1,5 +1,11 @@
 @import '../../variables.scss';
 
+#Feeds.full-size {
+  ul.item-list {
+    justify-content: center;
+  }
+}
+
 #Feeds {
   .feed-status {
     position: sticky;
