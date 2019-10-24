@@ -10,13 +10,18 @@ import {
   toggleFeedItemMinimize,
   toggleTabItemMinimize,
   setFeedItemRefreshPeriod,
+  setFeedItemLoadDay,
 } from '../../redux/actions/app';
 
 const SettingModal = ({ close }) => {
-  const { linkMethod, isMenuAlwaysOpen, isFeedItemMinimize, isTabItemMinimize, feedItemRefreshPeriod } = useSelector(
-    state => state.app,
-    {}
-  );
+  const {
+    linkMethod,
+    isMenuAlwaysOpen,
+    isFeedItemMinimize,
+    isTabItemMinimize,
+    feedItemRefreshPeriod,
+    feedItemLoadDay,
+  } = useSelector(state => state.app, {});
   const dispatch = useDispatch();
 
   const tabLinkMethod = linkMethod.tab;
@@ -186,7 +191,17 @@ const SettingModal = ({ close }) => {
           </div>
           <div className="feed-item-load-day-setting">
             <h3>Hide feed posts older than</h3>
-            <input type="number" min="0" max="365" required />
+            <input
+              type="number"
+              min="0"
+              max="9999"
+              required
+              defaultValue={feedItemLoadDay || 0}
+              onChange={e => {
+                const num = parseInt(e.currentTarget.value, 10);
+                if (num || num === 0) dispatch(setFeedItemLoadDay(num));
+              }}
+            />
             <h3>days</h3>
           </div>
         </div>
