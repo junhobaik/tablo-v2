@@ -190,19 +190,24 @@ const SettingModal = ({ close }) => {
             />
           </div>
           <div className="feed-item-load-day-setting">
-            <h3>Hide feed posts older than</h3>
-            <input
-              type="number"
-              min="0"
-              max="9999"
-              required
-              defaultValue={feedItemLoadDay || 0}
-              onChange={e => {
-                const num = parseInt(e.currentTarget.value, 10);
-                if (num || num === 0) dispatch(setFeedItemLoadDay(num));
-              }}
-            />
-            <h3>days</h3>
+            <div className="wrap">
+              <h3>Hide feed posts older than</h3>
+              <input
+                type="number"
+                min="0"
+                max="9999"
+                required
+                defaultValue={feedItemLoadDay || 0}
+                onChange={e => {
+                  const num = parseInt(e.currentTarget.value, 10);
+                  if (num || num === 0) dispatch(setFeedItemLoadDay(num));
+                }}
+              />
+              <h3>days</h3>
+            </div>
+            <div className="sub">
+              <span>0 = No posts hidden</span>
+            </div>
           </div>
         </div>
       </div>

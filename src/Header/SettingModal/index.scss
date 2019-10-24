@@ -92,9 +92,17 @@
     }
 
     .feed-item-load-day-setting {
-      display: flex;
-      input {
-        margin: 0 0.25rem;
+      .wrap {
+        display: flex;
+
+        input {
+          margin: 0 0.25rem;
+          text-align: right;
+        }
+      }
+      .sub {
+        color: gray;
+        text-align: right;
       }
     }
   }
