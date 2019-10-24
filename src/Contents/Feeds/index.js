@@ -133,7 +133,7 @@ class Feeds extends Component {
   }
 
   getUpdateNeeds() {
-    return true; // TEST: always request feed
+    // return true; // TEST: always request feed
 
     // eslint-disable-next-line no-unreachable
     const reloadTime = (this.props.feedItemRefreshPeriod || 6) * 3600000; // reloadTime: ms, 3600000 === 1hour
