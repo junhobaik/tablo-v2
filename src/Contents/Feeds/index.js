@@ -99,7 +99,7 @@ class Feeds extends Component {
   }
 
   getUpdateNeeds() {
-    const reloadTime = this.props.feedItemRefreshPeriod || 6 * 3600000; // reloadTime: ms, 3600000 === 1hour
+    const reloadTime = (this.props.feedItemRefreshPeriod || 6) * 3600000; // reloadTime: ms, 3600000 === 1hour
     const localFeedSync = localStorage.getItem('tablo_v2_local_feed_sync');
     const localFeeds = localStorage.getItem('tablo_v2_local_feed');
 
