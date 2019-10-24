@@ -10,13 +10,18 @@ import {
   toggleFeedItemMinimize,
   toggleTabItemMinimize,
   setFeedItemRefreshPeriod,
+  setFeedItemLoadDay,
 } from '../../redux/actions/app';
 
 const SettingModal = ({ close }) => {
-  const { linkMethod, isMenuAlwaysOpen, isFeedItemMinimize, isTabItemMinimize, feedItemRefreshPeriod } = useSelector(
-    state => state.app,
-    {}
-  );
+  const {
+    linkMethod,
+    isMenuAlwaysOpen,
+    isFeedItemMinimize,
+    isTabItemMinimize,
+    feedItemRefreshPeriod,
+    feedItemLoadDay,
+  } = useSelector(state => state.app, {});
   const dispatch = useDispatch();
 
   const tabLinkMethod = linkMethod.tab;
@@ -156,23 +161,25 @@ const SettingModal = ({ close }) => {
             <h3>Always open bottom menu</h3>
             <Checkbox className="menu-open-toggle" onChange={handleMenuOpen} checked={isMenuAlwaysOpen} toggle />
           </div>
-          <div className="feed-item-minimize-setting">
-            <h3>Minimize Feed Items</h3>
-            <Checkbox
-              className="feed-item-minimize-toggle"
-              onChange={handleMinimize}
-              checked={isFeedItemMinimize}
-              toggle
-            />
-          </div>
-          <div className="tab-item-minimize-setting">
-            <h3>Minimize Tab Items</h3>
-            <Checkbox
-              className="tab-item-minimize-toggle"
-              onChange={handleTabItemMinimize}
-              checked={isTabItemMinimize}
-              toggle
-            />
+          <div className="minimize-settings">
+            <div className="feed-item-minimize-setting">
+              <h3>Minimize Feed Items</h3>
+              <Checkbox
+                className="feed-item-minimize-toggle"
+                onChange={handleMinimize}
+                checked={isFeedItemMinimize}
+                toggle
+              />
+            </div>
+            <div className="tab-item-minimize-setting">
+              <h3>Minimize Tab Items</h3>
+              <Checkbox
+                className="tab-item-minimize-toggle"
+                onChange={handleTabItemMinimize}
+                checked={isTabItemMinimize}
+                toggle
+              />
+            </div>
           </div>
           <div className="feed-item-refresh-setting">
             <h3>Refresh period of Feed Posts</h3>
@@ -181,6 +188,26 @@ const SettingModal = ({ close }) => {
               defaultValue={feedItemRefreshPeriod || 6}
               options={refreshOptions}
             />
+          </div>
+          <div className="feed-item-load-day-setting">
+            <div className="wrap">
+              <h3>Hide feed posts older than</h3>
+              <input
+                type="number"
+                min="0"
+                max="9999"
+                required
+                defaultValue={feedItemLoadDay || 0}
+                onChange={e => {
+                  const num = parseInt(e.currentTarget.value, 10);
+                  if (num || num === 0) dispatch(setFeedItemLoadDay(num));
+                }}
+              />
+              <h3>days</h3>
+            </div>
+            <div className="sub">
+              <span>0 = No posts hidden</span>
+            </div>
           </div>
         </div>
       </div>

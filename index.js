@@ -29,6 +29,7 @@ const firstLoadState = () => {
       hideCategories: [],
       isFeedItemMinimize: false,
       feedItemRefreshPeriod: 6,
+      feedItemLoadDay: 0,
       settingInfo: {
         target: '',
         isVisible: false,

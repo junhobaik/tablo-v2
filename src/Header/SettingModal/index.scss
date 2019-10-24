@@ -56,6 +56,15 @@
       }
     }
 
+    .menu-open-setting,
+    .feed-item-minimize-setting,
+    .tab-item-minimize-setting,
+    .feed-item-refresh-setting {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
     .link-setting {
       h3 {
         margin-bottom: 1rem;
@@ -69,19 +78,31 @@
       }
     }
 
-    .menu-open-setting,
-    .feed-item-minimize-setting,
-    .tab-item-minimize-setting,
-    .feed-item-refresh-setting {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    .minimize-settings {
+      & > div:nth-child(2) {
+        margin-top: 0.5rem;
+      }
     }
 
     .feed-item-refresh-setting {
       & > div {
         min-width: auto;
         max-width: 7rem;
+      }
+    }
+
+    .feed-item-load-day-setting {
+      .wrap {
+        display: flex;
+
+        input {
+          margin: 0 0.25rem;
+          text-align: right;
+        }
+      }
+      .sub {
+        color: gray;
+        text-align: right;
       }
     }
   }

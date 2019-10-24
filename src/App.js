@@ -68,7 +68,10 @@ const App = () => {
       }
       if (storage.tablo_v2_feed) {
         const feeds = storage.tablo_v2_feed.newValue;
-        if (feeds.length > document.querySelectorAll('#FeedMenu .feed').length) window.location.reload();
+        if (feeds.length > document.querySelectorAll('#FeedMenu .feed').length) {
+          localStorage.setItem('tablo_v2_local_feed_sync', '0');
+          window.location.reload();
+        }
       }
     });
   }, []);
