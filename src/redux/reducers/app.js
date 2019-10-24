@@ -13,6 +13,7 @@ import {
   CLEAR_DRAG_INFO,
   TOGGLE_TAB_ITEM_MINIMIZE,
   SET_FEED_ITEM_REFRESH_PERIOD,
+  SET_FEED_ITEM_LOAD_DAY,
 } from '../actions/app';
 
 const app = (state = [], action) => {
@@ -76,6 +77,9 @@ const app = (state = [], action) => {
 
     case SET_FEED_ITEM_REFRESH_PERIOD:
       return { ...state, feedItemRefreshPeriod: action.time };
+
+    case SET_FEED_ITEM_LOAD_DAY:
+      return { ...state, feedItemLoadDay: action.day };
 
     default:
       return state;
