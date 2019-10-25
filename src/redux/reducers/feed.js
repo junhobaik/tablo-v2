@@ -31,7 +31,7 @@ const feed = (state = [], action) => {
         ...originFeed,
         title: action.title || originFeed.title,
         category: action.cateogry || originFeed.category,
-        isHide: action.isHide === 'undefined' ? originFeed.isHide : action.isHide,
+        isHide: action.isHide === undefined ? originFeed.isHide : action.isHide,
       });
       return newState;
     }

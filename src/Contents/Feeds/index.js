@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { Icon } from 'semantic-ui-react';
+import _ from 'lodash';
 
 import './index.scss';
 
@@ -28,7 +29,10 @@ class Feeds extends Component {
     chrome.storage.sync.onChanged.addListener(storage => {
       if (storage.tablo_v2_feed) {
         const { newValue, oldValue } = storage.tablo_v2_feed;
-        if (newValue !== oldValue) {
+        const newValueLength = newValue.filter(v => v.isHide).length;
+        const oldValueLength = oldValue.filter(v => v.isHide).length;
+
+        if (newValue !== oldValue && newValueLength === oldValueLength) {
           this.setState({
             items: [],
             loadingFeeds: [],
