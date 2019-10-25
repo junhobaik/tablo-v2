@@ -1,13 +1,9 @@
-/* eslint-disable class-methods-use-this */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import RSSParser from 'rss-parser';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Icon } from 'semantic-ui-react';
-import _ from 'lodash';
 
 import './index.scss';
 
@@ -22,10 +18,10 @@ class Feeds extends Component {
   }
 
   componentDidMount() {
-    const setItems = () => this.setItems(this.props.feeds);
+    const { feeds } = this.props;
+    const setItems = () => this.setItems(feeds);
     setItems();
 
-    // eslint-disable-next-line no-undef
     chrome.storage.sync.onChanged.addListener(storage => {
       if (storage.tablo_v2_feed) {
         const { newValue, oldValue } = storage.tablo_v2_feed;
@@ -46,6 +42,7 @@ class Feeds extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextStage) {
+    const { feeds } = this.props;
     const isPropsChange = nextProps !== this.props;
     const isStateChange = nextStage !== this.state;
 
@@ -56,14 +53,14 @@ class Feeds extends Component {
       this.setItems(nextProps.feeds);
     };
 
-    const prevLength = this.props.feeds.length;
+    const prevLength = feeds.length;
     const nextLength = nextProps.feeds.length;
-    const lowerLengthFeeds = prevLength > nextLength ? nextProps.feeds : this.props.feeds;
+    const lowerLengthFeeds = prevLength > nextLength ? nextProps.feeds : feeds;
 
     if (prevLength !== nextLength) setItems();
 
     for (const i in lowerLengthFeeds) {
-      if (nextProps.feeds[i].title !== this.props.feeds[i].title) {
+      if (nextProps.feeds[i].title !== feeds[i].title) {
         setItems();
         break;
       }
@@ -86,9 +83,6 @@ class Feeds extends Component {
 
       const result = await parser.parseURL(CORS_PROXY + requestUrl, (err, feed) => {
         if (err) {
-          // eslint-disable-next-line no-console
-          console.log('request feed, ERROR: ', err);
-
           this.setState(prevState => {
             const prevLoadingFeeds = [...prevState.loadingFeeds];
             prevLoadingFeeds.splice(prevLoadingFeeds.indexOf(feedTitle), 1);
@@ -98,8 +92,6 @@ class Feeds extends Component {
             };
           });
         } else {
-          // eslint-disable-next-line no-console
-          console.log('reqeust feed, title: ', feed.title);
           for (const item of feed.items) {
             const { title, link, pubDate, contentSnippet } = item;
             const description = contentSnippet.substr(0, 200);
@@ -160,7 +152,8 @@ class Feeds extends Component {
   }
 
   getUpdateNeeds() {
-    const reloadTime = (this.props.feedItemRefreshPeriod || 6) * 3600000; // reloadTime: ms, 3600000 === 1hour
+    const { feedItemRefreshPeriod } = this.props;
+    const reloadTime = (feedItemRefreshPeriod || 6) * 3600000; // reloadTime: ms, 3600000 === 1hour
     const localFeedSync = localStorage.getItem('tablo_v2_local_feed_sync');
     const localFeeds = localStorage.getItem('tablo_v2_local_feed');
 
@@ -198,6 +191,7 @@ class Feeds extends Component {
     }
 
     const itemList = items.map(item => {
+      const { addCartItem } = this.props;
       const { title, link, pubDate, contentSnippet, feedTitle, feedLink } = item;
 
       if (hideFeedTitle.indexOf(feedTitle) > -1 || this.getIsHideItem(pubDate, feedItemLoadDay)) return null;
@@ -214,7 +208,7 @@ class Feeds extends Component {
               <Icon
                 name="add to cart"
                 onClick={() => {
-                  this.props.addCartItem(link, title, contentSnippet);
+                  addCartItem(link, title, contentSnippet);
                 }}
               />
             </div>
@@ -286,6 +280,18 @@ const mapDispatchToProps = dispatch => {
   return {
     addCartItem: (link, title, description) => dispatch({ type: 'ADD_CART_ITEM', link, title, description }),
   };
+};
+
+Feeds.propTypes = {
+  linkMethod: PropTypes.string.isRequired,
+  hideCategories: PropTypes.arrayOf(PropTypes.string).isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  feeds: PropTypes.array.isRequired,
+  windowStatus: PropTypes.string.isRequired,
+  isFeedItemMinimize: PropTypes.bool.isRequired,
+  feedItemRefreshPeriod: PropTypes.number.isRequired,
+  feedItemLoadDay: PropTypes.number.isRequired,
+  addCartItem: PropTypes.func.isRequired,
 };
 
 export default connect(

@@ -17,7 +17,6 @@ const Setting = () => {
     if (settingInfo.isVisible) {
       dispatch(setSettingInfo({ isVisible: false }));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const hideSetting = () => {

@@ -1,5 +1,3 @@
-/* eslint-disable no-alert */
-/* eslint-disable no-undef */
 document.addEventListener('DOMContentLoaded', () => {
   let loadedTitle;
   let loadedUrl;
@@ -100,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         );
       });
     } else {
-      alert('ERROR');
+      // alert('ERROR');
     }
   });
 

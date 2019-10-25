@@ -129,7 +129,6 @@ const FeedMenu = () => {
 
   const categories = new Set();
 
-  // eslint-disable-next-line no-restricted-syntax, no-unused-vars
   for (const { category } of feeds) {
     categories.add('Inbox');
     categories.add(category);
@@ -179,8 +178,6 @@ const FeedMenu = () => {
                   // eslint-disable-next-line react/jsx-wrap-multilines
                   <Icon
                     name="cancel"
-                    // inverted
-                    // circular
                     link
                     onClick={() => {
                       setIsNewCategory(false);

@@ -19,7 +19,6 @@ const TabMenu = () => {
   const [cartItemTitleWidths, setCartItemTitleWidths] = useState({});
 
   const getAllTabs = () => {
-    // eslint-disable-next-line no-undef
     chrome.windows.getAll({ populate: true }, windows => {
       const list = [];
       for (const window of windows) {
@@ -47,19 +46,13 @@ const TabMenu = () => {
     const items = Array.from(document.querySelectorAll('.cart-item'));
     let widths = {};
     for (const item of items) {
-      // eslint-disable-next-line no-underscore-dangle
       const url = item.querySelector('a').href;
       const { width } = item.querySelector('h3').getBoundingClientRect();
       widths = { ...widths, [url]: width };
       item.querySelector('h3').style.width = '100%';
     }
     setCartItemTitleWidths(widths);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cart]);
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentTabList, setCurrentTabList]);
 
   const getLinkFirstStr = originLink => {
     const filteredLink = originLink.split('/')[2].split('www.');

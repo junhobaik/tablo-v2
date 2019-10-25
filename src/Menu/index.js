@@ -37,8 +37,7 @@ const Menu = () => {
       break;
   }
 
-  // eslint-disable-next-line no-shadow
-  const createToggleBtnGroup = (isMenuAlwaysOpen, menuStatus) => {
+  const createToggleBtnGroup = (_isMenuAlwaysOpen, _menuStatus) => {
     const createToggleBtn = (isHalfBtn, iconName, setMenu, key) => {
       return (
         <div
@@ -55,9 +54,9 @@ const Menu = () => {
       );
     };
 
-    if (isMenuAlwaysOpen) {
+    if (_isMenuAlwaysOpen) {
       // extend / isMenuAlwaysOpen
-      if (menuStatus === 'extend') {
+      if (_menuStatus === 'extend') {
         const down = createToggleBtn(false, 'angle down', 'default', 'down');
         return [down];
       }
@@ -66,12 +65,12 @@ const Menu = () => {
       return [extend];
     }
     // extend
-    if (menuStatus === 'extend') {
+    if (_menuStatus === 'extend') {
       const down = createToggleBtn(false, 'angle down', 'default', 'down');
       return [down];
     }
     // hide
-    if (menuStatus === 'hide') {
+    if (_menuStatus === 'hide') {
       const up = createToggleBtn(false, 'angle up', 'default', 'up');
       return [up];
     }

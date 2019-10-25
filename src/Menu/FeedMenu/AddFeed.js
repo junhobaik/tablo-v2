@@ -134,7 +134,6 @@ const AddFeed = ({ close }) => {
 
   const createOptions = () => {
     const categories = new Set();
-    // eslint-disable-next-line no-restricted-syntax, no-unused-vars
     for (const { category } of feeds) {
       categories.add('Inbox');
       categories.add(category);

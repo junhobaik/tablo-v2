@@ -38,7 +38,6 @@ const Tabs = () => {
       item.querySelector('h3').style.width = '100%';
     }
     setItemTitleWidths(widths);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tabs]);
 
   const setDragEnterStyle = (_target, isEnter = true) => {

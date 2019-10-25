@@ -51,7 +51,6 @@ const feed = (state = [], action) => {
     case EDIT_CATEGORY: {
       const newState = _.cloneDeep(state);
       const { oldCategory, newCategory } = action;
-      // eslint-disable-next-line no-unused-vars
       for (const f of newState) {
         if (f.category === oldCategory) f.category = newCategory;
       }

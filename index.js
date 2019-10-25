@@ -1,13 +1,9 @@
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import 'semantic-ui-css/semantic.min.css';
-import _ from 'lodash';
 
 import './index.scss';
 import App from './src/App';
@@ -66,7 +62,7 @@ const firstLoadState = () => {
 const preloadedState = firstLoadState();
 const store = createStore(rootReducer, preloadedState, composeWithDevTools());
 
-const unsubscribe = store.subscribe(() => {
+store.subscribe(() => {
   const { feed, app, tab } = store.getState();
 
   chrome.storage.sync.set(

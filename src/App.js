@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-undef */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -19,7 +17,6 @@ const App = () => {
 
   useEffect(() => {
     chrome.storage.sync.get(['tablo_v2_feed', 'tablo_v2_tab'], items => {
-      // eslint-disable-next-line camelcase
       const { tablo_v2_feed, tablo_v2_tab } = items;
       if (Object.keys(items).length) {
         dispatch(resetFeed(tablo_v2_feed));
