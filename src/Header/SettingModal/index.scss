@@ -1,3 +1,5 @@
+@import '../../style/variables.scss';
+
 .modal-layout {
   position: fixed;
   top: 0;
@@ -59,7 +61,8 @@
     .menu-open-setting,
     .feed-item-minimize-setting,
     .tab-item-minimize-setting,
-    .feed-item-refresh-setting {
+    .feed-item-refresh-setting,
+    .app-theme-color-setting {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -103,6 +106,47 @@
       .sub {
         color: gray;
         text-align: right;
+      }
+    }
+
+    .app-theme-color-setting {
+      .theme-list {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        justify-content: space-around;
+
+        & > div {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          min-height: 2rem;
+          min-width: 2rem;
+          border-radius: 100%;
+          margin: 0.25rem;
+
+          &.dark {
+            background-color: $dark-theme-color;
+          }
+          &.light {
+            background-color: $light-theme-color;
+          }
+
+          .icon {
+            opacity: 0;
+            margin: 0;
+            color: white;
+            transition: 0.3s;
+          }
+
+          &.selected {
+            .icon {
+              opacity: 1;
+            }
+          }
+        }
       }
     }
   }

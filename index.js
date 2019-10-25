@@ -18,6 +18,7 @@ const firstLoadState = () => {
   const appState = localStorage.getItem('tablo_v2_app');
   if (appState === null) {
     app = {
+      appThemeColor: 'black',
       windowStatus: 'both',
       linkMethod: {
         tab: 'blank',

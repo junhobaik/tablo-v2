@@ -14,6 +14,7 @@ import {
   TOGGLE_TAB_ITEM_MINIMIZE,
   SET_FEED_ITEM_REFRESH_PERIOD,
   SET_FEED_ITEM_LOAD_DAY,
+  SET_APP_THEME_COLOR,
 } from '../actions/app';
 
 const app = (state = [], action) => {
@@ -80,6 +81,9 @@ const app = (state = [], action) => {
 
     case SET_FEED_ITEM_LOAD_DAY:
       return { ...state, feedItemLoadDay: action.day };
+
+    case SET_APP_THEME_COLOR:
+      return { ...state, appThemeColor: action.color };
 
     default:
       return state;

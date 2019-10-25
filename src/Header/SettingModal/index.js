@@ -11,6 +11,7 @@ import {
   toggleTabItemMinimize,
   setFeedItemRefreshPeriod,
   setFeedItemLoadDay,
+  setAppThemeColor,
 } from '../../redux/actions/app';
 
 const SettingModal = ({ close }) => {
@@ -21,6 +22,7 @@ const SettingModal = ({ close }) => {
     isTabItemMinimize,
     feedItemRefreshPeriod,
     feedItemLoadDay,
+    appThemeColor,
   } = useSelector(state => state.app, {});
   const dispatch = useDispatch();
 
@@ -57,6 +59,10 @@ const SettingModal = ({ close }) => {
 
   const handleFeedItemRefresh = (e, data) => {
     dispatch(setFeedItemRefreshPeriod(data.value));
+  };
+
+  const handleAppThemeColor = e => {
+    dispatch(setAppThemeColor(e.currentTarget.classList[0]));
   };
 
   const refreshOptions = [
@@ -207,6 +213,32 @@ const SettingModal = ({ close }) => {
             </div>
             <div className="sub">
               <span>0 = No posts hidden</span>
+            </div>
+          </div>
+
+          <div className="app-theme-color-setting">
+            <h3>Theme Color</h3>
+            <div className="theme-list">
+              <div
+                className={`dark ${appThemeColor === 'dark' ? 'selected' : ''}`}
+                role="button"
+                tabIndex="0"
+                onClick={e => {
+                  handleAppThemeColor(e);
+                }}
+              >
+                <Icon name="check" />
+              </div>
+              <div
+                className={`light ${appThemeColor === 'light' ? 'selected' : ''}`}
+                role="button"
+                tabIndex="0"
+                onClick={e => {
+                  handleAppThemeColor(e);
+                }}
+              >
+                <Icon name="check" />
+              </div>
             </div>
           </div>
         </div>

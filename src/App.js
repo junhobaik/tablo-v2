@@ -15,7 +15,7 @@ import { resetTab } from './redux/actions/tab';
 
 const App = () => {
   const dispatch = useDispatch();
-  const { settingInfo } = useSelector(state => state.app);
+  const { settingInfo, appThemeColor } = useSelector(state => state.app);
 
   useEffect(() => {
     chrome.storage.sync.get(['tablo_v2_feed', 'tablo_v2_tab'], items => {
@@ -77,7 +77,7 @@ const App = () => {
   }, []);
 
   return (
-    <div id="App" className="theme-light">
+    <div id="App" className={`theme-${appThemeColor || 'dark'}`}>
       <Header />
       <Contents />
       <Menu />
