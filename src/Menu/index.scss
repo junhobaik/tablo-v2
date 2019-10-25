@@ -18,6 +18,10 @@
 
       .icon {
         margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 2px;
       }
 
       .header-btn {
@@ -28,6 +32,9 @@
         width: 8rem;
         background-color: #fff;
         border-top: 2px solid themed('primary-color-1');
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         &:hover {
           background-color: #dadce0;
@@ -41,10 +48,6 @@
 
       .tab-menu-button,
       .feed-menu-button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
         h3 {
           font-weight: normal;
           font-size: 1rem;
