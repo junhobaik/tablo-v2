@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Tablo v2 (beta)",
-  "description": "Website scraps and management and Feed (RSS) subscriptions",
-  "version": "1.0.3",
+  "description": "Website scraps and management and Feed(RSS) subscriptions",
+  "version": "1.0.4",
   "icons": {
     "128": "icon.png"
   },
