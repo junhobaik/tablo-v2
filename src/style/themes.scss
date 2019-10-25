@@ -1,0 +1,49 @@
+$themes: (
+  light: (
+    primary-color-1: rgb(20, 101, 192),
+    primary-color-2: rgb(43, 187, 255),
+    primary-color-3: rgb(44, 117, 190, 0.5),
+    primary-color-4: rgb(44, 117, 190, 0.25),
+    content-background-color: rgb(245, 246, 250),
+    font-color: rgb(17, 17, 17),
+    font-color-0: rgb(34, 34, 34),
+    font-color-1: rgb(51, 51, 51),
+    font-color-2: rgb(113, 113, 113),
+    font-color-3: rgb(153, 153, 153),
+  ),
+  dark: (
+    primary-color-1: rgb(36, 41, 46),
+    primary-color-2: rgb(63, 68, 72),
+    primary-color-3: rgba(63, 68, 72, 0.5),
+    primary-color-4: rgba(63, 68, 72, 0.25),
+    content-background-color: rgb(235, 235, 235),
+    font-color: rgb(17, 17, 17),
+    font-color-0: rgb(34, 34, 34),
+    font-color-1: rgb(51, 51, 51),
+    font-color-2: rgb(113, 113, 113),
+    font-color-3: rgb(153, 153, 153),
+  ),
+);
+
+@mixin themify($themes) {
+  @each $theme, $map in $themes {
+    .theme-#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), '#{$key}');
+        $theme-map: map-merge(
+          $theme-map,
+          (
+            $key: $value,
+          )
+        ) !global;
+      }
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}

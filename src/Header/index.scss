@@ -1,97 +1,98 @@
-@import '../variables.scss';
+@import '../style/themes.scss';
 
 #Header {
-  display: flex;
-  border-bottom: 1px solid transparent;
-  height: 3rem;
-  justify-content: space-between;
-  align-items: center;
-  background-color: $primary-color-1;
-
-  .title,
-  .setting {
-    padding: 0 1rem;
-    width: 10rem;
-  }
-
-  .title {
-    h1 {
-      font-size: 1.2rem;
-      color: white;
-    }
-  }
-  .select-content {
-    .button-group {
-      div.round {
-        min-width: 1.8rem;
-        border-radius: 100%;
-        border: 2px solid white;
-        background-color: white;
-        z-index: 3;
-
-        &.left {
-          position: relative;
-          left: 0.9rem;
-        }
-        &.right {
-          position: relative;
-          left: -0.9rem;
-        }
-      }
-
-      button {
-        height: 1.8rem;
-        width: 5rem;
-        padding: 0 !important;
-        font-size: 0.9rem;
-        color: white;
-        background-color: $primary-color-2;
-        transition: 0.3s;
-
-        &.selected {
-          border: 2px solid white;
-        }
-
-        &:nth-child(1) {
-          position: relative;
-          left: 1.8rem;
-          padding-right: 0.45rem !important;
-        }
-        &:nth-child(3) {
-          z-index: 2;
-          // width: 7rem;
-          background-color: #fff;
-          color: $primary-color-2;
-        }
-        &:nth-child(5) {
-          position: relative;
-          left: -1.8rem;
-          padding-left: 0.45rem !important;
-        }
-      }
-
-      .or {
-        height: 1.8rem;
-        &::before {
-          color: white !important;
-          height: 1.8rem;
-        }
-      }
-    }
-  }
-
-  .setting {
+  @include themify($themes) {
     display: flex;
-    justify-content: flex-end;
-    color: white;
+    background-color: themed('primary-color-1');
+    border-bottom: 1px solid transparent;
+    height: 3rem;
+    justify-content: space-between;
+    align-items: center;
 
-    .setting-icon-wrap {
-      opacity: 0.5;
-      transition: 0.3s;
-      cursor: pointer;
+    .title,
+    .setting {
+      padding: 0 1rem;
+      width: 10rem;
+    }
 
-      &:hover {
-        opacity: 1;
+    .title {
+      h1 {
+        font-size: 1.2rem;
+        color: white;
+      }
+    }
+    .select-content {
+      .button-group {
+        div.round {
+          min-width: 1.8rem;
+          border-radius: 100%;
+          border: 2px solid white;
+          background-color: white;
+          z-index: 3;
+
+          &.left {
+            position: relative;
+            left: 0.9rem;
+          }
+          &.right {
+            position: relative;
+            left: -0.9rem;
+          }
+        }
+
+        button {
+          height: 1.8rem;
+          width: 5rem;
+          padding: 0 !important;
+          font-size: 0.9rem;
+          color: white;
+          background-color: themed('primary-color-2');
+          transition: 0.3s;
+
+          &.selected {
+            border: 2px solid white;
+          }
+
+          &:nth-child(1) {
+            position: relative;
+            left: 1.8rem;
+            padding-right: 0.45rem !important;
+          }
+          &:nth-child(3) {
+            z-index: 2;
+            background-color: white;
+            color: themed('primary-color-2');
+          }
+          &:nth-child(5) {
+            position: relative;
+            left: -1.8rem;
+            padding-left: 0.45rem !important;
+          }
+        }
+
+        .or {
+          height: 1.8rem;
+          &::before {
+            color: white !important;
+            height: 1.8rem;
+          }
+        }
+      }
+    }
+
+    .setting {
+      display: flex;
+      justify-content: flex-end;
+      color: white;
+
+      .setting-icon-wrap {
+        opacity: 0.5;
+        transition: 0.3s;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 1;
+        }
       }
     }
   }

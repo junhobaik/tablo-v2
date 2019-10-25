@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import './App.scss';
-import './global.scss';
+import './style/global.scss';
 
 import Header from './Header';
 import Contents from './Contents';
@@ -77,7 +77,7 @@ const App = () => {
   }, []);
 
   return (
-    <div id="App">
+    <div id="App" className="theme-light">
       <Header />
       <Contents />
       <Menu />
