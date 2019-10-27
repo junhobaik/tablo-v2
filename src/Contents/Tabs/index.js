@@ -49,11 +49,7 @@ const Tabs = () => {
       target.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
       target.style.boxShadow = 'inset 0 0 2px rgba(0, 0, 0, 0.2)';
     } else {
-      if (target.className === 'tab-list') {
-        target.style.backgroundColor = '#fff';
-      } else {
-        target.style.backgroundColor = 'transparent';
-      }
+      target.style.backgroundColor = document.querySelector('#Tabs li.category').style.backgroundColor;
       target.style.boxShadow = 'none';
     }
   };
