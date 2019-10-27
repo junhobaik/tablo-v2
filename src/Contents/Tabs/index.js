@@ -33,9 +33,12 @@ const Tabs = () => {
     let widths = {};
     for (const item of items) {
       const id = item.attributes._id.value;
-      const { width } = item.querySelector('h3').getBoundingClientRect();
+      const titleEl = item.querySelector('h3');
+
+      titleEl.style.width = 'auto';
+      const { width } = titleEl.getBoundingClientRect();
       widths = { ...widths, [id]: width };
-      item.querySelector('h3').style.width = '100%';
+      titleEl.style.width = '100%';
     }
     setItemTitleWidths(widths);
   }, [tabs]);
