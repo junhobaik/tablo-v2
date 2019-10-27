@@ -74,7 +74,7 @@ const App = () => {
   }, []);
 
   return (
-    <div id="App" className={`theme-${appThemeColor || 'dark'}`}>
+    <div id="App" className={`theme-${appThemeColor || 'light'}`}>
       <Header />
       <Contents />
       <Menu />
