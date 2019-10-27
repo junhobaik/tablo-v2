@@ -3,7 +3,8 @@
 #Header {
   @include themify($themes) {
     display: flex;
-    background-color: themed('primary-color-1');
+    background-color: themed('header-background-color');
+    background-image: themed('header-background-image');
     border-bottom: 1px solid transparent;
     height: 3rem;
     justify-content: space-between;

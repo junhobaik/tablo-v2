@@ -7,6 +7,7 @@
     height: 100%;
     overflow: hidden;
     background-color: themed('content-background-color');
+    background-image: themed('content-background-image');
 
     & > :nth-child(1) {
       box-shadow: inset -1px 0 1px 0 rgba(0, 0, 0, 0.1);
