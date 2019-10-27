@@ -92,7 +92,7 @@ const TabMenu = () => {
                 alt="a"
                 onError={e => {
                   e.currentTarget.parentNode.parentNode.firstChild.style.display = 'flex';
-                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.parentNode.style.display = 'none';
                 }}
               />
             </div>
@@ -152,7 +152,7 @@ const TabMenu = () => {
                 alt="a"
                 onError={e => {
                   e.currentTarget.parentNode.parentNode.firstChild.style.display = 'flex';
-                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.parentNode.style.display = 'none';
                 }}
               />
             </div>
