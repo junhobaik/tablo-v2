@@ -83,12 +83,17 @@ const Menu = () => {
   const toggleButtons = createToggleBtnGroup(isMenuAlwaysOpen, menuStatus);
 
   useEffect(() => {
-    if (menuStatus === 'hide') {
-      if (windowStatus === 'feed') {
+    switch (windowStatus) {
+      case 'feed':
         setSelectMenu('feed');
-      } else setSelectMenu('tab');
+        break;
+      case 'tab':
+        setSelectMenu('tab');
+        break;
+      default:
+        break;
     }
-  }, [menuStatus, windowStatus]);
+  }, [windowStatus]);
 
   return (
     <div id="Menu" style={menuStyle}>
