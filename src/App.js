@@ -16,6 +16,7 @@ const App = () => {
   const { settingInfo, appThemeColor } = useSelector(state => state.app);
 
   useEffect(() => {
+    /* 첫 실행 후, chrome sync stroage 불러오기, ==componentDidMount */
     chrome.storage.sync.get(['tablo_v2_feed', 'tablo_v2_tab'], items => {
       const { tablo_v2_feed, tablo_v2_tab } = items;
       if (Object.keys(items).length) {
@@ -58,6 +59,7 @@ const App = () => {
       }
     });
 
+    /* popup에서 새로운 아이템을 추가할 경우 새로고침 기능 */
     chrome.storage.sync.onChanged.addListener(storage => {
       if (storage.tablo_v2_tab) {
         const { cart } = storage.tablo_v2_tab.newValue;
