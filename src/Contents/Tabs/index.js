@@ -459,6 +459,15 @@ const Tabs = () => {
       </React.Fragment>
     );
   });
+
+  if (!categoryList.length) {
+    categoryList.push(
+      <div className="no-category">
+        <span>Please add a category first</span>
+      </div>
+    );
+  }
+
   categoryList.push(
     <li className="category-add" key="tab-category-add-row">
       <div

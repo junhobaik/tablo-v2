@@ -67,6 +67,16 @@
       }
     }
 
+    .no-item-list {
+      display: flex;
+      color: white;
+      opacity: 0.2;
+      height: 100%;
+      margin-top: 25%;
+      justify-content: center;
+      user-select: none;
+    }
+
     .item-list {
       margin: 0;
       padding: 1rem;
