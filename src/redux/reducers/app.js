@@ -45,10 +45,9 @@ const app = (state = [], action) => {
       return { ...state, settingInfo: { ...state.settingInfo, ...action.info } };
 
     case SET_DRAG_INFO: {
-      const { id, link, title, description, target } = action.info;
       let { category } = action.info;
       if (!category) category = null;
-      return { ...state, dragInfo: { ...state.dragInfo, id, link, title, description, category, target } };
+      return { ...state, dragInfo: { ...state.dragInfo, ...action.info, category } };
     }
 
     case CLEAR_DRAG_INFO: {

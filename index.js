@@ -14,7 +14,7 @@ const firstLoadState = () => {
   const appState = localStorage.getItem('tablo_v2_app');
   if (appState === null) {
     app = {
-      appThemeColor: 'black',
+      appThemeColor: 'light',
       windowStatus: 'both',
       linkMethod: {
         tab: 'blank',
@@ -45,7 +45,7 @@ const firstLoadState = () => {
       },
     };
   } else {
-    app = JSON.parse(appState);
+    app = { ...JSON.parse(appState), menuOpenStatus: 'hide' };
   }
 
   return {
@@ -64,7 +64,6 @@ const store = createStore(rootReducer, preloadedState, composeWithDevTools());
 
 store.subscribe(() => {
   const { feed, app, tab } = store.getState();
-
   chrome.storage.sync.set(
     {
       tablo_v2_tab: tab,

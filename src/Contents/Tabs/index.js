@@ -69,13 +69,13 @@ const Tabs = () => {
   };
 
   const tabItemSettingMouseEnter = e => {
-    const { x, y } = e.currentTarget.getBoundingClientRect();
+    const { x, y, bottom } = e.currentTarget.getBoundingClientRect();
 
     dispatch(
       setSettingInfo({
         target: 'tab-item',
         x,
-        y,
+        y: y + (bottom - y) / 5,
         isVisible: true,
         id: e.currentTarget.parentNode.parentNode.parentNode.parentNode.attributes._id.value,
       })
@@ -83,15 +83,15 @@ const Tabs = () => {
   };
 
   const settingMouseLeave = () => {
-    if (settingInfo.isVisible) {
-      setTimeout(() => {
+    setTimeout(() => {
+      if (settingInfo.isVisible) {
         dispatch(
           setSettingInfo({
             isVisible: false,
           })
         );
-      }, 1000);
-    }
+      }
+    }, 500);
   };
 
   const handleCategoryValue = e => {
@@ -113,7 +113,7 @@ const Tabs = () => {
     setTabTitleValue('');
     const target = e.currentTarget.parentNode;
     target.style.display = 'none';
-    target.parentNode.querySelector('.title-a').style.display = 'inline';
+    target.parentNode.querySelector('.title-a').style.display = 'flex';
   };
 
   const categoryDragSpace = () => {
@@ -459,6 +459,15 @@ const Tabs = () => {
       </React.Fragment>
     );
   });
+
+  if (!categoryList.length) {
+    categoryList.push(
+      <div className="no-category">
+        <span>Please add a category first</span>
+      </div>
+    );
+  }
+
   categoryList.push(
     <li className="category-add" key="tab-category-add-row">
       <div

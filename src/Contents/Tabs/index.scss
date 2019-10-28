@@ -21,6 +21,15 @@
         display: none;
       }
 
+      .no-category {
+        display: flex;
+        justify-content: center;
+        margin: 5% 0;
+        color: white;
+        opacity: 0.3;
+        user-select: none;
+      }
+
       .category {
         display: flex;
         min-height: 6rem;

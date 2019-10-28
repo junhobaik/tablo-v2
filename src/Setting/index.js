@@ -6,18 +6,11 @@ import { Icon } from 'semantic-ui-react';
 import './index.scss';
 import { deleteFeed, deleteCategory } from '../redux/actions/feed';
 import { deleteTabCategory, deleteTabItem } from '../redux/actions/tab';
-import { setSettingInfo } from '../redux/actions/app';
 
 const Setting = () => {
   const [isMouseIn, setIsMouseIn] = useState(false);
   const { settingInfo } = useSelector(state => state.app);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (settingInfo.isVisible) {
-      dispatch(setSettingInfo({ isVisible: false }));
-    }
-  }, []);
 
   const hideSetting = () => {
     document.querySelector('.setting-tt').style.display = 'none';
@@ -63,7 +56,7 @@ const Setting = () => {
         let targetTitle;
         for (const tt of tabTitles) {
           const titleA = tt.childNodes[0];
-          titleA.style.display = 'inline';
+          titleA.style.display = 'flex';
           tt.childNodes[1].style.display = 'none';
           if (settingInfo.id === tt.parentNode.parentNode.parentNode.parentNode.attributes._id.value) targetTitle = tt;
         }
@@ -78,6 +71,10 @@ const Setting = () => {
 
     hideSetting();
   };
+
+  useEffect(() => {
+    hideSetting();
+  }, []);
 
   const clickRemove = () => {
     switch (settingInfo.target) {
