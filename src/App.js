@@ -10,6 +10,7 @@ import Menu from './Menu';
 import Setting from './Setting';
 import { resetFeed } from './redux/actions/feed';
 import { resetTab } from './redux/actions/tab';
+import BoundaryError from './BoundaryError';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -76,12 +77,14 @@ const App = () => {
   }, []);
 
   return (
-    <div id="App" className={`theme-${appThemeColor || 'light'}`}>
-      <Header />
-      <Contents />
-      <Menu />
-      <Setting settingInfo={settingInfo} />
-    </div>
+    <BoundaryError>
+      <div id="App" className={`theme-${appThemeColor || 'light'}`}>
+        <Header />
+        <Contents />
+        <Menu />
+        <Setting settingInfo={settingInfo} />
+      </div>
+    </BoundaryError>
   );
 };
 
