@@ -70,7 +70,7 @@ const FeedMenu = () => {
     feed.style.width = '14rem';
     feed.style.maxWidth = '14rem';
     titleInputs.style.display = 'none';
-    feed.querySelector('.title-a').style.display = 'inline';
+    feed.querySelector('.title-a').style.display = 'flex';
     feed.querySelector('.feed-setting').style.display = 'flex';
   };
 

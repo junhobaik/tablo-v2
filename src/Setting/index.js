@@ -56,7 +56,7 @@ const Setting = () => {
         let targetTitle;
         for (const tt of tabTitles) {
           const titleA = tt.childNodes[0];
-          titleA.style.display = 'inline';
+          titleA.style.display = 'flex';
           tt.childNodes[1].style.display = 'none';
           if (settingInfo.id === tt.parentNode.parentNode.parentNode.parentNode.attributes._id.value) targetTitle = tt;
         }

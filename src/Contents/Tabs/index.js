@@ -113,7 +113,7 @@ const Tabs = () => {
     setTabTitleValue('');
     const target = e.currentTarget.parentNode;
     target.style.display = 'none';
-    target.parentNode.querySelector('.title-a').style.display = 'inline';
+    target.parentNode.querySelector('.title-a').style.display = 'flex';
   };
 
   const categoryDragSpace = () => {
