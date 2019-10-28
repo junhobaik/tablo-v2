@@ -69,8 +69,8 @@
     .menu-open-setting,
     .feed-item-minimize-setting,
     .tab-item-minimize-setting,
-    .feed-item-refresh-setting,
-    .app-theme-color-setting {
+    .app-theme-color-setting,
+    .feed-item-refresh-setting > .inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -96,9 +96,26 @@
     }
 
     .feed-item-refresh-setting {
-      & > div {
-        min-width: auto;
-        max-width: 7rem;
+      text-align: right;
+      .inner {
+        & > div {
+          min-width: auto;
+          max-width: 7rem;
+        }
+      }
+      .force-refresh {
+        color: lightgray;
+        display: inline;
+        align-self: flex-end;
+        cursor: pointer;
+
+        &:hover {
+          color: gray;
+        }
+
+        span {
+          user-select: none;
+        }
       }
     }
 

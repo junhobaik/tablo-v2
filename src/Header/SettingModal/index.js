@@ -188,12 +188,27 @@ const SettingModal = ({ close }) => {
             </div>
           </div>
           <div className="feed-item-refresh-setting">
-            <h3>Refresh period of Feed Posts</h3>
-            <Select
-              onChange={(e, data) => handleFeedItemRefresh(e, data)}
-              defaultValue={feedItemRefreshPeriod || 6}
-              options={refreshOptions}
-            />
+            <div className="inner">
+              <h3>Refresh period of Feed Posts</h3>
+              <Select
+                onChange={(e, data) => handleFeedItemRefresh(e, data)}
+                defaultValue={feedItemRefreshPeriod || 6}
+                options={refreshOptions}
+              />
+            </div>
+            <div
+              className="force-refresh"
+              role="button"
+              tabIndex="0"
+              onClick={() => {
+                localStorage.setItem('tablo_v2_local_feed_sync', '0');
+                setTimeout(() => {
+                  window.location.reload();
+                }, 1000);
+              }}
+            >
+              <span>Force Refresh</span>
+            </div>
           </div>
           <div className="feed-item-load-day-setting">
             <div className="wrap">
