@@ -258,7 +258,7 @@ class Feeds extends Component {
             </div>
           )}
         </div>
-        {itemList.length ? (
+        {feeds.length ? (
           <ul className="item-list">{itemList}</ul>
         ) : (
           <div className="no-item-list">
