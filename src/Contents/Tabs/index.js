@@ -69,13 +69,13 @@ const Tabs = () => {
   };
 
   const tabItemSettingMouseEnter = e => {
-    const { x, y } = e.currentTarget.getBoundingClientRect();
+    const { x, y, bottom } = e.currentTarget.getBoundingClientRect();
 
     dispatch(
       setSettingInfo({
         target: 'tab-item',
         x,
-        y,
+        y: y + (bottom - y) / 5,
         isVisible: true,
         id: e.currentTarget.parentNode.parentNode.parentNode.parentNode.attributes._id.value,
       })
@@ -83,15 +83,15 @@ const Tabs = () => {
   };
 
   const settingMouseLeave = () => {
-    if (settingInfo.isVisible) {
-      setTimeout(() => {
+    setTimeout(() => {
+      if (settingInfo.isVisible) {
         dispatch(
           setSettingInfo({
             isVisible: false,
           })
         );
-      }, 1000);
-    }
+      }
+    }, 500);
   };
 
   const handleCategoryValue = e => {

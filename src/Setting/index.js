@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 
@@ -71,6 +71,10 @@ const Setting = () => {
 
     hideSetting();
   };
+
+  useEffect(() => {
+    hideSetting();
+  }, []);
 
   const clickRemove = () => {
     switch (settingInfo.target) {

@@ -11,7 +11,7 @@ import AddFeed from './AddFeed';
 
 const FeedMenu = () => {
   const feeds = useSelector(state => state.feed);
-  const { hideCategories } = useSelector(state => state.app);
+  const { hideCategories, settingInfo } = useSelector(state => state.app);
   const dispatch = useDispatch();
   const [_force, _setForce] = useState(true);
   const [isAddFeed, setIsAddFeed] = useState(false);
@@ -53,11 +53,13 @@ const FeedMenu = () => {
 
   const settingMouseLeave = () => {
     setTimeout(() => {
-      dispatch(
-        setSettingInfo({
-          isVisible: false,
-        })
-      );
+      if (settingInfo.isVisible) {
+        dispatch(
+          setSettingInfo({
+            isVisible: false,
+          })
+        );
+      }
     }, 500);
   };
 
