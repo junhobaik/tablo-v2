@@ -81,6 +81,32 @@ const SettingModal = ({ close }) => {
           <Icon name="close" onClick={close} />
         </div>
         <div className="content">
+          <div className="app-theme-color-setting">
+            <h3>Theme Color</h3>
+            <div className="theme-list">
+              <div
+                className={`dark ${appThemeColor === 'dark' ? 'selected' : ''}`}
+                role="button"
+                tabIndex="0"
+                onClick={e => {
+                  handleAppThemeColor(e);
+                }}
+              >
+                <Icon name="check" />
+              </div>
+              <div
+                className={`light ${appThemeColor === 'light' ? 'selected' : ''}`}
+                role="button"
+                tabIndex="0"
+                onClick={e => {
+                  handleAppThemeColor(e);
+                }}
+              >
+                <Icon name="check" />
+              </div>
+            </div>
+          </div>
+          
           <div className="link-setting">
             <h3>Link opening method</h3>
             <div className="link-method">
@@ -163,10 +189,12 @@ const SettingModal = ({ close }) => {
               </div>
             </div>
           </div>
+
           <div className="menu-open-setting">
             <h3>Always open bottom menu</h3>
             <Checkbox className="menu-open-toggle" onChange={handleMenuOpen} checked={isMenuAlwaysOpen} toggle />
           </div>
+
           <div className="minimize-settings">
             <div className="feed-item-minimize-setting">
               <h3>Minimize Feed Items</h3>
@@ -187,6 +215,7 @@ const SettingModal = ({ close }) => {
               />
             </div>
           </div>
+
           <div className="feed-item-refresh-setting">
             <div className="inner">
               <h3>Refresh period of Feed Posts</h3>
@@ -210,6 +239,7 @@ const SettingModal = ({ close }) => {
               <span>Force Refresh</span>
             </div>
           </div>
+
           <div className="feed-item-load-day-setting">
             <div className="wrap">
               <h3>Hide feed posts older than</h3>
@@ -228,32 +258,6 @@ const SettingModal = ({ close }) => {
             </div>
             <div className="sub">
               <span>0 = No posts hidden</span>
-            </div>
-          </div>
-
-          <div className="app-theme-color-setting">
-            <h3>Theme Color</h3>
-            <div className="theme-list">
-              <div
-                className={`dark ${appThemeColor === 'dark' ? 'selected' : ''}`}
-                role="button"
-                tabIndex="0"
-                onClick={e => {
-                  handleAppThemeColor(e);
-                }}
-              >
-                <Icon name="check" />
-              </div>
-              <div
-                className={`light ${appThemeColor === 'light' ? 'selected' : ''}`}
-                role="button"
-                tabIndex="0"
-                onClick={e => {
-                  handleAppThemeColor(e);
-                }}
-              >
-                <Icon name="check" />
-              </div>
             </div>
           </div>
         </div>

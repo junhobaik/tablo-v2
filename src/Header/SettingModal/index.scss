@@ -20,9 +20,9 @@
   transform: translate(-50%, -50%);
   min-width: 25rem;
   max-width: 50rem;
+  max-height: 75%;
   background-color: #fff;
   border-radius: 5px;
-  padding: 1rem 1.5rem;
 
   h1,
   h2,
@@ -36,6 +36,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 1rem 1.5rem;
+    padding-bottom: 0;
 
     h2 {
       margin: 0;
@@ -52,7 +54,8 @@
   }
 
   .content {
-    padding-right: 1rem;
+    overflow-y: scroll;
+    padding: 1rem 1.5rem;
 
     h3 {
       margin: 0;
