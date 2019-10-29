@@ -12,7 +12,7 @@ const Menu = () => {
   const dispatch = useDispatch();
   const [selectMenu, setSelectMenu] = useState('tab');
 
-  const menuStatus = isMenuAlwaysOpen ? 'default' : menuOpenStatus;
+  const menuStatus = menuOpenStatus === 'hide' && isMenuAlwaysOpen ? 'default' : menuOpenStatus;
 
   const menuStyle = {
     bottom: '-13rem',
