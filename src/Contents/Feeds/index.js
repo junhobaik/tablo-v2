@@ -15,14 +15,11 @@ class Feeds extends Component {
       items: [],
       loadingFeeds: [],
       erroredFeeds: [],
+      isFirstLoad: true,
     };
   }
 
   componentDidMount() {
-    const { feeds } = this.props;
-    const setItems = () => this.setItems(feeds);
-    setItems();
-
     chrome.storage.sync.onChanged.addListener(storage => {
       if (storage.tablo_v2_feed) {
         const { newValue, oldValue } = storage.tablo_v2_feed;
@@ -30,47 +27,32 @@ class Feeds extends Component {
         const oldValueLength = oldValue.filter(v => v.isHide).length;
 
         if (newValue !== oldValue && newValueLength === oldValueLength) {
-          this.setState({
-            items: [],
-            loadingFeeds: [],
-            erroredFeeds: [],
-          });
-          this.setUpdateNeeds(true);
-          setItems();
+          const { feeds } = this.props;
+          this.clearState();
+          this.setItems(feeds, true);
         }
       }
     });
   }
 
-  shouldComponentUpdate(nextProps, nextStage) {
-    const { feeds } = this.props;
+  shouldComponentUpdate(nextProps, nextState) {
     const isPropsChange = nextProps !== this.props;
-    const isStateChange = nextStage !== this.state;
+    const isStateChange = nextState !== this.state;
 
-    const setItems = () => {
+    const { isFirstLoad } = this.state;
+
+    if (isFirstLoad && nextState.isFirstLoad) {
       this.setState({
-        items: [],
+        isFirstLoad: false,
       });
+      this.clearState();
       this.setItems(nextProps.feeds);
-    };
-
-    const prevLength = feeds.length;
-    const nextLength = nextProps.feeds.length;
-    const lowerLengthFeeds = prevLength > nextLength ? nextProps.feeds : feeds;
-
-    if (prevLength !== nextLength) setItems();
-
-    for (const i in lowerLengthFeeds) {
-      if (nextProps.feeds[i].title !== feeds[i].title) {
-        setItems();
-        break;
-      }
     }
 
     return isPropsChange || isStateChange;
   }
 
-  setItems(feeds) {
+  setItems(feeds, isForceUpdate) {
     const pipe = (...funcs) => argument => funcs.reduce((acc, func) => func(acc), argument);
     let count = 0;
 
@@ -141,7 +123,7 @@ class Feeds extends Component {
       })
     );
 
-    const isUpdateNeeds = this.getUpdateNeeds();
+    const isUpdateNeeds = isForceUpdate || this.getUpdateNeeds();
     if (isUpdateNeeds) {
       localStorage.removeItem('tablo_v2_local_feed');
       setAllFeedItems();
@@ -178,6 +160,14 @@ class Feeds extends Component {
     const pub = parseInt(moment(itemData).format('x'), 10);
     if (now - 3600000 * 24 * day > pub) return true;
     return false;
+  }
+
+  clearState() {
+    this.setState({
+      items: [],
+      loadingFeeds: [],
+      erroredFeeds: [],
+    });
   }
 
   render() {
