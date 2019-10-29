@@ -159,7 +159,7 @@ const FeedMenu = () => {
         </div>
         <div key={`${url}-title`} className="feed-title title">
           <a className="title-a" href={link}>
-            {title}
+            <span>{title}</span>
           </a>
           <div className="title-inputs">
             <Input
