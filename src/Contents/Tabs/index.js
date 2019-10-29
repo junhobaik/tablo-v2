@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Icon, Input } from 'semantic-ui-react';
 import uuidv4 from 'uuid/v4';
+import ReactTooltip from 'react-tooltip';
 
 import './index.scss';
 import { setDragInfo, setSettingInfo, clearDragInfo } from '../../redux/actions/app';
@@ -405,9 +406,15 @@ const Tabs = () => {
                   }
                 }
               }}
+              data-tip
+              data-for="openTabListTip"
             >
               <Icon name="window restore outline" />
             </div>
+            <ReactTooltip id="openTabListTip" place="left" effect="solid">
+              <span>Open all links</span>
+            </ReactTooltip>
+
             <div
               className="setting"
               onMouseEnter={e => {

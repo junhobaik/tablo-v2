@@ -2,6 +2,7 @@ import React from 'react';
 import { Icon, Form, Radio, Checkbox, Select } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+import ReactTooltip from 'react-tooltip';
 
 import './index.scss';
 import {
@@ -106,7 +107,7 @@ const SettingModal = ({ close }) => {
               </div>
             </div>
           </div>
-          
+
           <div className="link-setting">
             <h3>Link opening method</h3>
             <div className="link-method">
@@ -235,9 +236,15 @@ const SettingModal = ({ close }) => {
                   window.location.reload();
                 }, 1000);
               }}
+              data-tip
+              data-for="forceRefreshTip"
             >
               <span>Force Refresh</span>
             </div>
+
+            <ReactTooltip id="forceRefreshTip" place="left" effect="solid">
+              <span>Use when there is a problem with the feed posts list</span>
+            </ReactTooltip>
           </div>
 
           <div className="feed-item-load-day-setting">

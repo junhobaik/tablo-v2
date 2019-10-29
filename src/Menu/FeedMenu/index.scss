@@ -287,6 +287,12 @@
         }
       }
 
+      .btn-wrap {
+        display: flex;
+        & > * {
+          flex-grow: 1;
+        }
+      }
       .message {
         margin: 0.5rem 0;
       }

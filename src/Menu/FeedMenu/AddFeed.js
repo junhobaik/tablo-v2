@@ -4,6 +4,7 @@ import RSSParser from 'rss-parser';
 import { useSelector, useDispatch } from 'react-redux';
 import { Input, Message, Icon, Select, Button } from 'semantic-ui-react';
 import _ from 'lodash';
+import ReactTooltip from 'react-tooltip';
 
 import { addFeed } from '../../redux/actions/feed';
 
@@ -158,7 +159,12 @@ const AddFeed = ({ close }) => {
             placeholder="URL"
             value={linkValue}
             onChange={e => handleChange(e)}
+            data-tip
+            data-for="urlTip"
           />
+          <ReactTooltip id="urlTip" place="top" effect="solid">
+            <span>Wait a moment after typing to check</span>
+          </ReactTooltip>
 
           <Input
             label="TITLE"
@@ -226,9 +232,16 @@ const AddFeed = ({ close }) => {
             ADD
           </Button>
         ) : (
-          <Button type="submit" disabled>
-            ADD
-          </Button>
+          <>
+            <div className="btn-wrap" data-tip data-for="disabledAddTip">
+              <Button type="submit" disabled>
+                ADD
+              </Button>
+            </div>
+            <ReactTooltip id="disabledAddTip" place="top" effect="solid" type="error">
+              <span>Must pass address check</span>
+            </ReactTooltip>
+          </>
         )}
       </div>
     </div>

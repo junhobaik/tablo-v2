@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Icon } from 'semantic-ui-react';
+import ReactTooltip from 'react-tooltip';
 
 import './index.scss';
 
@@ -210,7 +211,12 @@ class Feeds extends Component {
                 onClick={() => {
                   addCartItem(link, title, contentSnippet);
                 }}
+                data-tip
+                data-for="addCartTip"
               />
+              <ReactTooltip id="addCartTip" place="left" effect="solid">
+                <span>Add to Cart</span>
+              </ReactTooltip>
             </div>
             <div className="item-info">
               <a className="title" href={feedLink} target={aTarget}>
