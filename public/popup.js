@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 document.addEventListener('DOMContentLoaded', () => {
   let loadedTitle;
   let loadedUrl;
@@ -57,6 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    const throttleFindFeed = _.throttle(findFeed, 1000);
+
     chrome.storage.sync.get('tablo_v2_feed', items => {
       let isNeedFind = true;
       for (const f of items.tablo_v2_feed) {
@@ -66,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
           break;
         }
       }
-      if (isNeedFind) findFeed(siteUrl);
+      if (isNeedFind) throttleFindFeed(siteUrl);
     });
   });
 
