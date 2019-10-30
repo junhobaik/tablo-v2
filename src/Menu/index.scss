@@ -17,14 +17,15 @@
       min-height: 2rem;
 
       .icon {
-        margin: 0;
         display: flex;
+        margin: 0;
         align-items: center;
         justify-content: center;
         margin-bottom: 2px;
       }
 
       .header-btn {
+        display: flex;
         position: relative;
         top: 2px;
         cursor: pointer;
@@ -32,7 +33,6 @@
         width: 8rem;
         background-color: #fff;
         border-top: 2px solid themed('primary-color-1');
-        display: flex;
         align-items: center;
         justify-content: center;
         user-select: none;

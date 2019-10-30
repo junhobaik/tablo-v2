@@ -93,6 +93,7 @@ h1 {
   border-radius: 5px;
   margin-top: 0.5rem;
   cursor: pointer;
+  transition: 0.2s;
 }
 
 .disable-button {

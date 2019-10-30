@@ -43,9 +43,10 @@
       margin: 0;
     }
 
-    i {
+    .icon {
       cursor: pointer;
       opacity: 0.7;
+      transition: 0.3s;
 
       &:hover {
         opacity: 1;
@@ -56,6 +57,17 @@
   .content {
     overflow-y: scroll;
     padding: 1rem 1.5rem;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+      background: none;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+    }
+    &::-webkit-scrollbar-track {
+      background: none;
+    }
 
     h3 {
       margin: 0;
@@ -111,6 +123,7 @@
         display: inline;
         align-self: flex-end;
         cursor: pointer;
+        transition: 0.2s;
 
         &:hover {
           color: gray;
