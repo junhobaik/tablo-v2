@@ -469,7 +469,7 @@ const Tabs = () => {
 
   if (!categoryList.length) {
     categoryList.push(
-      <div className="no-category">
+      <div className="no-category" key="no-category">
         <span>Please add a category first</span>
       </div>
     );
