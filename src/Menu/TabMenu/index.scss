@@ -49,11 +49,16 @@
 
       ul.current-tab-item-list {
         display: flex;
+        overflow-y: auto;
         flex-wrap: wrap;
         flex-grow: 1;
         padding: 1rem;
         margin: 0;
         align-content: flex-start;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
 
         li.current-tab-item {
           margin: 0.25rem;
