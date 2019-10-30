@@ -5,6 +5,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
+import ReactTooltip from 'react-tooltip';
 
 import './index.scss';
 import { deleteCartItem } from '../../redux/actions/tab';
@@ -206,14 +207,20 @@ const TabMenu = () => {
     <div id="TabMenu">
       <div className="tabs">
         <div className="title">
-          <Icon name="window restore outline" />
+          <Icon name="window restore outline" data-tip data-for="currentTabIconTip" />
+          <ReactTooltip id="currentTabIconTip" place="right" effect="solid">
+            <span>Current Tabs</span>
+          </ReactTooltip>
         </div>
         <ul className="current-tab-item-list">{currentTabs}</ul>
       </div>
       <div className="cart">
         <ul className="cart-item-list">{cartItems}</ul>
         <div className="title">
-          <Icon name="cart" />
+          <Icon name="cart" data-tip data-for="cartIconTip" />
+          <ReactTooltip id="cartIconTip" place="left" effect="solid">
+            <span>Cart</span>
+          </ReactTooltip>
         </div>
       </div>
     </div>
