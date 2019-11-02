@@ -2,6 +2,8 @@
 
 [Chrome Web Store - Tablo v2](https://chrome.google.com/webstore/detail/tablo-v2-beta/aflhcldanmopecmjjinnenkcddghjnkn)
 
+<img src="tablov2.jpg"></img>
+
 ---
 
 기존 [Tablo](https://github.com/junhobaik/tablo) 웹앱을 개선하고 Feed(rss) 구독 기능을 추가한 새로운 웹앱.
