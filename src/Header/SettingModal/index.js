@@ -3,6 +3,7 @@ import { Icon, Form, Radio, Checkbox, Select } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
+import { withTranslation } from 'react-i18next';
 
 import './index.scss';
 import {
@@ -15,7 +16,8 @@ import {
   setAppThemeColor,
 } from '../../redux/actions/app';
 
-const SettingModal = ({ close }) => {
+// eslint-disable-next-line react/prop-types
+const SettingModal = ({ close, t }) => {
   const {
     linkMethod,
     isMenuAlwaysOpen,
@@ -83,7 +85,7 @@ const SettingModal = ({ close }) => {
         </div>
         <div className="content">
           <div className="app-theme-color-setting">
-            <h3>Theme Color</h3>
+            <h3>{t('setting.themeColor')}</h3>
             <div className="theme-list">
               <div
                 className={`dark ${appThemeColor === 'dark' ? 'selected' : ''}`}
@@ -109,14 +111,14 @@ const SettingModal = ({ close }) => {
           </div>
 
           <div className="link-setting">
-            <h3>Link opening method</h3>
+            <h3>{t('setting.linkMethod.title')}</h3>
             <div className="link-method">
               <div className="tab-link-mehtod">
-                <h4>Tab Link</h4>
+                <h4>{t('setting.linkMethod.tabLink')}</h4>
                 <Form className="tab-link-method-form">
                   <Form.Field>
                     <Radio
-                      label="new tab"
+                      label={t('setting.linkMethod.newTab')}
                       name="radioGroup"
                       value="new tab"
                       checked={tabLinkMethod === 'blank'}
@@ -127,7 +129,7 @@ const SettingModal = ({ close }) => {
                   </Form.Field>
                   <Form.Field>
                     <Radio
-                      label="current tab"
+                      label={t('setting.linkMethod.currentTab')}
                       name="radioGroup"
                       value="self"
                       checked={tabLinkMethod === 'self'}
@@ -138,11 +140,11 @@ const SettingModal = ({ close }) => {
               </div>
 
               <div className="feed-link-mehtod">
-                <h4>Feed Link</h4>
+                <h4>{t('setting.linkMethod.feedLink')}</h4>
                 <Form className="feed-link-method-form">
                   <Form.Field>
                     <Radio
-                      label="new tab"
+                      label={t('setting.linkMethod.newTab')}
                       name="radioGroup"
                       value="new tab"
                       checked={feedLinkMethod === 'blank'}
@@ -153,7 +155,7 @@ const SettingModal = ({ close }) => {
                   </Form.Field>
                   <Form.Field>
                     <Radio
-                      label="current tab"
+                      label={t('setting.linkMethod.currentTab')}
                       name="radioGroup"
                       value="self"
                       checked={feedLinkMethod === 'self'}
@@ -164,11 +166,11 @@ const SettingModal = ({ close }) => {
               </div>
 
               <div className="tab-list-mehtod">
-                <h4>Open tabs in category</h4>
+                <h4>{t('setting.linkMethod.openTabList')}</h4>
                 <Form className="tab-list-method-form">
                   <Form.Field>
                     <Radio
-                      label="new window"
+                      label={t('setting.linkMethod.newWindow')}
                       name="radioGroup"
                       value="new window"
                       checked={tabListMethod === 'blank'}
@@ -179,7 +181,7 @@ const SettingModal = ({ close }) => {
                   </Form.Field>
                   <Form.Field>
                     <Radio
-                      label="current window"
+                      label={t('setting.linkMethod.currentWindow')}
                       name="radioGroup"
                       value="current window"
                       checked={tabListMethod === 'self'}
@@ -192,13 +194,13 @@ const SettingModal = ({ close }) => {
           </div>
 
           <div className="menu-open-setting">
-            <h3>Always open bottom menu</h3>
+            <h3>{t('setting.alwaysOpenMenu')}</h3>
             <Checkbox className="menu-open-toggle" onChange={handleMenuOpen} checked={isMenuAlwaysOpen} toggle />
           </div>
 
           <div className="minimize-settings">
             <div className="feed-item-minimize-setting">
-              <h3>Minimize Feed Items</h3>
+              <h3>{t('setting.minimizeFeedItems')}</h3>
               <Checkbox
                 className="feed-item-minimize-toggle"
                 onChange={handleMinimize}
@@ -207,7 +209,7 @@ const SettingModal = ({ close }) => {
               />
             </div>
             <div className="tab-item-minimize-setting">
-              <h3>Minimize Tab Items</h3>
+              <h3>{t('setting.minimizeTabItems')}</h3>
               <Checkbox
                 className="tab-item-minimize-toggle"
                 onChange={handleTabItemMinimize}
@@ -219,7 +221,7 @@ const SettingModal = ({ close }) => {
 
           <div className="feed-item-refresh-setting">
             <div className="inner">
-              <h3>Refresh period of Feed Posts</h3>
+              <h3>{t('setting.refreshPeriod')}</h3>
               <Select
                 onChange={(e, data) => handleFeedItemRefresh(e, data)}
                 defaultValue={feedItemRefreshPeriod || 6}
@@ -239,17 +241,17 @@ const SettingModal = ({ close }) => {
               data-tip
               data-for="forceRefreshTip"
             >
-              <span>Force Refresh</span>
+              <span>{t('setting.forceRefresh')}</span>
             </div>
 
             <ReactTooltip id="forceRefreshTip" place="left" effect="solid">
-              <span>Use when there is a problem with the feed posts list</span>
+              <span>{t('setting.forceRefreshTooltip')}</span>
             </ReactTooltip>
           </div>
 
           <div className="feed-item-load-day-setting">
             <div className="wrap">
-              <h3>Hide feed posts older than</h3>
+              <h3>{t('setting.hidePost1')}</h3>
               <input
                 type="number"
                 min="0"
@@ -261,10 +263,10 @@ const SettingModal = ({ close }) => {
                   if (num || num === 0) dispatch(setFeedItemLoadDay(num));
                 }}
               />
-              <h3>days</h3>
+              <h3>{t('setting.hidePost2')}</h3>
             </div>
             <div className="sub">
-              <span>0 = No posts hidden</span>
+              <span>{t('setting.noPostsHidden')}</span>
             </div>
           </div>
         </div>
@@ -277,4 +279,4 @@ SettingModal.propTypes = {
   close: PropTypes.func.isRequired,
 };
 
-export default SettingModal;
+export default withTranslation()(SettingModal);
