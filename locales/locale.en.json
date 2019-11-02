@@ -1,0 +1,26 @@
+{
+  "translation": {
+    "setting": {
+      "themeColor": "Theme Color",
+      "linkMethod": {
+        "title": "Link opening method",
+        "tabLink": "Tab Link",
+        "feedLink": "Feed Link",
+        "newTab": "New tab",
+        "currentTab": "Current tab",
+        "openTabList": "Open tabs in category",
+        "newWindow": "New window",
+        "currentWindow": "Current window"
+      },
+      "alwaysOpenMenu": "Always open bottom menu",
+      "minimizeFeedItems": "Minimize Feed Items",
+      "minimizeTabItems": "Minimize Tab Items",
+      "refreshPeriod": "Refresh period of Feed Posts",
+      "hidePost1": "Hide feed posts older than",
+      "hidePost2": "days",
+      "forceRefresh": "Force Refresh",
+      "forceRefreshTooltip": "Use when there is a problem with the feed posts list",
+      "noPostsHidden": "0: No posts hidden"
+    }
+  }
+}

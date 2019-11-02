@@ -1,0 +1,26 @@
+{
+  "translation": {
+    "setting": {
+      "themeColor": "앱 테마 색상",
+      "linkMethod": {
+        "title": "링크 열기 방법",
+        "tabLink": "TAB 링크 열기",
+        "feedLink": "FEED 게시물 열기",
+        "newTab": "새 탭에서",
+        "currentTab": "현재 탭에서",
+        "openTabList": "카테고리 링크 모두 열기",
+        "newWindow": "새 창에서",
+        "currentWindow": "현재 창에서"
+      },
+      "alwaysOpenMenu": "메뉴 항상 열림",
+      "minimizeFeedItems": "FEED 게시물 최소화",
+      "minimizeTabItems": "TAB 링크 최소화",
+      "refreshPeriod": "FEED 게시물 새로고침 주기",
+      "hidePost1": "",
+      "hidePost2": "일 이상 된 FEED 게시물은 숨깁니다",
+      "forceRefresh": "강제 새로고침",
+      "forceRefreshTooltip": "게시물 목록에 이상이 있을때 사용하세요",
+      "noPostsHidden": "0: 게시물을 숨기지 않습니다"
+    }
+  }
+}
