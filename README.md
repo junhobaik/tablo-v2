@@ -83,4 +83,3 @@ _~~취소선~~은 도입 예정_
 - Linter & Formatter: **ESLint** & **Prettier**
 - etc:
   - **chrome APIs**
-  - ~~Google Analytics~~
