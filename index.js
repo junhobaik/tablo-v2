@@ -8,7 +8,7 @@ import 'semantic-ui-css/semantic.min.css';
 import './index.scss';
 import App from './src/App';
 import rootReducer from './src/redux/reducers';
-import './i18n';
+import './locales/i18n';
 
 const firstLoadState = () => {
   let app;

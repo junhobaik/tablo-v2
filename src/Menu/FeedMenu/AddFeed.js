@@ -5,10 +5,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Input, Message, Icon, Select, Button } from 'semantic-ui-react';
 import _ from 'lodash';
 import ReactTooltip from 'react-tooltip';
+import { withTranslation } from 'react-i18next';
 
 import { addFeed } from '../../redux/actions/feed';
 
-const AddFeed = ({ close }) => {
+const AddFeed = ({ close, t }) => {
   const feeds = useSelector(state => state.feed);
   const [linkValue, setLinkValue] = useState('');
   const [titleValue, setTitleValue] = useState('');
@@ -123,7 +124,8 @@ const AddFeed = ({ close }) => {
       default:
         return (
           <Message>
-            <Message.Header>Please enter the feed address of the site you want to add</Message.Header>
+            {/* <Message.Header>Please enter the feed address of the site you want to add</Message.Header> */}
+            <Message.Header>{t('test')}</Message.Header>
             <p>
               The address must contain http:// or https://, Validation will begin shortly after the address is entered
             </p>
@@ -248,4 +250,4 @@ const AddFeed = ({ close }) => {
   );
 };
 
-export default AddFeed;
+export default withTranslation()(AddFeed);
