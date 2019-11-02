@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 
 import './index.scss';
 import FeedMenu from './FeedMenu';
 import TabMenu from './TabMenu';
-import { setMenuOpenStatus } from '../redux/actions/app';
 
 const Menu = () => {
-  const { windowStatus, isMenuAlwaysOpen, menuOpenStatus } = useSelector(state => state.app);
-  const dispatch = useDispatch();
+  const { windowStatus, isMenuAlwaysOpen } = useSelector(state => state.app);
   const [selectMenu, setSelectMenu] = useState('tab');
-
-  const menuStatus = menuOpenStatus === 'hide' && isMenuAlwaysOpen ? 'default' : menuOpenStatus;
+  const [menuStatus, setMenuStatus] = useState('hide');
 
   const menuStyle = {
     bottom: '-13rem',
@@ -36,16 +33,25 @@ const Menu = () => {
       break;
   }
 
+  const setMenuOpenStatus = status => {
+    if (isMenuAlwaysOpen && status === 'hide') {
+      setMenuStatus('default');
+    } else {
+      setMenuStatus(status);
+    }
+  };
+
   const createToggleBtnGroup = (_isMenuAlwaysOpen, _menuStatus) => {
     const createToggleBtn = (isHalfBtn, iconName, setMenu, key) => {
       return (
         <div
+          id={`hb_${key}`}
           key={key}
           className={`toggle-button header-btn ${isHalfBtn ? 'header-half-btn' : null}`}
           role="button"
           tabIndex={0}
           onClick={() => {
-            dispatch(setMenuOpenStatus(setMenu));
+            setMenuOpenStatus(setMenu);
           }}
         >
           <Icon name={iconName} />
@@ -94,6 +100,29 @@ const Menu = () => {
     }
   }, [windowStatus]);
 
+  useEffect(() => {
+    setMenuOpenStatus('hide');
+
+    document.addEventListener('keydown', e => {
+      if (['BODY', 'DIV'].indexOf(e.target.nodeName) > -1) {
+        const header = document.querySelector('.menu-header');
+        const up = header.querySelector('#hb_up') || header.querySelector('#hb_extend');
+        const down = header.querySelector('#hb_down');
+
+        switch (e.keyCode) {
+          case 87: // w
+            if (up) up.click();
+            break;
+          case 83: // s
+            if (down) down.click();
+            break;
+          default:
+            break;
+        }
+      }
+    });
+  }, []);
+
   return (
     <div id="Menu" style={menuStyle}>
       <div className="menu-header">
@@ -104,7 +133,7 @@ const Menu = () => {
           onClick={() => {
             setSelectMenu('tab');
             if (menuStatus === 'hide') {
-              dispatch(setMenuOpenStatus('default'));
+              setMenuOpenStatus('default');
             }
           }}
         >
@@ -120,7 +149,7 @@ const Menu = () => {
           onClick={() => {
             setSelectMenu('feed');
             if (menuStatus === 'hide') {
-              dispatch(setMenuOpenStatus('default'));
+              setMenuOpenStatus('default');
             }
           }}
         >

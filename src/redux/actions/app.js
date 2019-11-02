@@ -26,10 +26,6 @@ export const toggleMenuAlwaysOpen = () => {
   return { type: TOGGLE_MENU_ALWAYS_OPEN };
 };
 
-export const setMenuOpenStatus = status => {
-  return { type: SET_MENU_OPEN_STATUS, status };
-};
-
 export const setSettingInfo = info => {
   return { type: SET_SETTING_INFO, info };
 };
