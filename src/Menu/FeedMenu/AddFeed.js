@@ -94,41 +94,38 @@ const AddFeed = ({ close, t }) => {
       case 'positive':
         return (
           <Message positive>
-            <Message.Header>The address is valid!</Message.Header>
-            <p>{`"${verifiedUrl}" Address confirmed, Press Add button to add.`}</p>
+            <Message.Header>{t('addFeed.positiveHeader')}</Message.Header>
+            <p>{`"${verifiedUrl}" ${t('addFeed.positiveMsg')}`}</p>
           </Message>
         );
       case 'warning':
         return (
           <Message warning icon>
             <Icon name="circle notched" loading />
-            <Message.Header>Validating address...</Message.Header>
+            <Message.Header>{t('addFeed.warningHeader')}</Message.Header>
           </Message>
         );
 
       case 'negative':
         return (
           <Message negative>
-            <Message.Header>Sorry, invalid or unknown address</Message.Header>
-            <p>Please check your address again, or check if rss subscription is supported.</p>
+            <Message.Header>{t('addFeed.negativeHeader')}</Message.Header>
+            <p>{t('addFeed.negativeMsg')}</p>
           </Message>
         );
 
       case 'info':
         return (
           <Message info>
-            <Message.Header>This site has already been added</Message.Header>
+            <Message.Header>{t('addFeed.infoHeader')}</Message.Header>
           </Message>
         );
 
       default:
         return (
           <Message>
-            {/* <Message.Header>Please enter the feed address of the site you want to add</Message.Header> */}
-            <Message.Header>{t('test')}</Message.Header>
-            <p>
-              The address must contain http:// or https://, Validation will begin shortly after the address is entered
-            </p>
+            <Message.Header>{t('addFeed.defaultHeader')}</Message.Header>
+            <p>{t('addFeed.defaultMsg')}</p>
           </Message>
         );
     }
@@ -144,7 +141,7 @@ const AddFeed = ({ close, t }) => {
     categories.add('new');
 
     return Array.from(categories).map(c => {
-      if (c === 'new') return { key: c, text: '+ New Category', value: c };
+      if (c === 'new') return { key: c, text: '+ New', value: c };
       return { key: c, text: c, value: c };
     });
   };
@@ -165,7 +162,7 @@ const AddFeed = ({ close, t }) => {
             data-for="urlTip"
           />
           <ReactTooltip id="urlTip" place="top" effect="solid">
-            <span>Wait a moment after typing to check</span>
+            <span>{t('addFeed.urlTooltip')}</span>
           </ReactTooltip>
 
           <Input
@@ -231,17 +228,17 @@ const AddFeed = ({ close, t }) => {
               close();
             }}
           >
-            ADD
+            {t('addFeed.addBtn')}
           </Button>
         ) : (
           <>
             <div className="btn-wrap" data-tip data-for="disabledAddTip">
               <Button type="submit" disabled>
-                ADD
+                {t('addFeed.addBtn')}
               </Button>
             </div>
             <ReactTooltip id="disabledAddTip" place="top" effect="solid" type="error">
-              <span>Must pass address check</span>
+              <span>{t('addFeed.addBtnTooltip')}</span>
             </ReactTooltip>
           </>
         )}

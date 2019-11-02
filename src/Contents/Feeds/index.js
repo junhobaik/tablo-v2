@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Icon } from 'semantic-ui-react';
 import ReactTooltip from 'react-tooltip';
+import { withTranslation } from 'react-i18next';
 
 import './index.scss';
 
@@ -172,7 +173,7 @@ class Feeds extends Component {
 
   render() {
     const { items, loadingFeeds, erroredFeeds } = this.state;
-    const { feeds, hideCategories, windowStatus, isFeedItemMinimize, linkMethod, feedItemLoadDay } = this.props;
+    const { feeds, hideCategories, windowStatus, isFeedItemMinimize, linkMethod, feedItemLoadDay, t } = this.props;
     const isWindowStatusFeed = windowStatus === 'feed';
     const aTarget = linkMethod === 'blank' ? '_blank' : '_self';
 
@@ -205,7 +206,7 @@ class Feeds extends Component {
                 data-for="addCartTip"
               />
               <ReactTooltip id="addCartTip" place="left" effect="solid">
-                <span>Add to Cart</span>
+                <span>{t('addCart')}</span>
               </ReactTooltip>
             </div>
             <div className="item-info">
@@ -258,7 +259,7 @@ class Feeds extends Component {
           <ul className="item-list">{itemList}</ul>
         ) : (
           <div className="no-item-list">
-            <span>No Feed added, please add a Feed.</span>
+            <span>{t('noFeed')}</span>
           </div>
         )}
       </div>
@@ -296,7 +297,9 @@ Feeds.propTypes = {
   addCartItem: PropTypes.func.isRequired,
 };
 
-export default connect(
+const connectedFeeds = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Feeds);
+
+export default withTranslation()(connectedFeeds);

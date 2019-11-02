@@ -1,5 +1,25 @@
 {
   "translation": {
+    "addCart": "Add to Cart",
+    "openTabLinks": "Open all links",
+    "noCategory": "Please add a category first",
+    "noFeed": "No Feed added, please add a Feed",
+    "currentTabIconTip": "Current Tabs",
+    "cart": "Cart",
+    "addFeed": {
+      "positiveHeader": "The address is valid!",
+      "positiveMsg": "Address confirmed, Press Add button to add",
+      "warningHeader": "Validating address...",
+      "negativeHeader": "Sorry, invalid or unknown address",
+      "negativeMsg": "Please check your address again, or check if rss subscription is supported.",
+      "infoHeader": "This site has already been added",
+      "defaultHeader": "Please enter the feed address of the site you want to add",
+      "defaultMsg": "The address must contain http:// or https://, Validation will begin shortly after the address is entered",
+      "urlTooltip": "Wait a moment after typing to check",
+      "addBtn": "ADD",
+      "addBtnTooltip": "Must pass address check"
+    },
+
     "setting": {
       "themeColor": "Theme Color",
       "linkMethod": {

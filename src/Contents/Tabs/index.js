@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react';
@@ -5,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Icon, Input } from 'semantic-ui-react';
 import uuidv4 from 'uuid/v4';
 import ReactTooltip from 'react-tooltip';
+import { withTranslation } from 'react-i18next';
 
 import './index.scss';
 import { setDragInfo, setSettingInfo, clearDragInfo } from '../../redux/actions/app';
@@ -17,7 +19,7 @@ import {
   moveTabCategory,
 } from '../../redux/actions/tab';
 
-const Tabs = () => {
+const Tabs = ({ t }) => {
   const dispatch = useDispatch();
   const { settingInfo, windowStatus } = useSelector(state => state.app);
   const { tabs, categories } = useSelector(state => state.tab);
@@ -412,7 +414,7 @@ const Tabs = () => {
               <Icon name="window restore outline" />
             </div>
             <ReactTooltip id="openTabListTip" place="left" effect="solid">
-              <span>Open all links</span>
+              <span>{t('openTabLinks')}</span>
             </ReactTooltip>
 
             <div
@@ -470,7 +472,7 @@ const Tabs = () => {
   if (!categoryList.length) {
     categoryList.push(
       <div className="no-category" key="no-category">
-        <span>Please add a category first</span>
+        <span>{t('noCategory')}</span>
       </div>
     );
   }
@@ -507,4 +509,4 @@ const Tabs = () => {
   );
 };
 
-export default Tabs;
+export default withTranslation()(Tabs);

@@ -6,12 +6,14 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 import ReactTooltip from 'react-tooltip';
+import { withTranslation } from 'react-i18next';
 
 import './index.scss';
 import { deleteCartItem } from '../../redux/actions/tab';
 import { setDragInfo, clearDragInfo } from '../../redux/actions/app';
 
-const TabMenu = () => {
+// eslint-disable-next-line react/prop-types
+const TabMenu = ({ t }) => {
   const dispatch = useDispatch();
   const { cart } = useSelector(state => state.tab);
   const linkMethod = useSelector(state => state.app.linkMethod.tab);
@@ -209,7 +211,7 @@ const TabMenu = () => {
         <div className="title">
           <Icon name="window restore outline" data-tip data-for="currentTabIconTip" />
           <ReactTooltip id="currentTabIconTip" place="right" effect="solid">
-            <span>Current Tabs</span>
+            <span>{t('currentTabIconTip')}</span>
           </ReactTooltip>
         </div>
         <ul className="current-tab-item-list">{currentTabs}</ul>
@@ -219,7 +221,7 @@ const TabMenu = () => {
         <div className="title">
           <Icon name="cart" data-tip data-for="cartIconTip" />
           <ReactTooltip id="cartIconTip" place="left" effect="solid">
-            <span>Cart</span>
+            <span>{t('cart')}</span>
           </ReactTooltip>
         </div>
       </div>
@@ -227,4 +229,4 @@ const TabMenu = () => {
   );
 };
 
-export default TabMenu;
+export default withTranslation()(TabMenu);
