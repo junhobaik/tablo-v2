@@ -131,11 +131,11 @@ const TabMenu = ({ t }) => {
           e.currentTarget.querySelector('.handle-icon').style.opacity = 0;
         }}
         onDragStart={e => {
-          console.log('dragStart', e.currentTarget.querySelector('a').href);
+          // console.log('dragStart', e.currentTarget.querySelector('a').href);
           dispatch(setDragInfo({ link, title, description, target: 'cart-item' }));
         }}
         onDragEnd={e => {
-          console.log('dragEnd');
+          // console.log('dragEnd');
           dispatch(clearDragInfo());
         }}
       >
