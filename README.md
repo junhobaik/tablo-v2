@@ -82,4 +82,5 @@ Menu는 하단에서 서랍식 UI로 꺼내고 집어넣을 수 있습니다.
 - Linter & Formatter: **ESLint** & **Prettier**
 - etc:
   - **chrome APIs**
+  - **i18next & react-i18next**
   - ...
