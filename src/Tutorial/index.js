@@ -12,7 +12,7 @@ import manifest from '../../public/manifest.json';
 const Tutorial = ({ t }) => {
   const [num, setNum] = useState(0);
   const dispatch = useDispatch();
-  console.log(num, img.length);
+
   const inc = () => {
     setNum(prev => (prev < img.length - 1 ? prev + 1 : prev));
   };
