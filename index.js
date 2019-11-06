@@ -65,13 +65,11 @@ const store = createStore(rootReducer, preloadedState, composeWithDevTools());
 
 store.subscribe(() => {
   const { feed, app, tab } = store.getState();
-  chrome.storage.sync.set(
-    {
-      tablo_v2_tab: tab,
-      tablo_v2_feed: feed,
-    },
-    () => {}
-  );
+
+  chrome.storage.sync.set({
+    tablo_v2_tab: tab,
+    tablo_v2_feed: feed,
+  });
   localStorage.setItem('tablo_v2_app', JSON.stringify(app));
 });
 
