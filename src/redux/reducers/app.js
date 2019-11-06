@@ -14,6 +14,7 @@ import {
   SET_FEED_ITEM_REFRESH_PERIOD,
   SET_FEED_ITEM_LOAD_DAY,
   SET_APP_THEME_COLOR,
+  SET_VERSION,
 } from '../actions/app';
 
 const app = (state = [], action) => {
@@ -80,6 +81,9 @@ const app = (state = [], action) => {
     case SET_APP_THEME_COLOR:
       return { ...state, appThemeColor: action.color };
 
+    case SET_VERSION: {
+      return { ...state, version: action.version };
+    }
     default:
       return state;
   }

@@ -41,6 +41,19 @@
       "forceRefresh": "Force Refresh",
       "forceRefreshTooltip": "Use when there is a problem with the feed posts list",
       "noPostsHidden": "0: No posts hidden"
-    }
+    },
+
+    "tutorial": [
+      "Introducing Tablo v2.",
+      "The TAB screen allows you to create and manage your own bookmarks.",
+      "The FEED screen allows you to check the posts of the RSS sites you subscribed to.",
+      "You can open the menu at the bottom of the screen to see which tabs are currently open in your browser and add them to the TAB screen.",
+      "All links in the TAB menu can be added by dragging them to the desired category on the TAB screen.",
+      "While surfing the web, if you want to add a link to this site in Tablo v2, you can add it to your cart from the TAB menu via 'Add to Cart' on the extension's icon.",
+      "If you have a site you want to subscribe to, press the + button on the FEED menu to enter the additional menu and enter the site address.",
+      "The extension icon allows you to automatically detect and add FEED addresses if your site supports RSS subscriptions while surfing the web.",
+      "The TAB, BOTH, FEED button at the top can be divided into various ways to view the TAB, FEED screen.",
+      "Try a variety of settings through the settings icon on the top right."
+    ]
   }
 }

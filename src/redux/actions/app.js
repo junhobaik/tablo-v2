@@ -13,6 +13,7 @@ export const TOGGLE_TAB_ITEM_MINIMIZE = 'TOGGLE_TAB_ITEM_MINIMIZE';
 export const SET_FEED_ITEM_REFRESH_PERIOD = 'SET_FEED_ITEM_REFRESH_PERIOD';
 export const SET_FEED_ITEM_LOAD_DAY = 'SET_FEED_ITEM_LOAD_DAY';
 export const SET_APP_THEME_COLOR = 'SET_APP_THEME_COLOR';
+export const SET_VERSION = 'SET_VERSION';
 
 export const setWindow = windowStatus => {
   return { type: SET_WINDOW, windowStatus };
@@ -64,4 +65,8 @@ export const setFeedItemLoadDay = day => {
 
 export const setAppThemeColor = color => {
   return { type: SET_APP_THEME_COLOR, color };
+};
+
+export const setVersion = version => {
+  return { type: SET_VERSION, version };
 };

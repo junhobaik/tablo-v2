@@ -8,13 +8,15 @@ import Header from './Header';
 import Contents from './Contents';
 import Menu from './Menu';
 import Setting from './Setting';
+import Tutorial from './Tutorial';
+import BoundaryError from './BoundaryError';
 import { resetFeed } from './redux/actions/feed';
 import { resetTab } from './redux/actions/tab';
-import BoundaryError from './BoundaryError';
+import { setVersion } from './redux/actions/app';
 
 const App = () => {
   const dispatch = useDispatch();
-  const { settingInfo, appThemeColor } = useSelector(state => state.app);
+  const { settingInfo, appThemeColor, version } = useSelector(state => state.app);
 
   useEffect(() => {
     /* 첫 실행 후, chrome sync stroage 불러오기, ==componentDidMount */
@@ -57,6 +59,9 @@ const App = () => {
         };
         dispatch(resetFeed(defaults.feed));
         dispatch(resetTab(defaults.tab));
+
+        // tutorial
+        dispatch(setVersion('new'));
       }
     });
 
@@ -79,6 +84,7 @@ const App = () => {
   return (
     <BoundaryError>
       <div id="App" className={`theme-${appThemeColor || 'light'}`}>
+        {version === 'new' ? <Tutorial /> : null}
         <Header />
         <Contents />
         <Menu />
