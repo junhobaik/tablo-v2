@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-undef */
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -45,17 +44,6 @@ const Tabs = ({ t }) => {
     }
     setItemTitleWidths(widths);
   }, [tabs]);
-
-  const setDragEnterStyle = (_target, isEnter = true) => {
-    const target = _target;
-    if (isEnter) {
-      target.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
-      target.style.boxShadow = 'inset 0 0 2px rgba(0, 0, 0, 0.2)';
-    } else {
-      target.style.backgroundColor = document.querySelector('#Tabs li.category').style.backgroundColor;
-      target.style.boxShadow = 'none';
-    }
-  };
 
   const tabCategorySettingMouseEnter = e => {
     const { x, y } = e.currentTarget.getBoundingClientRect();
@@ -141,12 +129,19 @@ const Tabs = ({ t }) => {
           if (dragInfo.target === 'tab-category') e.target.style.height = '0.5rem';
         }}
         onDrop={e => {
-          const targetIndex = Array.from(e.target.parentNode.querySelectorAll('.category-drop-space')).indexOf(
-            e.target
-          );
+          const nextIndex = Array.from(e.target.parentNode.querySelectorAll('.category-drop-space')).indexOf(e.target);
+          const prevIndex = dragInfo.currentIndex;
+
+          const dropSpaces = e.currentTarget.parentNode.querySelectorAll('.category-drop-space');
+
+          for (const ds of dropSpaces) {
+            ds.style.minHeight = '1rem';
+            ds.style.backgroundColor = 'transparent';
+          }
+
           if (isMovable(e)) {
             e.target.style.height = '0.5rem';
-            dispatch(moveTabCategory(dragInfo.category, targetIndex));
+            dispatch(moveTabCategory(dragInfo.category, prevIndex, nextIndex));
           }
         }}
       />
@@ -179,26 +174,30 @@ const Tabs = ({ t }) => {
             className="tab-item-wrap"
             key={`tab-item-${id}`}
             onDragEnter={e => {
-              const target = e.currentTarget;
-              if (isMovable && (dragInfo.target === 'tab-item' || dragInfo.target === 'current-tab-item')) {
-                target.style.flexGrow = '1';
-                target.firstChild.style.pointerEvents = 'none';
-                setDragEnterStyle(target, true);
+              e.stopPropagation();
+              if (isMovable && dragInfo.target !== 'tab-category') {
+                e.currentTarget.firstChild.style.pointerEvents = 'none';
+                e.currentTarget.style.borderLeft = '2px solid rgba(0, 0, 0, 0.2)';
               }
             }}
+            onDragOver={e => {
+              e.preventDefault();
+            }}
             onDragLeave={e => {
+              e.stopPropagation();
               if (e.target.className === 'tab-item-wrap') {
-                const target = getTarget(e);
-                target.style.flexGrow = '0';
-                target.firstChild.style.pointerEvents = 'all';
-                setDragEnterStyle(target, false);
+                e.currentTarget.firstChild.style.pointerEvents = 'all';
+                e.currentTarget.style.borderLeft = '0';
               }
             }}
             onDrop={e => {
               e.stopPropagation();
               const targetIndex = getTarget(e, true);
-              e.currentTarget.style.flexGrow = '0';
-              e.currentTarget.firstChild.style.pointerEvents = 'all';
+
+              if (e.target.className === 'tab-item-wrap') {
+                e.currentTarget.firstChild.style.pointerEvents = 'all';
+                e.currentTarget.style.borderLeft = '0';
+              }
 
               if (dragInfo.target === 'tab-item' && isMovable) {
                 dispatch(moveTabItem(dragInfo.id, c, targetIndex));
@@ -209,7 +208,6 @@ const Tabs = ({ t }) => {
               if (dragInfo.target === 'current-tab-item') {
                 dispatch(addTabItem(uuidv4(), dragInfo.link, dragInfo.title, '', c, targetIndex));
               }
-              setDragEnterStyle(e.currentTarget, false);
             }}
           >
             <li
@@ -217,6 +215,7 @@ const Tabs = ({ t }) => {
               _id={id}
               draggable
               onMouseEnter={e => {
+                e.stopPropagation();
                 if (!isTabItemMinimize) e.currentTarget.querySelector('.handle-icon').style.opacity = 0.2;
               }}
               onMouseLeave={e => {
@@ -227,11 +226,13 @@ const Tabs = ({ t }) => {
               }}
               onDragStart={e => {
                 e.stopPropagation();
-                setNotMovableIds([id, tabsArray[i + 1] ? tabsArray[i + 1].id : '']);
+                e.currentTarget.style.opacity = '0.5';
+                setNotMovableIds([id, tabsArray[i + 1] ? tabsArray[i + 1].id : '']); // 현재 아이템과 다음 아이템을 움직이지 않는 아이템으로 지정
                 dispatch(setDragInfo({ id, title, link, description, target: 'tab-item' }));
               }}
               onDragEnd={e => {
                 e.stopPropagation();
+                e.currentTarget.style.opacity = '1';
                 dispatch(clearDragInfo());
               }}
             >
@@ -345,19 +346,47 @@ const Tabs = ({ t }) => {
 
     return (
       <React.Fragment key={`${c}-fragment`}>
-        <li
-          className="category"
-          draggable
-          onDragStart={() => {
-            dispatch(setDragInfo({ category: c, target: 'tab-category' }));
-          }}
-          onDragEnd={() => {
-            dispatch(clearDragInfo());
-          }}
-        >
+        <li className="category">
           <div className="category-header">
             <div className="title">
-              <h3 className="title-text">{c}</h3>
+              <h3
+                className="title-text"
+                draggable
+                onDragStart={e => {
+                  e.stopPropagation();
+                  const category = e.currentTarget.parentNode.parentNode.parentNode;
+                  const dropSpaces = category.parentNode.querySelectorAll('.category-drop-space');
+
+                  for (const ds of dropSpaces) {
+                    ds.style.minHeight = '2rem';
+                    ds.style.backgroundColor = 'rgba(0,0,0,0.1)';
+                  }
+
+                  category.style.transition = '0.2s';
+                  category.style.opacity = '0.5';
+
+                  const currentIndex = Array.from(category.parentNode.querySelectorAll('.title-text')).indexOf(
+                    e.currentTarget
+                  );
+
+                  dispatch(setDragInfo({ target: 'tab-category', category: c, currentIndex }));
+                }}
+                onDragEnd={e => {
+                  const category = e.currentTarget.parentNode.parentNode.parentNode;
+                  const dropSpaces = category.parentNode.querySelectorAll('.category-drop-space');
+
+                  for (const ds of dropSpaces) {
+                    ds.style.minHeight = '1rem';
+                    ds.style.backgroundColor = 'transparent';
+                  }
+
+                  category.style.opacity = '1';
+
+                  dispatch(clearDragInfo());
+                }}
+              >
+                {c}
+              </h3>
               <Input
                 className="title-input"
                 type="text"
@@ -433,31 +462,42 @@ const Tabs = ({ t }) => {
             <ul
               className="tab-list"
               onDragEnter={e => {
-                if (e.target.className === 'tab-list') setDragEnterStyle(e.currentTarget);
-                if (dragInfo.target !== 'tab-category') dispatch(setDragInfo({ ...dragInfo, category: c }));
+                e.stopPropagation();
+                if (dragInfo.target !== 'tab-category') {
+                  for (const target of e.currentTarget.childNodes) {
+                    target.firstChild.style.pointerEvents = 'all';
+                    target.style.borderLeft = '0';
+                    e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+                  }
+
+                  dispatch(setDragInfo({ ...dragInfo, category: c }));
+                }
               }}
               onDragOver={e => {
                 e.preventDefault();
+                if (e.target.className === 'tab-list') e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
               }}
               onDragLeave={e => {
-                if (e.target.className === 'tab-list') setDragEnterStyle(e.currentTarget, false);
-                if (dragInfo.target !== 'tab-category') dispatch(setDragInfo({ ...dragInfo, category: null }));
+                e.currentTarget.style.backgroundColor = 'transparent';
               }}
               onDrop={e => {
-                setDragEnterStyle(e.currentTarget, false);
-                const { link, title, description, category, target } = dragInfo;
-                if (target === 'cart-item') {
-                  const id = uuidv4();
-                  dispatch(addTabItem(id, link, title, description, category));
-                }
+                const { id, link, title, description, category, target } = dragInfo;
+
+                e.currentTarget.style.backgroundColor = 'transparent';
+
                 if (target === 'tab-item') {
-                  dispatch(moveTabItem(dragInfo.id, category, e.currentTarget.childNodes.length));
+                  dispatch(moveTabItem(id, category, e.currentTarget.childNodes.length + 1));
                 }
                 if (target === 'current-tab-item') {
-                  const id = uuidv4();
-                  dispatch(addTabItem(id, link, title, '', category));
+                  const createdId = uuidv4();
+                  dispatch(addTabItem(createdId, link, title, '', category));
                 }
-                dispatch(setDragInfo({ link: null, title: null, description: null, category: null }));
+                if (target === 'cart-item') {
+                  const createdId = uuidv4();
+                  dispatch(addTabItem(createdId, link, title, description, category));
+                }
+
+                dispatch(clearDragInfo());
               }}
             >
               {tabList}

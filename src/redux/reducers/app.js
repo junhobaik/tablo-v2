@@ -50,7 +50,7 @@ const app = (state = [], action) => {
     case CLEAR_DRAG_INFO: {
       return {
         ...state,
-        dragInfo: { target: null, id: null, link: null, title: null, description: null, category: null },
+        dragInfo: {},
       };
     }
 

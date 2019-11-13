@@ -42,8 +42,8 @@ export const editTabCategory = (oldCategory, newCategory) => {
   return { type: EDIT_TAB_CATEGORY, oldCategory, newCategory };
 };
 
-export const moveTabCategory = (category, index) => {
-  return { type: MOVE_TAB_CATEGORY, category, index };
+export const moveTabCategory = (category, prevIndex, nextIndex) => {
+  return { type: MOVE_TAB_CATEGORY, category, prevIndex, nextIndex };
 };
 
 export const editTabItem = (id, title, description) => {

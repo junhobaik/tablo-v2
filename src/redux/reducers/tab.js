@@ -130,10 +130,14 @@ const tab = (state = [], action) => {
     }
 
     case MOVE_TAB_CATEGORY: {
+      const { prevIndex, nextIndex } = action;
       const newState = _.cloneDeep(state);
-      const index = newState.categories.indexOf(action.category);
-      newState.categories.splice(index, 1);
-      newState.categories.splice(action.index, 0, action.category);
+      newState.categories.splice(prevIndex, 1);
+      if (prevIndex > nextIndex) {
+        newState.categories.splice(nextIndex, 0, action.category);
+      } else {
+        newState.categories.splice(nextIndex - 1, 0, action.category);
+      }
       return newState;
     }
 
