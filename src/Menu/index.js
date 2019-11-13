@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 
 import './index.scss';
 import FeedMenu from './FeedMenu';
 import TabMenu from './TabMenu';
+import { setMenuOpenStatus } from '../redux/actions/app';
 
 const Menu = () => {
+  const dispatch = useDispatch();
   const { windowStatus, isMenuAlwaysOpen } = useSelector(state => state.app);
   const [selectMenu, setSelectMenu] = useState('tab');
   const [menuStatus, setMenuStatus] = useState('hide');
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   const menuStyle = {
     bottom: '-13rem',
@@ -33,7 +36,7 @@ const Menu = () => {
       break;
   }
 
-  const setMenuOpenStatus = status => {
+  const setOpenStatus = status => {
     if (isMenuAlwaysOpen && status === 'hide') {
       setMenuStatus('default');
     } else {
@@ -51,7 +54,7 @@ const Menu = () => {
           role="button"
           tabIndex={0}
           onClick={() => {
-            setMenuOpenStatus(setMenu);
+            setOpenStatus(setMenu);
           }}
         >
           <Icon name={iconName} />
@@ -101,7 +104,21 @@ const Menu = () => {
   }, [windowStatus]);
 
   useEffect(() => {
-    setMenuOpenStatus('hide');
+    if (!isFirstLoad) {
+      dispatch(setMenuOpenStatus(menuStatus));
+    } else {
+      setTimeout(() => {
+        setIsFirstLoad(false);
+      }, 1000);
+    }
+  }, [menuStatus]);
+
+  useEffect(() => {
+    setOpenStatus('hide');
+  }, [isMenuAlwaysOpen]);
+
+  useEffect(() => {
+    setOpenStatus('hide');
 
     document.addEventListener('keydown', e => {
       if (['BODY', 'DIV'].indexOf(e.target.nodeName) > -1) {
@@ -133,7 +150,7 @@ const Menu = () => {
           onClick={() => {
             setSelectMenu('tab');
             if (menuStatus === 'hide') {
-              setMenuOpenStatus('default');
+              setOpenStatus('default');
             }
           }}
         >
@@ -149,7 +166,7 @@ const Menu = () => {
           onClick={() => {
             setSelectMenu('feed');
             if (menuStatus === 'hide') {
-              setMenuOpenStatus('default');
+              setOpenStatus('default');
             }
           }}
         >

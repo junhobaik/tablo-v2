@@ -70,3 +70,7 @@ export const setAppThemeColor = color => {
 export const setVersion = version => {
   return { type: SET_VERSION, version };
 };
+
+export const setMenuOpenStatus = status => {
+  return { type: SET_MENU_OPEN_STATUS, status };
+};

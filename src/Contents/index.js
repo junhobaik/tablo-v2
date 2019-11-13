@@ -16,13 +16,6 @@ const Contents = () => {
 
   useEffect(() => {
     switch (menuOpenStatus) {
-      case 'hide':
-        if (isMenuAlwaysOpen) {
-          setPaddingBottom('17rem');
-        } else {
-          setPaddingBottom('3rem');
-        }
-        break;
       case 'default':
         setPaddingBottom('17rem');
         break;
@@ -30,6 +23,11 @@ const Contents = () => {
         setPaddingBottom(`${window.innerHeight * 0.6 + 20}px`);
         break;
       default:
+        if (isMenuAlwaysOpen) {
+          setPaddingBottom('17rem');
+        } else {
+          setPaddingBottom('3rem');
+        }
         break;
     }
   }, [menuOpenStatus, isMenuAlwaysOpen]);

@@ -15,6 +15,7 @@ import {
   SET_FEED_ITEM_LOAD_DAY,
   SET_APP_THEME_COLOR,
   SET_VERSION,
+  SET_MENU_OPEN_STATUS,
 } from '../actions/app';
 
 const app = (state = [], action) => {
@@ -53,6 +54,9 @@ const app = (state = [], action) => {
         dragInfo: {},
       };
     }
+
+    case SET_MENU_OPEN_STATUS:
+      return { ...state, menuOpenStatus: action.status };
 
     case ADD_HIDE_CATEGORY: {
       const newState = _.cloneDeep(state);
