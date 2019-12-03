@@ -1,4 +1,4 @@
-# Tablo v2 (가제)
+# Tablo (가제)
 
 [Chrome Web Store - Tablo v2](https://chrome.google.com/webstore/detail/tablo-v2-beta/aflhcldanmopecmjjinnenkcddghjnkn)
 
@@ -11,7 +11,7 @@
 다양한 방법으로 웹페이지를 스크랩하고, 스크랩한 링크들을 자신만의 북마크처럼 관리할 수 있습니다.  
 또한 RSS 구독 기능으로 구독한 게시물을 보고 스크랩할 수 있습니다.
 
-## Tablo v2
+## Tablo
 
 1. 다양한 방법으로 웹페이지를 스크랩하고, 스크랩한 링크들을 자신만의 북마크처럼 관리할 수 있습니다.
 2. 또한 RSS 구독 기능으로 구독한 게시물을 보고 스크랩할 수 있습니다.
