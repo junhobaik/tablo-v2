@@ -13,17 +13,12 @@ const FeedMenu = () => {
   const feeds = useSelector(state => state.feed);
   const { hideCategories, settingInfo } = useSelector(state => state.app);
   const dispatch = useDispatch();
-  const [_force, _setForce] = useState(true);
   const [isAddFeed, setIsAddFeed] = useState(false);
   const [titleValue, setTitleValue] = useState('');
   const [categoryValue, setCategoryValue] = useState('');
   const [isNewCategory, setIsNewCategory] = useState(false);
   const [newCategoryValue, setNewCategoryValue] = useState('');
   const [editCategoryValue, setEditCategoryValue] = useState('');
-
-  const forceUpdate = () => {
-    _setForce(!_force);
-  };
 
   const feedSettingMouseEnter = e => {
     const { x, y } = e.currentTarget.getBoundingClientRect();
@@ -85,10 +80,14 @@ const FeedMenu = () => {
   const saveEdit = e => {
     const id = e.currentTarget.parentNode.parentNode.parentNode.parentNode.attributes.id.value;
     const title = titleValue === '' ? null : titleValue;
-    const category = newCategoryValue !== '' ? newCategoryValue : categoryValue;
+
+    const category =
+      isNewCategory && (newCategoryValue !== '' || newCategoryValue !== 'new') ? newCategoryValue : categoryValue;
+
     dispatch(editFeed(id, title, category));
     hideEdit(e);
-    forceUpdate();
+    setNewCategoryValue('');
+    setIsNewCategory(false);
   };
 
   const cancelEdit = e => {
@@ -100,7 +99,6 @@ const FeedMenu = () => {
     const id = target.parentNode.attributes.id.value;
 
     dispatch(editFeed(id, null, null, !currentIsHide));
-    forceUpdate();
   };
 
   const handleChangeCategory = (e, data) => {
@@ -125,7 +123,6 @@ const FeedMenu = () => {
       const oldCategory = categoryTitle.innerText;
       dispatch(editCategory(oldCategory, value));
       categoryTitle.style.display = 'inline';
-      forceUpdate();
     }
   };
 
