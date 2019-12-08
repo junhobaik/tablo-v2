@@ -193,14 +193,16 @@ const FeedMenu = () => {
                 }}
               />
             ) : (
-              <Dropdown
-                className="category-select"
-                options={options}
-                defaultValue={category}
-                onChange={(e, data) => {
-                  handleChangeCategory(e, data);
-                }}
-              />
+              <div className="category-select-wrap">
+                <Dropdown
+                  className="category-select"
+                  options={options}
+                  defaultValue={category}
+                  onChange={(e, data) => {
+                    handleChangeCategory(e, data);
+                  }}
+                />
+              </div>
             )}
 
             <div className="icons">

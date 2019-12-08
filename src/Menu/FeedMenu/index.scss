@@ -164,10 +164,16 @@
                     }
                   }
 
+                  .category-select-wrap {
+                    min-width: 5rem;
+                    height: 1.1rem;
+                  }
+
                   .category-select {
                     display: flex;
                     align-items: center;
                     color: gray;
+                    position: absolute;
 
                     & > div.text {
                       max-width: 5rem;
