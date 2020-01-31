@@ -15,7 +15,7 @@ const Header = () => {
     <React.Fragment>
       <div id="Header">
         <div className="title">
-          <h1>Tablo v2</h1>
+          <h1>Tablo</h1>
         </div>
         <div className="select-content">
           <Button.Group className="button-group">
