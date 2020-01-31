@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import RSSParser from 'rss-parser';
 import { useSelector, useDispatch } from 'react-redux';
 import { Input, Message, Icon, Select, Button } from 'semantic-ui-react';
 import _ from 'lodash';
@@ -26,34 +25,42 @@ const AddFeed = ({ close, t }) => {
     if (isContain) {
       setLinkStatus('info');
     } else {
-      const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
-      const parser = new RSSParser();
-
       const urlCheck = ['feed', 'rss', 'feed.xml', 'd2.atom'];
 
-      parser.parseURL(CORS_PROXY + requestUrl, (err, feed) => {
-        setVerifiedUrl('');
-        setLinkStatus('warning');
-        let modifiedUrl = requestUrl;
-        if (requestUrl[requestUrl.length - 1] !== '/') modifiedUrl += '/';
+      let modifiedUrl = requestUrl;
+      if (requestUrl[requestUrl.length - 1] !== '/') modifiedUrl += '/';
 
-        if (err && urlCheckCnt !== urlCheck.length) {
-          let reduceCnt = modifiedUrl.length;
-          if (urlCheckCnt > 0) {
-            reduceCnt -= urlCheck[urlCheckCnt - 1].length + 1;
-          }
+      const reqUrl = `https://api.rss2json.com/v1/api.json?rss_url=${requestUrl}`;
+      fetch(reqUrl)
+        .then(res => {
+          setVerifiedUrl('');
+          setLinkStatus('warning');
 
-          modifiedUrl = modifiedUrl.substr(0, reduceCnt) + urlCheck[urlCheckCnt];
-
-          feedLinkCheck(modifiedUrl, urlCheckCnt + 1);
-        } else if (err) {
-          setLinkStatus('negative');
-        } else {
+          if (res.status === 200) return res.json();
+          throw Error('Feed not found');
+        })
+        .then(feed => {
           setVerifiedUrl(requestUrl);
-          setTitleValue(feed.title);
+          setTitleValue(feed.feed.title);
           setLinkStatus('positive');
-        }
-      });
+        })
+        .catch(() => {
+          if (urlCheckCnt !== urlCheck.length) {
+            let reduceCnt = modifiedUrl.length;
+            if (urlCheckCnt > 0) {
+              reduceCnt -= urlCheck[urlCheckCnt - 1].length + 1;
+            }
+
+            modifiedUrl = modifiedUrl.substr(0, reduceCnt) + urlCheck[urlCheckCnt];
+
+            setTimeout(() => {
+              feedLinkCheck(modifiedUrl, urlCheckCnt + 1);
+            }, 500);
+          } else {
+            setLinkStatus('negative');
+          }
+        });
+      //
     }
   };
 
