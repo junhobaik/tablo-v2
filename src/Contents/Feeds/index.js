@@ -1,4 +1,3 @@
-import RSSParser from 'rss-parser';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -58,30 +57,25 @@ class Feeds extends Component {
     let count = 0;
 
     const addFeedItems = async (requestUrl, feedTitle, feedLink) => {
-      const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
-      const parser = new RSSParser();
-
       this.setState(prevState => ({
         loadingFeeds: [...prevState.loadingFeeds, feedTitle],
       }));
 
-      const result = await parser.parseURL(CORS_PROXY + requestUrl, (err, feed) => {
-        if (err) {
-          this.setState(prevState => {
-            const prevLoadingFeeds = [...prevState.loadingFeeds];
-            prevLoadingFeeds.splice(prevLoadingFeeds.indexOf(feedTitle), 1);
-            return {
-              loadingFeeds: prevLoadingFeeds,
-              erroredFeeds: [...prevState.erroredFeeds, feedTitle],
-            };
-          });
-        } else {
+      const reqUrl = `https://api.rss2json.com/v1/api.json?rss_url=${requestUrl}`;
+      fetch(reqUrl)
+        .then(res => {
+          if (res.status === 200) return res.json();
+          throw Error('Feed not found');
+        })
+        .then(feed => {
           for (const item of feed.items) {
-            const { title, link, pubDate, contentSnippet } = item;
-            const description = contentSnippet.substr(0, 200);
+            const { title, link, pubDate, description } = item;
+            const descriptionDiv = document.createElement('div');
+            descriptionDiv.innerHTML = description;
+            const contentSnippet = descriptionDiv.innerText.substr(0, 200);
             const localFeeds = JSON.parse(localStorage.getItem('tablo_v2_local_feed')) || [];
 
-            localFeeds.push({ title, link, pubDate, contentSnippet: description, feedTitle, feedLink });
+            localFeeds.push({ title, link, pubDate, contentSnippet, feedTitle, feedLink });
 
             const sortedLocalFeeds = localFeeds.sort((a, b) => {
               const aDate = parseInt(moment(a.pubDate).format('YYYYMMDD'), 10);
@@ -103,17 +97,24 @@ class Feeds extends Component {
               loadingFeeds: prevLoadingFeeds,
             };
           });
-        }
 
-        count += 1;
-        if (count < feeds.length) {
-          this.setUpdateNeeds(true);
-        } else {
-          this.setUpdateNeeds(false);
-        }
-      });
-
-      return result;
+          count += 1;
+          if (count < feeds.length) {
+            this.setUpdateNeeds(true);
+          } else {
+            this.setUpdateNeeds(false);
+          }
+        })
+        .catch(() => {
+          this.setState(prevState => {
+            const prevLoadingFeeds = [...prevState.loadingFeeds];
+            prevLoadingFeeds.splice(prevLoadingFeeds.indexOf(feedTitle), 1);
+            return {
+              loadingFeeds: prevLoadingFeeds,
+              erroredFeeds: [...prevState.erroredFeeds, feedTitle],
+            };
+          });
+        });
     };
 
     const setAllFeedItems = pipe(
