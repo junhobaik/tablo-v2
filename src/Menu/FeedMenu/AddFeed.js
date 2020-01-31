@@ -29,7 +29,7 @@ const AddFeed = ({ close, t }) => {
       const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
       const parser = new RSSParser();
 
-      const urlCheck = ['rss', 'feed.xml', 'feed', 'd2.atom'];
+      const urlCheck = ['feed', 'rss', 'feed.xml', 'd2.atom'];
 
       parser.parseURL(CORS_PROXY + requestUrl, (err, feed) => {
         setVerifiedUrl('');
