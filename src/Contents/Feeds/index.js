@@ -295,11 +295,9 @@ Feeds.propTypes = {
   feedItemRefreshPeriod: PropTypes.number.isRequired,
   feedItemLoadDay: PropTypes.number.isRequired,
   addCartItem: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
 };
 
-const connectedFeeds = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Feeds);
+const connectedFeeds = connect(mapStateToProps, mapDispatchToProps)(Feeds);
 
 export default withTranslation()(connectedFeeds);
