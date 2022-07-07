@@ -34,7 +34,7 @@
     "i18next": "^19.0.0",
     "i18next-browser-languagedetector": "^4.0.1",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "parcel-plugin-static-files-copy": "^2.2.1",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
